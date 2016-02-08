@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void fillData() {
         HashMap<String,String> map = new HashMap<>();
-        map.put("uuid","asdfg");
+        map.put("uuid","nixxxx");
         map.put("versionCode","0.9.0");
 
         HttpRequest.post(API.REGISTER_UUID_URI, map, new HttpRequestListener() {

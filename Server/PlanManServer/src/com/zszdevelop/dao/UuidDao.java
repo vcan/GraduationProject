@@ -1,5 +1,12 @@
 package com.zszdevelop.dao;
 
-public class UuidDao {
+import java.util.ArrayList;
 
+import com.zszdevelop.bean.BaseUser;
+
+
+public interface UuidDao {
+	
+	public BaseUser getUuidinfo(String uuid);
+	public void insertUuid(String uuid);
 }
