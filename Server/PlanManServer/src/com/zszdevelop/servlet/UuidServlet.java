@@ -2,6 +2,7 @@ package com.zszdevelop.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ public class UuidServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//针对post请求，设置允许接收中文
         request.setCharacterEncoding("UTF-8");
 		// 返回时防止编码混乱
@@ -45,7 +47,17 @@ public class UuidServlet extends HttpServlet {
         String uuid = request.getParameter("uuid");
 		String versionCode = request.getParameter("versionCode");
         UuidDao uuidDao = new UuidImpl();
-        BaseUser uuidinfo = uuidDao.getUuidinfo(uuid);
+        
+        // 用户基本数据
+        BaseUser uuidinfo = new BaseUser();
+        boolean isUuidExist = uuidDao.isExist(uuid);
+        if (isUuidExist) {
+        	 uuidinfo = uuidDao.getUuidinfo(uuid);
+		}else {
+			uuidDao.insertUuid(uuid);
+			uuidinfo = uuidDao.getUuidinfo(uuid);
+		}
+        
         
      // 将数据以json的形式传递回来
      		Gson gson = new Gson();

@@ -71,9 +71,8 @@ public class UuidImpl implements UuidDao{
 			   System.out.println(insertUuid);
 			  
 			   ps.close();
-			   if (isExecute) {
-				   getUuidinfo(uuid);
-			}
+				  
+			
 			
 			
 		} catch (SQLException e) {
@@ -83,7 +82,37 @@ public class UuidImpl implements UuidDao{
 			BaseConnection.closeResource(rs, ps, conn);
 		}
 		
+		 getUuidinfo(uuid);
+	}
+
+
+	@Override
+	public boolean isExist(String uuid) {
+		boolean b=false;
+		BaseUser baseUser = new BaseUser();
 		
+		// 根据查询的类型返回数据
+		String queryUuid="SELECT * FROM UserInfo WHERE uuid=\""+uuid+"\"";
+		System.out.println("查询uuid是否存在:"+queryUuid);
+		try {
+			conn=BaseConnection.getConnection();
+			ps=(PreparedStatement) conn.prepareStatement(queryUuid);
+			rs=ps.executeQuery();
+			
+			if (rs.next()) {// 如果有值，把值塞进去返回。
+				b = true;
+			}else {// 如果没有值，新增一条记录
+				b = false;
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			BaseConnection.closeResource(rs, ps, conn);
+		}
+		
+		
+		return b;
 	}
 	
 	

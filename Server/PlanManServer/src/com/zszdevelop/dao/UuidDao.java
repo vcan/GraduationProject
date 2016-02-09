@@ -9,4 +9,5 @@ public interface UuidDao {
 	
 	public BaseUser getUuidinfo(String uuid);
 	public void insertUuid(String uuid);
+	public boolean isExist(String uuid);
 }
