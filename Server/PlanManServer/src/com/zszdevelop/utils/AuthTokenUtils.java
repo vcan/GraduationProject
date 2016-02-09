@@ -8,14 +8,12 @@ public class AuthTokenUtils {
 	public static String getAuthToken(){
 		String authToken = getJavaUuid()+getRandomString(12);
 		
-		
-		
 		return authToken;
 	}
 
 
 	/**
-	 * 生成随机数
+	 * 生成java 的uuid 截取20位
 	 * @return
 	 */
 	private static String getJavaUuid() {
