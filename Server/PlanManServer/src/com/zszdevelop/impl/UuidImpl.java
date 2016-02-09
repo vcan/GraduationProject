@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.dao.UuidDao;
-import com.zszdevelop.utils.JavaUuidUtils;
+import com.zszdevelop.utils.AuthTokenUtils;
 
 public class UuidImpl implements UuidDao {
 	private Connection conn = null;
@@ -56,7 +56,8 @@ public class UuidImpl implements UuidDao {
 	@Override
 	public void insertUuid(String uuid) {
 
-		String insertAuthToken = JavaUuidUtils.getJavaUuid();
+		String insertAuthToken = AuthTokenUtils.getAuthToken();
+		System.out.println("token >>:"+insertAuthToken);
 		// 插如uuid和token
 		String insertUuid = "insert UserInfo (uuid,authToken,registerAppTime) values(?,?,?)";
 		System.out.println(insertUuid);
