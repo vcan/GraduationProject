@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.dao.UuidDao;
 import com.zszdevelop.impl.UuidImpl;
+import com.zszdevelop.utils.JavaUuidUtils;
 
 /**
  * Servlet implementation class UuidServlet
@@ -38,6 +39,8 @@ public class UuidServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		
 		//针对post请求，设置允许接收中文
         request.setCharacterEncoding("UTF-8");
