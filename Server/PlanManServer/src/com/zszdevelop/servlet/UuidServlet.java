@@ -1,5 +1,6 @@
 package com.zszdevelop.servlet;
 
+import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.zszdevelop.bean.BaseUser;
+import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.dao.UuidDao;
 import com.zszdevelop.impl.UuidImpl;
 import com.zszdevelop.utils.AuthTokenUtils;
@@ -62,7 +64,7 @@ public class UuidServlet extends HttpServlet {
 		// 将数据以json的形式传递回来
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(uuidinfo);
-		OutJsonUtils.outJson(jsonData,response);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response);
 
 	}
 

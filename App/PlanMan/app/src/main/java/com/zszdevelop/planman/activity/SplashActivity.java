@@ -2,6 +2,7 @@ package com.zszdevelop.planman.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.config.API;
@@ -38,6 +39,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void fillData() {
+        TextUtils.isEmpty("s");
         HashMap<String,String> map = new HashMap<>();
         map.put("uuid","nixxxx");
         map.put("versionCode","0.9.0");

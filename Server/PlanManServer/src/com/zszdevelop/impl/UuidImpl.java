@@ -24,7 +24,7 @@ public class UuidImpl implements UuidDao {
 		BaseUser baseUser = new BaseUser();
 
 		// 根据查询的类型返回数据
-		String queryUuid = "SELECT * FROM UserInfo WHERE uuid=\"" + uuid + "\"";
+		String queryUuid = "SELECT userId,authToken FROM UserInfo WHERE uuid=\"" + uuid + "\"";
 		System.out.println("查询uuid:" + queryUuid);
 		try {
 			conn = BaseConnection.getConnection();
