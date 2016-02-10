@@ -10,7 +10,43 @@ import com.zszdevelop.dao.AuthUserDao;
 import com.zszdevelop.impl.AuthUserImpl;
 
 public class AuthUserUtils {
+	
+	
+	/**
+	 * 手机和验证码是否正确
+	 * @param phone
+	 * @param verifyCode
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static boolean passAuthPhoneCode(String phone, String verifyCode, HttpServletRequest request, HttpServletResponse response){
+		
+		
+		if (TextUtils.isEmpty(phone)) {
+			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_NO_PHONE, response,ResultCode.HTTP_ERROR);
+			return false;
+		}
 
+		 if (verifyCode== null) {
+			 OutJsonUtils.outJson("", ResponseMessage.MESSAGE_EDIT_VERIFY_CODE,response,ResultCode.HTTP_ERROR);
+			 return false;
+			 
+		 }
+		 if (!verifyCode.equals("1234")) {
+			 OutJsonUtils.outJson("", ResponseMessage.MESSAGE_VERIFY_CODE,response,ResultCode.HTTP_ERROR);
+
+				return false;
+			}
+		 return true;
+	}
+
+	/**
+	 * 验证id和token
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public static boolean passAuthUser(HttpServletRequest request, HttpServletResponse response){
 		boolean b = false;
 
@@ -30,9 +66,12 @@ public class AuthUserUtils {
 		
 		AuthUserDao authUserDao = new AuthUserImpl();
 		try {
-			b = true;
 			int userId = Integer.parseInt(userIdStr);
-			boolean authUser = authUserDao.isAuthUser(userId, authToken);
+			b = authUserDao.isAuthUser(userId, authToken);
+			if (!b) {
+				OutJsonUtils.outJson("", ResponseMessage.MESSAGE_AUTH_ERROR, response,ResultCode.HTTP_ERROR);
+				return false;
+			}
 		} catch (Exception e) {
 			b = false;
 			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_OPERATE_EXCEPTION, response,ResultCode.HTTP_ERROR);

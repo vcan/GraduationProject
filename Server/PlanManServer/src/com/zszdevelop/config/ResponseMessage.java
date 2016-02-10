@@ -14,6 +14,12 @@ public class ResponseMessage {
 	
 	public static final String MESSAGE_VERIFY_CODE = "验证码错误";
 	
+	public static final String MESSAGE_EDIT_VERIFY_CODE = "请输入验证码";
+	
 	public static final String MESSAGE_NO_REGISTER = "您还未注册，请先注册";
+	
+	public static final String MESSAGE_ALREADY_REGISTER = "您已经注册，可以直接登陆";
+	
+	public static final String MESSAGE_AUTH_ERROR = "账户认证失败";
 	
 }

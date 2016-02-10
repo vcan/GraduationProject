@@ -69,7 +69,7 @@ public class UuidImpl implements UuidDao {
 			ps.setString(1, uuid);
 			ps.setString(2, insertAuthToken);
 			ps.setString(3, String.valueOf(System.currentTimeMillis() / 1000));
-			boolean isExecute = ps.execute();
+			ps.executeUpdate();
 			System.out.println(insertUuid);
 
 			ps.close();
