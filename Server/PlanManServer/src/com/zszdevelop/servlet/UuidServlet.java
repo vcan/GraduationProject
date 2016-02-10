@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.config.ResponseMessage;
+import com.zszdevelop.config.ResultCode;
 import com.zszdevelop.dao.UuidDao;
 import com.zszdevelop.impl.UuidImpl;
 import com.zszdevelop.utils.AuthTokenUtils;
@@ -64,7 +65,7 @@ public class UuidServlet extends HttpServlet {
 		// 将数据以json的形式传递回来
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(uuidinfo);
-		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response,ResultCode.HTTP_OK);
 
 	}
 

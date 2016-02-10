@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zszdevelop.utils.AuthUserUtils;
+import com.zszdevelop.utils.ServerSettingUtils;
+
 /**
  * Servlet implementation class HomeServlet
  */
@@ -20,18 +23,15 @@ public class HomeServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println("hahahahahah");
-		String uuid = request.getParameter("uuid");
-		String versionCode = request.getParameter("versionCode");
-		System.out.println(uuid+">>>>>>"+versionCode);
+		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		
+		ServerSettingUtils.settingEncode(request, response);
+		AuthUserUtils.passAuthUser(request, response);
 	}
 
 }

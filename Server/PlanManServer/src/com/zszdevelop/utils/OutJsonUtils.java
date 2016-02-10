@@ -10,13 +10,13 @@ import com.google.gson.JsonObject;
 
 public class OutJsonUtils {
 
-	public static void outJson(String jsonData, String message, HttpServletResponse response) {
+	public static void outJson(String jsonData, String message, HttpServletResponse response, int httpCode) {
 
 		// 添加消息信息，将jsonArray 转为 jsonObject
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("data", jsonData);
 		jsonObject.addProperty("message", message);
-		jsonObject.addProperty("code", 200);
+		jsonObject.addProperty("code", httpCode);
 
 		// 设置输出
 		PrintWriter out;
