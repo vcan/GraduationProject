@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.zszdevelop.bean.BaseUser;
+import com.zszdevelop.bean.ComsumeCCInfo;
 import com.zszdevelop.bean.Userinfo;
 import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.config.ResultCode;
@@ -57,16 +59,20 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		String goalRecordWeight = request.getParameter("goalRecordWeight");
 		String high = request.getParameter("high");
 		String sex = request.getParameter("sex");
+		String actionType = request.getParameter("actionType");
 		
 		// 对数据进行一个容错处理
 		userId=userId==null?"0":userId;
+		authToken=authToken==null?"0":authToken;
 		goalRecordChest=goalRecordChest==null?"0":goalRecordChest;
 		goalRecordLeftArm=goalRecordLeftArm==null?"0":goalRecordLeftArm;
 		goalRecordLoin=goalRecordLoin==null?"0":goalRecordLoin;
 		goalRecordRightArm=goalRecordRightArm==null?"0":goalRecordRightArm;
 		goalRecordWeight=goalRecordWeight==null?"0":goalRecordWeight;
-		high=high==null?"0":high;
+		high=high==null?"170":high;
 		sex=sex==null?"0":sex;
+		birthdayStr=birthdayStr==null?"0":birthdayStr;
+		actionType=actionType==null?"1.3":actionType;
 		
 		//把参数保存在数据对象
 		Userinfo userinfo = new Userinfo();
@@ -78,15 +84,25 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		userinfo.setGoalRecordWeight(Float.parseFloat(goalRecordWeight));
 		userinfo.setHigh(Float.parseFloat(high));
 		userinfo.setSex(Integer.parseInt(sex));
+		userinfo.setActionType(Float.parseFloat(actionType));
 		BaseUser baseUser = new BaseUser();
-		
+		// 塞用户基本资料
 		baseUser.setUserId(Integer.parseInt(userId));
 		baseUser.setAuthToken(authToken);
 		userinfo.setBaseUser( baseUser);
 		
-		
+		// 修改资料
 		ModifyUserinfoDao modifyUserinfoDao = new ModifyUserinfoImpl();
-		modifyUserinfoDao.modifyUser(userinfo);
+		 ComsumeCCInfo comsumeCCInfo = modifyUserinfoDao.modifyUser(userinfo);
+		if (comsumeCCInfo == null) {
+			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_NO_MODIFY, response,ResultCode.HTTP_ERROR);
+			return;
+		}
+		
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(comsumeCCInfo);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response,ResultCode.HTTP_OK);
+		
 		
 	}
 

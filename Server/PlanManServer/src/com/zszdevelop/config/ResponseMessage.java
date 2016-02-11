@@ -21,5 +21,7 @@ public class ResponseMessage {
 	public static final String MESSAGE_ALREADY_REGISTER = "您已经注册，可以直接登陆";
 	
 	public static final String MESSAGE_AUTH_ERROR = "账户认证失败";
+
+	public static final String MESSAGE_NO_MODIFY = "资料没有修改成功";
 	
 }

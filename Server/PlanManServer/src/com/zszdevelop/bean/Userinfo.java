@@ -9,9 +9,24 @@ public class Userinfo {
 	private float goalRecordLeftArm;
 	private float goalRecordRightArm;
 	private float goalRecordWeight;
+	private float actionType;
 	private String goalRecordTime;
 	private BaseUser baseUser;
+	private ComsumeCCInfo comsumeCC;
 	
+	
+	public float getActionType() {
+		return actionType;
+	}
+	public void setActionType(float actionType) {
+		this.actionType = actionType;
+	}
+	public ComsumeCCInfo getComsumeCC() {
+		return comsumeCC;
+	}
+	public void setComsumeCC(ComsumeCCInfo comsumeCC) {
+		this.comsumeCC = comsumeCC;
+	}
 	public BaseUser getBaseUser() {
 		return baseUser;
 	}

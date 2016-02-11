@@ -1,12 +1,19 @@
 package com.zszdevelop.bean;
 
-public class ComsumeCC {
+public class ComsumeCCInfo {
 
 	private float BMI;
 	private float intakeCC;
 	private float consumeCC;
+	private float consumeREE;
 	
 	
+	public float getConsumeREE() {
+		return consumeREE;
+	}
+	public void setConsumeREE(float consumeREE) {
+		this.consumeREE = consumeREE;
+	}
 	public float getBMI() {
 		return BMI;
 	}
