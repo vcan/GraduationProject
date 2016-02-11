@@ -57,6 +57,7 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		String goalRecordLoin = request.getParameter("goalRecordLoin");
 		String goalRecordRightArm = request.getParameter("goalRecordRightArm");
 		String goalRecordWeight = request.getParameter("goalRecordWeight");
+		String goalRecordShoulder = request.getParameter("goalRecordShoulder");
 		String high = request.getParameter("high");
 		String sex = request.getParameter("sex");
 		String actionType = request.getParameter("actionType");
@@ -69,6 +70,7 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		goalRecordLoin=goalRecordLoin==null?"0":goalRecordLoin;
 		goalRecordRightArm=goalRecordRightArm==null?"0":goalRecordRightArm;
 		goalRecordWeight=goalRecordWeight==null?"0":goalRecordWeight;
+		goalRecordShoulder=goalRecordShoulder==null?"0":goalRecordShoulder;
 		high=high==null?"170":high;
 		sex=sex==null?"0":sex;
 		birthdayStr=birthdayStr==null?"0":birthdayStr;
@@ -82,6 +84,7 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		userinfo.setGoalRecordLoin(Float.parseFloat(goalRecordLoin));
 		userinfo.setGoalRecordRightArm(Float.parseFloat(goalRecordRightArm));
 		userinfo.setGoalRecordWeight(Float.parseFloat(goalRecordWeight));
+		userinfo.setGoalRecordShoulder(Float.parseFloat(goalRecordShoulder));
 		userinfo.setHigh(Float.parseFloat(high));
 		userinfo.setSex(Integer.parseInt(sex));
 		userinfo.setActionType(Float.parseFloat(actionType));

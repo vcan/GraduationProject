@@ -8,7 +8,14 @@ public class Userinfo {
 	private float goalRecordLoin;
 	private float goalRecordLeftArm;
 	private float goalRecordRightArm;
+	public float getGoalRecordShoulder() {
+		return goalRecordShoulder;
+	}
+	public void setGoalRecordShoulder(float goalRecordShoulder) {
+		this.goalRecordShoulder = goalRecordShoulder;
+	}
 	private float goalRecordWeight;
+	private float goalRecordShoulder;
 	private float actionType;
 	private String goalRecordTime;
 	private BaseUser baseUser;

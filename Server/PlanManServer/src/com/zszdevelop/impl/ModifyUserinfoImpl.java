@@ -67,7 +67,9 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 		String sqlUserInfo = "update UserInfo set sex = ?,birthday = ?,high = ? where userId = ?";
 		System.out.println("基本数据更新更新的sql:" + sqlUserInfo);
 		// 更新当前三围体重
-		String sqlGoalRecordInfo = "update GoalRecordInfo set goalRecordChest = ?,goalRecordLoin = ?,goalRecordLeftArm = ? ,goalRecordRightArm = ? ,goalRecordWeight = ? ,goalRecordTime = ? where userId = ?";
+//		String sqlGoalRecordInfo = "update GoalRecordInfo set goalRecordChest = ?,goalRecordLoin = ?,goalRecordLeftArm = ? ,goalRecordRightArm = ? ,goalRecordWeight = ? ,goalRecordTime = ? where userId = ?";
+		String sqlGoalRecordInfo = "insert GoalRecordInfo (goalRecordChest,goalRecordLoin,goalRecordLeftArm,goalRecordRightArm,goalRecordWeight,goalRecordTime,goalRecordShoulder,userId) values(?,?,?,?,?,?,?,?)";
+		
 		System.out.println("更新当前三围体重的sql:" + sqlGoalRecordInfo);
 		try {
 			conn = BaseConnection.getConnection();
@@ -90,15 +92,13 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 			preparedStatement.setFloat(4, userinfo.getGoalRecordRightArm());
 			preparedStatement.setFloat(5, userinfo.getGoalRecordWeight());
 			preparedStatement.setString(6, String.valueOf(System.currentTimeMillis()/1000));
-			preparedStatement.setFloat(7, userinfo.getBaseUser().getUserId());
+			preparedStatement.setFloat(7, userinfo.getGoalRecordShoulder());
+			preparedStatement.setInt(8, userinfo.getBaseUser().getUserId());
 			int exeSqlGoalRecordInfo = preparedStatement.executeUpdate();
 			
 			//事务提交  
 			conn.commit();  
 			
-			
-			
-//			ps.close();
 			
 			if (exeSqlUserInfo > 0 && exeSqlGoalRecordInfo>0) {
 				System.out.println("修改信息成功");
