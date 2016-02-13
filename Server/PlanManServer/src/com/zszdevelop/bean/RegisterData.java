@@ -1,6 +1,6 @@
 package com.zszdevelop.bean;
 
-public class Userinfo {
+public class RegisterData {
 	private int sex;
 	private String birthday; 
 	private float high;

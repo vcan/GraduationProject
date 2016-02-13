@@ -3,34 +3,32 @@ package com.zszdevelop.bean;
 public class ComsumeCCInfo {
 
 	private float BMI;
-	private float intakeCC;
-	private float consumeCC;
-	private float consumeREE;
-	
-	
-	public float getConsumeREE() {
-		return consumeREE;
-	}
-	public void setConsumeREE(float consumeREE) {
-		this.consumeREE = consumeREE;
-	}
+	private int intakeCC;
+	private int consumeCC;
+	private int consumeREE;
 	public float getBMI() {
 		return BMI;
 	}
 	public void setBMI(float bMI) {
 		BMI = bMI;
 	}
-	public float getIntakeCC() {
+	public int getIntakeCC() {
 		return intakeCC;
 	}
-	public void setIntakeCC(float intakeCC) {
+	public void setIntakeCC(int intakeCC) {
 		this.intakeCC = intakeCC;
 	}
-	public float getConsumeCC() {
+	public int getConsumeCC() {
 		return consumeCC;
 	}
-	public void setConsumeCC(float consumeCC) {
+	public void setConsumeCC(int consumeCC) {
 		this.consumeCC = consumeCC;
+	}
+	public int getConsumeREE() {
+		return consumeREE;
+	}
+	public void setConsumeREE(int consumeREE) {
+		this.consumeREE = consumeREE;
 	}
 	
 	

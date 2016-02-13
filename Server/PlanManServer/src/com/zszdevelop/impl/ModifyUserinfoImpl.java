@@ -9,7 +9,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.bean.ComsumeCCInfo;
-import com.zszdevelop.bean.Userinfo;
+import com.zszdevelop.bean.RegisterData;
 import com.zszdevelop.dao.ModifyUserinfoDao;
 import com.zszdevelop.utils.BirthDayUtil;
 
@@ -20,7 +20,7 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 	private ResultSet rs = null;
 
 	@Override
-	public ComsumeCCInfo modifyUser(Userinfo userinfo) {
+	public ComsumeCCInfo modifyUser(RegisterData userinfo) {
 		float goalRecordWeight = userinfo.getGoalRecordWeight();
 		float high = userinfo.getHigh();
 
@@ -59,12 +59,12 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 		comsumeCCInfo.setBMI(goalRecordWeight / (highM * highM));
 		comsumeCCInfo.setConsumeCC(consumeCC);
 		comsumeCCInfo.setIntakeCC(intakeCC);
-		comsumeCCInfo.setConsumeREE(consumeREE);
+		comsumeCCInfo.setConsumeREE((int)consumeREE);
 
 		
 		
 		// 基本数据更新更新
-		String sqlUserInfo = "update UserInfo set sex = ?,birthday = ?,high = ? where userId = ?";
+		String sqlUserInfo = "update UserInfo set sex = ?,birthday = ?,high = ?,consumeCC = ?,intakeCC = ?,consumeREE = ?where userId = ?";
 		System.out.println("基本数据更新更新的sql:" + sqlUserInfo);
 		// 更新当前三围体重
 //		String sqlGoalRecordInfo = "update GoalRecordInfo set goalRecordChest = ?,goalRecordLoin = ?,goalRecordLeftArm = ? ,goalRecordRightArm = ? ,goalRecordWeight = ? ,goalRecordTime = ? where userId = ?";
@@ -81,7 +81,11 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 			ps.setInt(1, userinfo.getSex());
 			ps.setString(2, userinfo.getBirthday());
 			ps.setFloat(3, userinfo.getHigh());
-			ps.setFloat(4, userinfo.getBaseUser().getUserId());
+			ps.setFloat(4, userinfo.getHigh());
+			ps.setInt(5, consumeCC);
+			ps.setInt(6, intakeCC);
+			ps.setInt(7, (int)consumeREE);
+			ps.setInt(8, userinfo.getBaseUser().getUserId());
 			int exeSqlUserInfo = ps.executeUpdate();
 			
 			// 更新三围信息的事物参数
