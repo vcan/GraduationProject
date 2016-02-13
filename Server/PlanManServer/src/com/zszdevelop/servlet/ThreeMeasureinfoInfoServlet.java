@@ -1,6 +1,8 @@
 package com.zszdevelop.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,30 +11,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.zszdevelop.bean.GoalRecordInfo;
-import com.zszdevelop.bean.ModifyStatus;
+import com.zszdevelop.bean.InsertStatus;
 import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.config.ResultCode;
-import com.zszdevelop.dao.ModifyThereMeasureDao;
-import com.zszdevelop.impl.ModifyThereMeasureImpl;
+import com.zszdevelop.dao.ThereMeasureDao;
+import com.zszdevelop.impl.ThereMeasureImpl;
 import com.zszdevelop.utils.AuthUserUtils;
 import com.zszdevelop.utils.OutJsonUtils;
 import com.zszdevelop.utils.ServerSettingUtils;
 
 /**
- * Servlet implementation class ModifyThreeMeasureServlet
+ * Servlet implementation class ThreeMeasureinfoInfoServlet
  */
-@WebServlet("/ModifyThreeMeasureServlet")
-public class ModifyThreeMeasureServlet extends HttpServlet {
+@WebServlet("/ThreeMeasureinfoInfoServlet")
+public class ThreeMeasureinfoInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ModifyThreeMeasureServlet() {
+	public ThreeMeasureinfoInfoServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		ServerSettingUtils.settingEncode(request, response);
+		// 取得参数
+		String userId = request.getParameter("userId");
+		ThereMeasureDao thereMeasureDao = new ThereMeasureImpl();
+		ArrayList<GoalRecordInfo> lists = thereMeasureDao.getThereMeasure(Integer.parseInt(userId));
+		// 将数据以json的形式传递回来
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(lists);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response,ResultCode.HTTP_OK);
+
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +85,7 @@ public class ModifyThreeMeasureServlet extends HttpServlet {
 		goalRecordInfo.setGoalRecordShoulder(Float.parseFloat(goalRecordShoulder));
 		goalRecordInfo.setGoalRecordTime(goalRecordTime);
 		
-		ModifyThereMeasureDao modifyThereMeasureDao = new ModifyThereMeasureImpl();
+		ThereMeasureDao modifyThereMeasureDao = new ThereMeasureImpl();
 		boolean modifyThereMeasure = modifyThereMeasureDao.ModifyThereMeasure(goalRecordInfo, Integer.parseInt(userId));
 	
 		if (!modifyThereMeasure) {
@@ -81,7 +93,7 @@ public class ModifyThreeMeasureServlet extends HttpServlet {
 			return;
 		}// 将数据以json的形式传递回来
 		Gson gson = new Gson();
-		String jsonData = gson.toJson(new ModifyStatus(ResultCode.MODIFY_OK));
+		String jsonData = gson.toJson(new InsertStatus(ResultCode.MODIFY_OK));
 		OutJsonUtils.outJson(jsonData, ResponseMessage.MESSAGE_CUCCESS, response,ResultCode.HTTP_OK);
 
 	}
