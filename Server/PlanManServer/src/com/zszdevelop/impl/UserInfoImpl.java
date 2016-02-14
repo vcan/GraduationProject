@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.ComsumeCCInfo;
+import com.zszdevelop.bean.GoalRecordInfo;
 import com.zszdevelop.bean.UserInfo;
 import com.zszdevelop.dao.UserInfoDao;
 import com.zszdevelop.utils.BirthDayUtil;
@@ -85,6 +86,7 @@ public class UserInfoImpl implements UserInfoDao {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			return null;
 		} finally {
 			BaseConnection.closeResource(rs, ps, conn);
 		}
@@ -94,8 +96,45 @@ public class UserInfoImpl implements UserInfoDao {
 
 	@Override
 	public UserInfo getUserInfo(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		UserInfo userInfo = new UserInfo();
+		
+		String sql = "SELECT birthday FROM UserInfo WHERE userId=?";
+		conn = BaseConnection.getConnection();
+		try {
+			ps = (PreparedStatement) conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			 rs = ps.executeQuery();
+			 if (rs.next()) {
+			
+					 
+						userInfo.setActionType(rs.getFloat("actionType"));
+						userInfo.setBirthday(rs.getString("birthday"));
+						ComsumeCCInfo comsumeCCInfo = new ComsumeCCInfo();
+						comsumeCCInfo.setBMI(rs.getFloat("BMI"));
+						comsumeCCInfo.setConsumeCC( rs.getInt("consumeCC"));
+						comsumeCCInfo.setConsumeREE(rs.getInt("consumeREE"));
+						comsumeCCInfo.setIntakeCC(rs.getInt("intakeCC"));
+						userInfo.setComsumeCCInfo(comsumeCCInfo);
+						userInfo.setGoalRecordWeight(rs.getFloat("goalRecordWeight"));
+						userInfo.setHigh(rs.getFloat("high"));
+						userInfo.setNickname(rs.getString("nickname"));
+						userInfo.setSex(rs.getInt("sex"));
+						userInfo.setSignture(rs.getString("signture"));
+					
+			}else {
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("chucuole ");
+			e.printStackTrace();
+			return null;
+		}finally {
+			BaseConnection.closeResource(rs, ps, conn);
+		}
+		
+		return userInfo;
 	}
 
 }

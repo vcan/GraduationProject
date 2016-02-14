@@ -1,6 +1,8 @@
 package com.zszdevelop.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,13 +13,16 @@ import com.google.gson.Gson;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.bean.ComsumeCCInfo;
 import com.zszdevelop.bean.GoalInfo;
+import com.zszdevelop.bean.GoalRecordInfo;
 import com.zszdevelop.bean.InsertStatus;
 import com.zszdevelop.bean.UserInfo;
 import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.config.ResultCode;
 import com.zszdevelop.dao.GoalInfoDao;
+import com.zszdevelop.dao.ThereMeasureDao;
 import com.zszdevelop.dao.UserInfoDao;
 import com.zszdevelop.impl.GoalInfoImpl;
+import com.zszdevelop.impl.ThereMeasureImpl;
 import com.zszdevelop.impl.UserInfoImpl;
 import com.zszdevelop.utils.AuthUserUtils;
 import com.zszdevelop.utils.OutJsonUtils;
@@ -36,6 +41,20 @@ public class UserInfoServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServerSettingUtils.settingEncode(request, response);
+		// 取得参数
+		String userId = request.getParameter("userId");
+		UserInfoDao userInfoDao = new UserInfoImpl();
+		UserInfo userInfo = userInfoDao.getUserInfo(Integer.parseInt(userId));
+		if (userInfo==null) {
+			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_OPERATE_EXCEPTION, response, ResultCode.HTTP_ERROR);
+			return;
+		}
+		// 将数据以json的形式传递回来
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(userInfo);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response,ResultCode.HTTP_OK);
+
 		
 	}
 
