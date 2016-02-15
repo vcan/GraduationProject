@@ -1,5 +1,6 @@
 package com.zszdevelop.planman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void initView() {
 
+        startActivity(new Intent(this,LoginActivity.class));
 
     }
 

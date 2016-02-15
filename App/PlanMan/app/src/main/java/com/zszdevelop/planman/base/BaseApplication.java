@@ -11,6 +11,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.smssdk.SMSSDK;
+
 /**
  * @author ShengZhong
  *
@@ -35,6 +37,10 @@ public class BaseApplication extends Application {
 		super.onCreate();
 
 		application = this;
+
+		SMSSDK.initSDK(this, "f578407a2d21", "1cfc261cf1b1de61d99809973541d682");
+
+
 	}
 
 	public static Context getApplication() {
