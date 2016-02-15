@@ -99,7 +99,7 @@ public class UserInfoImpl implements UserInfoDao {
 		
 		UserInfo userInfo = new UserInfo();
 		
-		String sql = "SELECT birthday FROM UserInfo WHERE userId=?";
+		String sql = "SELECT * FROM UserInfo WHERE userId=?";
 		conn = BaseConnection.getConnection();
 		try {
 			ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -116,7 +116,6 @@ public class UserInfoImpl implements UserInfoDao {
 						comsumeCCInfo.setConsumeREE(rs.getInt("consumeREE"));
 						comsumeCCInfo.setIntakeCC(rs.getInt("intakeCC"));
 						userInfo.setComsumeCCInfo(comsumeCCInfo);
-						userInfo.setGoalRecordWeight(rs.getFloat("goalRecordWeight"));
 						userInfo.setHigh(rs.getFloat("high"));
 						userInfo.setNickname(rs.getString("nickname"));
 						userInfo.setSex(rs.getInt("sex"));

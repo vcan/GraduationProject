@@ -93,7 +93,7 @@ public class ThreeMeasureinfoInfoServlet extends HttpServlet {
 			return;
 		}// 将数据以json的形式传递回来
 		Gson gson = new Gson();
-		String jsonData = gson.toJson(new InsertStatus(ResultCode.MODIFY_OK));
+		String jsonData = gson.toJson(new InsertStatus(ResultCode.INSERT_OK));
 		OutJsonUtils.outJson(jsonData, ResponseMessage.MESSAGE_CUCCESS, response,ResultCode.HTTP_OK);
 
 	}

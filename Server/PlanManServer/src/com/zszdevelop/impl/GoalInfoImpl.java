@@ -45,6 +45,7 @@ public class GoalInfoImpl implements GoalInfoDao{
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			b= false;
 		} finally {
 			BaseConnection.closeResource(rs, ps, conn);
 		}

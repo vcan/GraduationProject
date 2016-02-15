@@ -6,7 +6,8 @@ public class ResultCode {
 	
 	public static final int HTTP_ERROR = 400;
 	
-	public static final int MODIFY_OK = 1;
+	// 插入成功
+	public static final int INSERT_OK = 1;
 	
 
 	
