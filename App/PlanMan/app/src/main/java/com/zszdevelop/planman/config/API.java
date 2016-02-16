@@ -7,8 +7,8 @@ package com.zszdevelop.planman.config;
 public class API {
 
 
-    public static final String SERVER_URI = "http://172.20.10.11:8080/PlanManServer/%s";
-    public static final String SERVER_DEBUG_URI = "http://172.20.10.11:8080/PlanManServer/%s";
+    public static final String SERVER_URI = "http://192.168.0.100:8080/PlanManServer/%s";
+    public static final String SERVER_DEBUG_URI = "http://192.168.0.100:8080/PlanManServer/%s";
 
     public static final String SERVER_IMAGE_URL = "http://play.mengtta.com/";
     public static final String DEBUG_SERVER_IMAGE_URL = "http://192.168.0.183/";
