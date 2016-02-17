@@ -2,6 +2,7 @@ package com.zszdevelop.planman.bean;
 
 import android.text.TextUtils;
 
+import com.zszdevelop.planman.config.Config;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.utils.SharedPreferencesUtil;
 
@@ -39,11 +40,12 @@ public class Helper {
      * @return true/false
      */
     public static final boolean getLoginStatus() {
-        String user_id = SharedPreferencesUtil.getString(UserConfig.USER_ID);
+        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
         String auth_token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
+       Boolean isLogin =  SharedPreferencesUtil.getBoolean(Config.IS_LOGIN, false);
 
 //        String user_id = SharedPreferencesUtil.getString(UserConfig.USER_ID);
-        if (TextUtils.isEmpty(user_id) && TextUtils.isEmpty(auth_token)) {
+        if (user_id == 0 && TextUtils.isEmpty(auth_token) && !isLogin) {
             return false;
         } else {
             return true;

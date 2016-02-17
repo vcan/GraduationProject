@@ -84,14 +84,17 @@ public class SplashActivity extends AppCompatActivity {
     /*跳转到主页面*/
     private void Jump2Home() {
 
-//
-//        if (Helper.getLoginStatus()) {
-//            fillUserCenter();
-//        }
 
-        Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
-        finish();
+        if (Helper.getLoginStatus()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
 

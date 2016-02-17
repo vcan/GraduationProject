@@ -49,7 +49,7 @@ public class UuidServlet extends HttpServlet {
 		ServerSettingUtils.settingEncode(request, response);
 
 		String uuid = request.getParameter("uuid");
-		String versionCode = request.getParameter("versionCode");
+		String registerAppTime = request.getParameter("registerAppTime");
 		UuidDao uuidDao = new UuidImpl();
 
 		// 用户基本数据

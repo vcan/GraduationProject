@@ -16,4 +16,7 @@ public class API {
     /*一：注册手机uuid*/
    public static final String REGISTER_UUID_URI ="UuidServlet";
 
+   /*二：登陆*/
+   public static final String LOGIN_URI ="LoginServlet";
+
 }
