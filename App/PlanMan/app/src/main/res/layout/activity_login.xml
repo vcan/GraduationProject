@@ -67,7 +67,7 @@
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+android:layout_marginTop="100dp"
         android:text="验证码" />
 
 </RelativeLayout>
