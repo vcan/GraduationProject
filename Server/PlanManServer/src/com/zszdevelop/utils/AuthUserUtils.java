@@ -33,7 +33,14 @@ public class AuthUserUtils {
 			 return false;
 			 
 		 }
-		 if (!verifyCode.equals("1234")) {
+		 String verifyStatus = null;
+		try {
+			verifyStatus = new VerifyCodeUtils(phone, verifyCode).go();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 if (!verifyStatus.equals("200")) {// 验证码状态不等于 200，返回错误
 			 OutJsonUtils.outJson("", ResponseMessage.MESSAGE_VERIFY_CODE,response,ResultCode.HTTP_ERROR);
 
 				return false;

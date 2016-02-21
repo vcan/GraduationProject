@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class HttpRequest {
 
-    public static boolean isDebug = true;
+    public static boolean isDebug = false;
 
 
     public static final int HTTP_OK = 200;
