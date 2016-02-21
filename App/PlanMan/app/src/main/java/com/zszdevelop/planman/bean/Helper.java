@@ -45,7 +45,7 @@ public class Helper {
        Boolean isLogin =  SharedPreferencesUtil.getBoolean(Config.IS_LOGIN, false);
 
 //        String user_id = SharedPreferencesUtil.getString(UserConfig.USER_ID);
-        if (user_id == 0 && TextUtils.isEmpty(auth_token) && !isLogin) {
+        if (user_id == 0 || TextUtils.isEmpty(auth_token) || !isLogin) {
             return false;
         } else {
             return true;

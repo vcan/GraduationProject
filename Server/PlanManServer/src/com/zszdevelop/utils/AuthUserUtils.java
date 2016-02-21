@@ -22,7 +22,7 @@ public class AuthUserUtils {
 	 */
 	public static boolean passAuthPhoneCode(String phone, String verifyCode, HttpServletRequest request, HttpServletResponse response){
 		
-		
+		System.out.println("passAuthPhoneCode≥≥≥≥");
 		if (TextUtils.isEmpty(phone)) {
 			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_NO_PHONE, response,ResultCode.HTTP_ERROR);
 			return false;
@@ -33,14 +33,14 @@ public class AuthUserUtils {
 			 return false;
 			 
 		 }
-		 String verifyStatus = null;
+		 int verifyStatus = 0 ;
 		try {
 			verifyStatus = new VerifyCodeUtils(phone, verifyCode).go();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 if (!verifyStatus.equals("200")) {// 验证码状态不等于 200，返回错误
+		 if (verifyStatus!=200) {// 验证码状态不等于 200，返回错误
 			 OutJsonUtils.outJson("", ResponseMessage.MESSAGE_VERIFY_CODE,response,ResultCode.HTTP_ERROR);
 
 				return false;

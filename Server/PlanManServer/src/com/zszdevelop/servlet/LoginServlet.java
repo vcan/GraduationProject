@@ -43,8 +43,9 @@ public class LoginServlet extends HttpServlet {
 		ServerSettingUtils.settingEncode(request, response);
 		String phone = request.getParameter("phone");
 		String verifyCode = request.getParameter("verifyCode");
-		
+		System.out.println("login次数");
 		boolean passAuthPhoneCode = AuthUserUtils.passAuthPhoneCode(phone,verifyCode,request, response);
+		
 		if (!passAuthPhoneCode) {// 如果不能通过验证手机和验证码，就直接返回
 			return ;
 		}

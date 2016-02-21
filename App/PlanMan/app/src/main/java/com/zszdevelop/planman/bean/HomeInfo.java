@@ -1,4 +1,4 @@
-package com.zszdevelop.bean;
+package com.zszdevelop.planman.bean;
 
 import java.util.ArrayList;
 

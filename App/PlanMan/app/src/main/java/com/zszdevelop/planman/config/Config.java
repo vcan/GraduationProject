@@ -11,4 +11,8 @@ public class Config {
     /* 是否登陆*/
     public static final String IS_LOGIN = "is_login";
 
+    /* 验证码时间*/
+    public static final int CODE_TIME = 60;
+
+
 }

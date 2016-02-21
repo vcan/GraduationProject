@@ -7,10 +7,17 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
+import com.zszdevelop.bean.ChestRecord;
 import com.zszdevelop.bean.ConsumeRecordInfo;
 import com.zszdevelop.bean.GoalInfo;
 import com.zszdevelop.bean.GoalRecordInfo;
 import com.zszdevelop.bean.HomeInfo;
+import com.zszdevelop.bean.LeftArmRecord;
+import com.zszdevelop.bean.LoinRecord;
+import com.zszdevelop.bean.RightArmRecord;
+import com.zszdevelop.bean.ShoulderRecord;
+import com.zszdevelop.bean.WeightRecord;
+import com.zszdevelop.config.ResultCode;
 import com.zszdevelop.dao.HomeDao;
 
 public class HomeImpl implements HomeDao {
@@ -28,8 +35,14 @@ public class HomeImpl implements HomeDao {
 	public HomeInfo getHomeData(String userId) {
 		HomeInfo homeInfo = new HomeInfo();
 		ArrayList<ConsumeRecordInfo> cRIs=new ArrayList<>();
-		ArrayList<GoalRecordInfo> gRIs=new ArrayList<>();
 		ArrayList<GoalInfo> gIs=new ArrayList<>();
+		
+		ArrayList<WeightRecord> wrs=new ArrayList<>();
+		ArrayList<ChestRecord> crs=new ArrayList<>();
+		ArrayList<LoinRecord> lrs=new ArrayList<>();
+		ArrayList<LeftArmRecord> lars=new ArrayList<>();
+		ArrayList<RightArmRecord> rars=new ArrayList<>();
+		ArrayList<ShoulderRecord> srs=new ArrayList<>();
 
 		// 根据查询的类型返回数据
 		String queryShowType = "SELECT showType FROM UserInfo WHERE userId=?";
@@ -64,16 +77,55 @@ public class HomeImpl implements HomeDao {
 			if (rs.next()) {// 如果有值，把值塞进去返回。
 				homeInfo.setShowType(rs.getInt("showType"));
 				while (rsQueryGoalRecordInfo.next()) {
-					GoalRecordInfo goalRecordInfo = new GoalRecordInfo();
-					goalRecordInfo.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
-					goalRecordInfo.setGoalRecordChest(rsQueryGoalRecordInfo.getFloat("goalRecordChest"));
-					goalRecordInfo.setGoalRecordLeftArm(rsQueryGoalRecordInfo.getFloat("goalRecordLeftArm"));
-					goalRecordInfo.setGoalRecordRightArm(rsQueryGoalRecordInfo.getFloat("goalRecordRightArm"));
-					goalRecordInfo.setGoalRecordLoin(rsQueryGoalRecordInfo.getFloat("goalRecordLoin"));
-					goalRecordInfo.setGoalRecordShoulder(rsQueryGoalRecordInfo.getFloat("goalRecordShoulder"));
-					goalRecordInfo.setGoalRecordWeight(rsQueryGoalRecordInfo.getFloat("goalRecordWeight"));
-					goalRecordInfo.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
-					gRIs.add(goalRecordInfo);
+					int goalRecordType = rsQueryGoalRecordInfo.getInt("goalRecordType");
+					switch (goalRecordType) {
+					case ResultCode.WEIGHT_CODE:
+						WeightRecord weightRecord = new WeightRecord();
+						weightRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						weightRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						weightRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						wrs.add(weightRecord);
+						break;
+					case ResultCode.CHEST_CODE:
+						ChestRecord chestRecord = new ChestRecord();
+						chestRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						chestRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						chestRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						crs.add(chestRecord);
+						break;
+					case ResultCode.LOIN_CODE:
+						LoinRecord loinRecord = new LoinRecord();
+						loinRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						loinRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						loinRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						lrs.add(loinRecord);
+						break;
+					case ResultCode.LEFT_ARM_CODE:
+						LeftArmRecord leftArmRecord = new LeftArmRecord();
+						leftArmRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						leftArmRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						leftArmRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						lars.add(leftArmRecord);
+						break;
+					case ResultCode.RIGHT_ARM_CODE:
+						RightArmRecord rightArmRecord = new RightArmRecord();
+						rightArmRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						rightArmRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						rightArmRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						rars.add(rightArmRecord);
+						break;
+					case ResultCode.SHOULDER_CODE:
+						ShoulderRecord shoulderRecord = new ShoulderRecord();
+						shoulderRecord.setGoalRecordTime(rsQueryGoalRecordInfo.getString("goalRecordTime"));
+						shoulderRecord.setGoalRecordId(rsQueryGoalRecordInfo.getInt("goalRecordId"));
+						shoulderRecord.setGoalRecordData(rsQueryGoalRecordInfo.getFloat("goalRecordData"));
+						srs.add(shoulderRecord);
+						break;
+
+					default:
+						break;
+					}
+					
 				}
 				while (rsQueryConsumeRecordInfo.next()) {
 					ConsumeRecordInfo consumeRecordInfo = new ConsumeRecordInfo();
@@ -96,8 +148,13 @@ public class HomeImpl implements HomeDao {
 					gIs.add(goalInfo);
 				}
 				homeInfo.setConsumeRecordInfos(cRIs);
-				homeInfo.setGoalRecordInfos(gRIs);
 				homeInfo.setGoalInfos(gIs);
+				homeInfo.setWeightRecords(wrs);
+				homeInfo.setChestRecords(crs);
+				homeInfo.setLoinRecords(lrs);
+				homeInfo.setLeftArmRecords(lars);
+				homeInfo.setRightArmRecords(rars);
+				homeInfo.setShoulderRecords(srs);
 
 			} else {
 				return null;

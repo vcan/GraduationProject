@@ -16,6 +16,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:hint="账户名" />
     </android.support.design.widget.TextInputLayout>
 
@@ -35,11 +36,12 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:hint="验证码" />
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tv_verify_code"
+        <Button
+            android:id="@+id/btn_verify_code"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
@@ -58,16 +60,10 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="登陆"
         android:layout_below="@+id/ll_code"
-        />
+        android:text="登陆" />
 
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-android:layout_marginTop="100dp"
-        android:text="验证码" />
+
 
 </RelativeLayout>

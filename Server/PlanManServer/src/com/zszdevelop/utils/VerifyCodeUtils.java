@@ -1,5 +1,7 @@
 package com.zszdevelop.utils;
 
+import com.google.gson.Gson;
+import com.zszdevelop.bean.VerifyCodeStatus;
 
 public class VerifyCodeUtils {
 	private String appkey;
@@ -27,7 +29,8 @@ public class VerifyCodeUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public  String go() throws Exception{
+	public  int go() throws Exception{
+		System.out.println("go次数");
 		
 		String address = "https://webapi.sms.mob.com/sms/verify";
 		MobClient client = null;
@@ -38,8 +41,10 @@ public class VerifyCodeUtils {
 			client.addRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			client.addRequestProperty("Accept", "application/json");
 			String result = client.post();
+			Gson gson = new Gson();
+			VerifyCodeStatus status = gson.fromJson(result, VerifyCodeStatus.class);
 			System.out.println("sta++="+result);
-			return result;
+			return status.getStatus();
 		} finally {
 			client.release();
 		}

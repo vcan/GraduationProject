@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_original"
+            android:checked="true"
+            android:icon="@drawable/smssdk_search_icon"
+            android:title="@string/my_plan"/>
+
+        <item
+            android:id="@+id/navigation_library"
+            android:icon="@drawable/smssdk_sharesdk_icon"
+            android:title="@string/plan_community"/>
+    </group>
+
+</menu>
