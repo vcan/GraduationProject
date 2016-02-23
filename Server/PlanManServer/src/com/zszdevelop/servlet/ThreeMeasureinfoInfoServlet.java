@@ -77,13 +77,13 @@ public class ThreeMeasureinfoInfoServlet extends HttpServlet {
 		goalRecordShoulder = goalRecordShoulder == null ? "0" : goalRecordShoulder;
 		
 		GoalRecordInfo goalRecordInfo = new GoalRecordInfo();
-		goalRecordInfo.setGoalRecordChest(Float.parseFloat(goalRecordChest));
-		goalRecordInfo.setGoalRecordLoin(Float.parseFloat(goalRecordLoin));
-		goalRecordInfo.setGoalRecordLeftArm(Float.parseFloat(goalRecordLeftArm));
-		goalRecordInfo.setGoalRecordRightArm(Float.parseFloat(goalRecordRightArm));
-		goalRecordInfo.setGoalRecordWeight(Float.parseFloat(goalRecordWeight));
-		goalRecordInfo.setGoalRecordShoulder(Float.parseFloat(goalRecordShoulder));
-		goalRecordInfo.setGoalRecordTime(goalRecordTime);
+//		goalRecordInfo.setGoalRecordChest(Float.parseFloat(goalRecordChest));
+//		goalRecordInfo.setGoalRecordLoin(Float.parseFloat(goalRecordLoin));
+//		goalRecordInfo.setGoalRecordLeftArm(Float.parseFloat(goalRecordLeftArm));
+//		goalRecordInfo.setGoalRecordRightArm(Float.parseFloat(goalRecordRightArm));
+//		goalRecordInfo.setGoalRecordWeight(Float.parseFloat(goalRecordWeight));
+//		goalRecordInfo.setGoalRecordShoulder(Float.parseFloat(goalRecordShoulder));
+//		goalRecordInfo.setGoalRecordTime(goalRecordTime);
 		
 		ThereMeasureDao modifyThereMeasureDao = new ThereMeasureImpl();
 		boolean modifyThereMeasure = modifyThereMeasureDao.ModifyThereMeasure(goalRecordInfo, Integer.parseInt(userId));

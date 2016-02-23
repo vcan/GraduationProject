@@ -27,15 +27,15 @@ public class ThereMeasureImpl implements ThereMeasureDao {
 		System.out.println("查询的sql:" + sql);
 		try {
 			conn = BaseConnection.getConnection();
-			ps = (PreparedStatement) conn.prepareStatement(sql);
-			ps.setFloat(1, goalRecordInfo.getGoalRecordChest());
-			ps.setFloat(2, goalRecordInfo.getGoalRecordLoin());
-			ps.setFloat(3, goalRecordInfo.getGoalRecordLeftArm());
-			ps.setFloat(4, goalRecordInfo.getGoalRecordRightArm());
-			ps.setFloat(5, goalRecordInfo.getGoalRecordWeight());
-			ps.setString(6, goalRecordInfo.getGoalRecordTime());
-			ps.setFloat(7, goalRecordInfo.getGoalRecordShoulder());
-			ps.setInt(8, userId);
+//			ps = (PreparedStatement) conn.prepareStatement(sql);
+//			ps.setFloat(1, goalRecordInfo.getGoalRecordChest());
+//			ps.setFloat(2, goalRecordInfo.getGoalRecordLoin());
+//			ps.setFloat(3, goalRecordInfo.getGoalRecordLeftArm());
+//			ps.setFloat(4, goalRecordInfo.getGoalRecordRightArm());
+//			ps.setFloat(5, goalRecordInfo.getGoalRecordWeight());
+//			ps.setString(6, goalRecordInfo.getGoalRecordTime());
+//			ps.setFloat(7, goalRecordInfo.getGoalRecordShoulder());
+//			ps.setInt(8, userId);
 			int executeUpdate = ps.executeUpdate();
 			System.out.println(executeUpdate+">>>>jige");
 			if (executeUpdate > 0) {
@@ -65,16 +65,16 @@ public class ThereMeasureImpl implements ThereMeasureDao {
 			ps.setInt(1, userId);
 			 rs = ps.executeQuery();
 			while (rs.next()) {
-				GoalRecordInfo goalRecordInfo = new GoalRecordInfo();
-				goalRecordInfo.setGoalRecordId(rs.getInt("goalRecordId"));
-				goalRecordInfo.setGoalRecordChest(rs.getFloat("goalRecordChest"));
-				goalRecordInfo.setGoalRecordLeftArm(rs.getFloat("goalRecordLeftArm"));
-				goalRecordInfo.setGoalRecordRightArm(rs.getFloat("goalRecordRightArm"));
-				goalRecordInfo.setGoalRecordLoin(rs.getFloat("goalRecordLoin"));
-				goalRecordInfo.setGoalRecordShoulder(rs.getFloat("goalRecordShoulder"));
-				goalRecordInfo.setGoalRecordWeight(rs.getFloat("goalRecordWeight"));
-				goalRecordInfo.setGoalRecordTime(rs.getString("goalRecordTime"));
-				lists.add(goalRecordInfo);
+//				GoalRecordInfo goalRecordInfo = new GoalRecordInfo();
+//				goalRecordInfo.setGoalRecordId(rs.getInt("goalRecordId"));
+//				goalRecordInfo.setGoalRecordChest(rs.getFloat("goalRecordChest"));
+//				goalRecordInfo.setGoalRecordLeftArm(rs.getFloat("goalRecordLeftArm"));
+//				goalRecordInfo.setGoalRecordRightArm(rs.getFloat("goalRecordRightArm"));
+//				goalRecordInfo.setGoalRecordLoin(rs.getFloat("goalRecordLoin"));
+//				goalRecordInfo.setGoalRecordShoulder(rs.getFloat("goalRecordShoulder"));
+//				goalRecordInfo.setGoalRecordWeight(rs.getFloat("goalRecordWeight"));
+//				goalRecordInfo.setGoalRecordTime(rs.getString("goalRecordTime"));
+//				lists.add(goalRecordInfo);
 				
 			}
 		} catch (SQLException e) {

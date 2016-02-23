@@ -85,6 +85,7 @@ public class LoginActivity extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnLogin.setClickable(false);
                 LogUtils.e("发送验证请求");
                 goLogin();
 
@@ -113,12 +114,14 @@ public class LoginActivity extends BaseActivity {
         String verifyCode = tilVerifyCode.getEditText().getText().toString().trim();
 
         if (TextUtils.isEmpty(phone)|| !TextStringUtils.isMobileNO(phone)) {
+            btnLogin.setClickable(true);
             return;
         }
         if (TextUtils.isEmpty(verifyCode)) {
+            btnLogin.setClickable(true);
             return;
         }
-        btnLogin.setClickable(false);
+
         HashMap<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("verifyCode", verifyCode);

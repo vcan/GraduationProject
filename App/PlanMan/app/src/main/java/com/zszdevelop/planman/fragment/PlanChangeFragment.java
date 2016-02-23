@@ -7,12 +7,7 @@ import android.view.ViewGroup;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseFragment;
-import com.zszdevelop.planman.bean.ChestRecord;
-import com.zszdevelop.planman.bean.LeftArmRecord;
-import com.zszdevelop.planman.bean.LoinRecord;
-import com.zszdevelop.planman.bean.RightArmRecord;
-import com.zszdevelop.planman.bean.ShoulderRecord;
-import com.zszdevelop.planman.bean.WeightRecord;
+import com.zszdevelop.planman.bean.GoalRecordInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,26 +33,18 @@ public class PlanChangeFragment extends BaseFragment {
 
     @Bind(R.id.lcv_plan_change)
     LineChartView lcvPlanChange;
-    ArrayList<WeightRecord> weightRecords ;
-    ArrayList<ChestRecord> chestRecords ;
-    ArrayList<LoinRecord> loinRecords ;
-    ArrayList<LeftArmRecord> leftArmRecords ;
-    ArrayList<RightArmRecord> rightArmRecords;
-    ArrayList<ShoulderRecord> shoulderRecords ;
+
+    ArrayList<GoalRecordInfo> goalRecordInfos;
+
     private LineChartData lineData;
     public final static String[] days = new String[]{"Mon", "Tue", "Wen", "Thu", "Fri", "Sat", "Sun",};
 
-    public static PlanChangeFragment newInstanceFragment(ArrayList<WeightRecord> weightRecords,ArrayList<ChestRecord> chestRecords,
-                                                         ArrayList<LoinRecord> loinRecords,ArrayList<LeftArmRecord> leftArmRecords,
-                                                         ArrayList<RightArmRecord> rightArmRecords,ArrayList<ShoulderRecord> shoulderRecords) {
-        PlanChangeFragment fragment = new PlanChangeFragment();
-        fragment.weightRecords = weightRecords;
-        fragment.chestRecords = chestRecords;
-        fragment.loinRecords = loinRecords;
-        fragment.leftArmRecords = leftArmRecords;
-        fragment.rightArmRecords = rightArmRecords;
-        fragment.shoulderRecords = shoulderRecords;
 
+
+
+    public static PlanChangeFragment newInstanceFragment(ArrayList<GoalRecordInfo> goalRecordInfos) {
+        PlanChangeFragment fragment = new PlanChangeFragment();
+        fragment.goalRecordInfos = goalRecordInfos;
         return fragment;
     }
 
@@ -72,8 +59,13 @@ public class PlanChangeFragment extends BaseFragment {
 
     }
 
+    public void refreshFragment(ArrayList<GoalRecordInfo> data){
+        goalRecordInfos = data;
+        generateInitialLineData();
+    }
+
     private void initChart() {
-       generateInitialLineData();
+        generateInitialLineData();
 //        generateLineData(ChartUtils.COLOR_GREEN, 0);
 
     }
@@ -87,9 +79,9 @@ public class PlanChangeFragment extends BaseFragment {
 
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
         List<PointValue> values = new ArrayList<PointValue>();
-        for (int i = 0; i < weightRecords.size(); ++i) {
-            values.add(new PointValue(i, weightRecords.get(i).getGoalRecordData()));
-            axisValues.add(new AxisValue(i).setLabel(weightRecords.get(i).getGoalRecordTime()));
+        for (int i = 0; i < goalRecordInfos.size(); ++i) {
+            values.add(new PointValue(i, goalRecordInfos.get(i).getGoalRecordData()));
+            axisValues.add(new AxisValue(i).setLabel(goalRecordInfos.get(i).getGoalRecordTime()));
         }
 //        for (int i = 0; i < numValues; ++i) {
 //            values.add(new PointValue(i, 0));
@@ -136,6 +128,7 @@ public class PlanChangeFragment extends BaseFragment {
         // Start new data animation with 300ms duration;
         lcvPlanChange.startDataAnimation(300);
     }
+
 
     private class ValueTouchListener implements ColumnChartOnValueSelectListener {
 
