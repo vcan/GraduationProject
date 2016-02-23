@@ -20,41 +20,35 @@
             android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
                     android:id="@+id/plmrv_plan_change"
                     android:layout_width="0dp"
-android:background="@color/colorPrimary"
-                    android:layout_weight="1"
+                    android:layout_height="200dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="200dp">
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary">
 
                 </com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
+
                 <FrameLayout
                     android:id="@+id/fl_content"
                     android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"
+                    android:layout_weight="4" />
 
             </LinearLayout>
 
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs_main"
+            <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
+                android:id="@+id/plmrv_consume_record"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/distance_48dp"
-                app:tabIndicatorColor="@color/colorPrimary"
-                app:tabSelectedTextColor="@color/colorPrimary" />
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_mian"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
 
 
         </LinearLayout>
@@ -68,7 +62,7 @@ android:background="@color/colorPrimary"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer_menu"/>
+            app:menu="@menu/drawer_menu" />
 
     </android.support.v4.widget.DrawerLayout>
 

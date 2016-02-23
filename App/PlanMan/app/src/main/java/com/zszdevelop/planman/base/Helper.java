@@ -1,7 +1,8 @@
-package com.zszdevelop.planman.bean;
+package com.zszdevelop.planman.base;
 
 import android.text.TextUtils;
 
+import com.zszdevelop.planman.bean.BaseUser;
 import com.zszdevelop.planman.config.Config;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.utils.SharedPreferencesUtil;
@@ -51,5 +52,11 @@ public class Helper {
             return true;
         }
     }
+
+    public static final int getUserId() {
+//        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
+        int user_id = 10001;
+
+    return  user_id;}
 
 }

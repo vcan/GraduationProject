@@ -22,4 +22,7 @@ public class ResultCode {
     // 腰围
     public static final int SHOULDER_CODE = 6;
 
+    // SHOU首页
+    public static final int FIRST_PAGE_CODE = 1;
+
 }

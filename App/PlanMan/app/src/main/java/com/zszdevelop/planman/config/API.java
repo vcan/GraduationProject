@@ -22,6 +22,9 @@ public class API {
     /*四：首页数据*/
    public static final String MAIN_URI ="HomeServlet?userId=%d";
 
+   /*十三：获取消耗纪录*/
+   public static final String CONSUME_RECORD_URI ="ConsumeRecordServlet?userId=%d";
+
 
 
 

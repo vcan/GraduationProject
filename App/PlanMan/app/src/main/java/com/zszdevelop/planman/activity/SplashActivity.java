@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BaseUser;
-import com.zszdevelop.planman.bean.Helper;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.Config;
 import com.zszdevelop.planman.config.UserConfig;

@@ -3,33 +3,34 @@ package com.zszdevelop.planman.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.adapter.MainAdapter;
+import com.zszdevelop.planman.adapter.ConsumeRecordAdapter;
 import com.zszdevelop.planman.adapter.ShowTypeAdapter;
 import com.zszdevelop.planman.base.BaseActivity;
+import com.zszdevelop.planman.base.Helper;
+import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalRecordInfo;
 import com.zszdevelop.planman.bean.HomeInfo;
 import com.zszdevelop.planman.bean.ShowType;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.fragment.PlanChangeFragment;
-import com.zszdevelop.planman.fragment.UserFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,32 +42,34 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.plmrv_plan_change)
+    PullLoadMoreRecyclerView plmrvPlanChange;
     @Bind(R.id.fl_content)
     FrameLayout flContent;
-    @Bind(R.id.tabs_main)
-    TabLayout tabsMain;
-    @Bind(R.id.vp_mian)
-    ViewPager vpMian;
+    @Bind(R.id.plmrv_consume_record)
+    PullLoadMoreRecyclerView plmrvConsumeRecord;
     @Bind(R.id.navigation)
     NavigationView navigation;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.plmrv_plan_change)
-    PullLoadMoreRecyclerView plmrvPlanChange;
     private List<Fragment> list_fragment = new ArrayList<>();
     ArrayList<GoalRecordInfo> goalRecordWeights = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordChests= new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordLoins= new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordLeftArms= new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordRightArms= new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordShoulder= new ArrayList<>();
+    ArrayList<GoalRecordInfo> goalRecordChests = new ArrayList<>();
+    ArrayList<GoalRecordInfo> goalRecordLoins = new ArrayList<>();
+    ArrayList<GoalRecordInfo> goalRecordLeftArms = new ArrayList<>();
+    ArrayList<GoalRecordInfo> goalRecordRightArms = new ArrayList<>();
+    ArrayList<GoalRecordInfo> goalRecordShoulder = new ArrayList<>();
+
+
+    List<ConsumeRecordInfo> consumeRecords = new ArrayList<>();
 
 
     FragmentManager supportFragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
     private PlanChangeFragment fragment;
+    private ConsumeRecordAdapter consumeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class MainActivity extends BaseActivity {
         initView();
         initListener();
         fillData();
+        fillConsumeRecordData();
 //        ShakeListenerUtils shakeListenerUtils = new ShakeListenerUtils(this);
 //
 //        shakeListenerUtils.setOnShakeListener(new ShakeListenerUtils.onShakeListener() {
@@ -91,17 +95,8 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         initToolbar();
-        initGodListRecyclerView();
-
-        UserFragment userFragment = new UserFragment();
-        UserFragment userFragment1 = new UserFragment();
-        list_fragment.add(userFragment);
-        list_fragment.add(userFragment1);
-
-        MainAdapter loginPagerAdapter = new MainAdapter(getSupportFragmentManager(), this, list_fragment);
-        vpMian.setAdapter(loginPagerAdapter);
-        tabsMain.setTabMode(TabLayout.MODE_FIXED);
-        tabsMain.setupWithViewPager(vpMian);
+        initShowTypeRecyclerView();
+        initConsumeRecordRecyclerView();
 
     }
 
@@ -124,10 +119,10 @@ public class MainActivity extends BaseActivity {
                 Gson gson = new Gson();
                 HomeInfo homeInfo = gson.fromJson(json, HomeInfo.class);
                 ArrayList<GoalRecordInfo> goalRecordInfos = homeInfo.getGoalRecordInfos();
-                for (int i = 0;i< goalRecordInfos.size() ; i++){
+                for (int i = 0; i < goalRecordInfos.size(); i++) {
                     GoalRecordInfo goalRecordInfo = goalRecordInfos.get(i);
                     int goalRecordType = goalRecordInfo.getGoalRecordType();
-                    switch (goalRecordType){
+                    switch (goalRecordType) {
 
                         case ResultCode.WEIGHT_CODE:
                             goalRecordWeights.add(goalRecordInfo);
@@ -166,6 +161,33 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    private void fillConsumeRecordData() {
+
+        consumeAdapter.clear();
+
+        loadConsumeRecordData(ResultCode.FIRST_PAGE_CODE);
+
+    }
+
+ private void loadConsumeRecordData(int currentPage) {
+
+        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
+        HttpRequest.get(url, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                LogUtils.e("fanhui le sm gui" + json);
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
+                }.getType();
+                consumeRecords = gson.fromJson(json, listType);
+                consumeAdapter.appendData(consumeRecords);
+                consumeAdapter.notifyDataSetChanged();
+                plmrvConsumeRecord.setPullLoadMoreCompleted();
+            }
+        });
+    }
+
+
     private void initToolbar() {
         toolbar.setTitle("型男计划");
         setSupportActionBar(toolbar);
@@ -182,7 +204,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 初始化 RecyclerView
      */
-    private void initGodListRecyclerView() {
+    private void initShowTypeRecyclerView() {
         List<ShowType> showTypes = new ArrayList<>();
         ShowType showType = new ShowType();
         showType.setShowTypeStr("体重");
@@ -214,7 +236,7 @@ public class MainActivity extends BaseActivity {
             public void OnItemClicked(ShowType bean) {
 
                 int showType = bean.getShowType();
-                switch (showType){
+                switch (showType) {
 
                     case ResultCode.WEIGHT_CODE:
                         fragment.refreshFragment(goalRecordWeights);
@@ -261,6 +283,26 @@ public class MainActivity extends BaseActivity {
 //            }
 //        });
 
+    }
+
+    int currentPage = 1;
+    private void initConsumeRecordRecyclerView() {
+        consumeAdapter = new ConsumeRecordAdapter(this, R.layout.item_consume_record, consumeRecords);
+        plmrvConsumeRecord.setAdapter(consumeAdapter);
+        plmrvConsumeRecord.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                fillConsumeRecordData();
+            }
+
+            @Override
+            public void onLoadMore() {
+
+                loadConsumeRecordData(++currentPage);
+
+            }
+        });
+        plmrvConsumeRecord.setLinearLayout();
     }
 
 

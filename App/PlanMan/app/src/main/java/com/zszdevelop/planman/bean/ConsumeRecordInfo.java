@@ -1,9 +1,11 @@
 package com.zszdevelop.planman.bean;
 
-public class ConsumeRecordInfo {
+import com.zszdevelop.planman.base.BaseBean;
+
+public class ConsumeRecordInfo extends BaseBean{
 
 	private int consumeRecordId;
-	private String consumeRecordTime;
+	private long consumeRecordTime;
 	private int consumeCC;
 	private int consumeRecordType;
 	private String consumeRecordContent;
@@ -13,12 +15,7 @@ public class ConsumeRecordInfo {
 	public void setConsumeRecordId(int consumeRecordId) {
 		this.consumeRecordId = consumeRecordId;
 	}
-	public String getConsumeRecordTime() {
-		return consumeRecordTime;
-	}
-	public void setConsumeRecordTime(String consumeRecordTime) {
-		this.consumeRecordTime = consumeRecordTime;
-	}
+
 	public int getConsumeCC() {
 		return consumeCC;
 	}
@@ -28,6 +25,15 @@ public class ConsumeRecordInfo {
 	public int getConsumeRecordType() {
 		return consumeRecordType;
 	}
+
+	public long getConsumeRecordTime() {
+		return consumeRecordTime;
+	}
+
+	public void setConsumeRecordTime(long consumeRecordTime) {
+		this.consumeRecordTime = consumeRecordTime;
+	}
+
 	public void setConsumeRecordType(int consumeRecordType) {
 		this.consumeRecordType = consumeRecordType;
 	}
