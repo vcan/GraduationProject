@@ -16,7 +16,7 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
@@ -24,31 +24,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs_change"
+                    android:layout_width="match_parent"
+                    app:tabIndicatorColor="@color/colorPrimary"
+                    app:tabSelectedTextColor="@color/colorPrimary"
+                    app:tabTextColor="@color/colorPrimary"
+
+                    android:layout_height="@dimen/distance_48dp" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_main_change"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></android.support.v4.view.ViewPager>
 
                 <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
-                    android:id="@+id/plmrv_plan_change"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimary">
+                    android:id="@+id/plmrv_consume_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
 
-                </com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
-
-                <FrameLayout
-                    android:id="@+id/fl_content"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="4" />
 
             </LinearLayout>
 
-
-            <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
-                android:id="@+id/plmrv_consume_record"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
 
 
         </LinearLayout>
@@ -67,12 +65,5 @@
     </android.support.v4.widget.DrawerLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

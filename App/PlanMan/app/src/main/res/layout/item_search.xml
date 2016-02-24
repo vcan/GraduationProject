@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_distance"
+        android:layout_marginRight="@dimen/default_distance"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_distance">
+
+            <TextView
+                android:id="@+id/tv_search_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="水果"
+                style="@style/text_title"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/tv_search_title"
+                android:layout_marginTop="@dimen/default_distance"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text_content"
+                    android:text="100克,"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_calory_cc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="400大卡"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    style="@style/text_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_toRightOf="@+id/tv_cr_time"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="大卡"
+                    style="@style/text_content"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_add_search"
+                android:src="@drawable/button_action_dark"
+                android:layout_alignParentRight="true"
+                android:layout_width="30dp"
+                android:layout_centerVertical="true"
+                android:layout_height="30dp" />
+
+
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

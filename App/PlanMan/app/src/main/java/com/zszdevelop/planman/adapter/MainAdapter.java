@@ -11,7 +11,7 @@ import java.util.List;
  * Created by zhangshengzhong on 16/2/20.
  */
 public class MainAdapter extends FragmentPagerAdapter {
-    private String tabTitles[] = new String[]{"首页","跑步"};
+    private String tabTitles[] = new String[]{"体重","胸围","腰围","左臂围","右臂围","肩宽"};
     private Context context;
     private List<Fragment> fragments;
 
