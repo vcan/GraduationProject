@@ -34,19 +34,25 @@ public class SearchAdapter extends BaseAdapter<Food, SearchViewHolder> {
     }
 
     @Override
-    public void onBindItemViewHolder(SearchViewHolder holder, final int position) {
-        Food food = getItem(position);
+    public void onBindItemViewHolder(final SearchViewHolder holder, final int position) {
+        final Food food = getItem(position);
         if (food == null){
             return;
         }
 
        holder.tv_calory_cc.setText(String.valueOf(food.getCalory()));
         holder.tv_search_title.setText(food.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.OnItemClicked(food,holder);
+            }
+        });
 
     }
 
     public interface  OnItemClickListener {
-        void OnItemClicked(Food bean);
+        void OnItemClicked(Food bean,SearchViewHolder holder);
     }
 
     private OnItemClickListener itemClickListener;

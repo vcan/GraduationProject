@@ -7,11 +7,12 @@ import android.os.Handler;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.zszdevelop.planman.db.DBHelper;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 /**
@@ -40,7 +41,12 @@ public class BaseApplication extends Application {
 		application = this;
 
 		SMSSDK.initSDK(this, "f578407a2d21", "1cfc261cf1b1de61d99809973541d682");
-
+		DBHelper dbHelper = new DBHelper(this);
+		try {
+			dbHelper.createDataBase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
