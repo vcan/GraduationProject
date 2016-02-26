@@ -12,9 +12,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.redbooth.SlidingDeck;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.adapter.SearchAdapter;
+import com.zszdevelop.planman.adapter.SlidingDeckAdapter;
 import com.zszdevelop.planman.bean.Food;
+import com.zszdevelop.planman.bean.SlidingDeckModel;
 import com.zszdevelop.planman.db.DBHelper;
 import com.zszdevelop.planman.db.DatabaseHelper;
 import com.zszdevelop.planman.http.ToastUtil;
@@ -37,13 +40,16 @@ public class SearchActivity extends AppCompatActivity {
     PullLoadMoreRecyclerView plmrvSearch;
     @Bind(R.id.iv_go_search)
     ImageView ivGoSearch;
+    @Bind(R.id.slidingDeck)
+    SlidingDeck slidingDeck;
     private DatabaseHelper helper;
 
     List<Food> foods = new ArrayList<>();
     private SearchAdapter searchAdapter;
     private String searchStr;
+    private SlidingDeckAdapter slidingAdapter;
 
-//    private ArrayList<ArrayList<String>> options1Items = new ArrayList<ArrayList<String>>();
+    //    private ArrayList<ArrayList<String>> options1Items = new ArrayList<ArrayList<String>>();
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<ArrayList<Integer>>();
 
@@ -62,6 +68,7 @@ public class SearchActivity extends AppCompatActivity {
     private void initView() {
 
         initRecyclerView();
+        initializeSlidingDeck();
     }
 
     private void initListener() {
@@ -80,23 +87,22 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void initDB() {
         searchAdapter.clear();
         helper = new DatabaseHelper(this);
 
-            DBHelper dbHelper = new DBHelper(this);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 //            String sql = "select * from foods where name=\""+searchStr+"\"";
-            String sql = "select * from foods where name like \'%"+searchStr+"%\'";
-            LogUtils.e(sql);
-            Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select * from foods where name like \'%" + searchStr + "%\'";
+        LogUtils.e(sql);
+        Cursor cursor = db.rawQuery(sql, null);
 
-            List<Food> foodses = new ArrayList<>();
-            Log.e("info", "length = " + cursor.getCount());
-        if (cursor.getCount() > 0){
+        List<Food> foodses = new ArrayList<>();
+        Log.e("info", "length = " + cursor.getCount());
+        if (cursor.getCount() > 0) {
 
             while (cursor.moveToNext()) {
                 Food foods = new Food();
@@ -106,28 +112,47 @@ public class SearchActivity extends AppCompatActivity {
                 foodses.add(foods);
 
             }
-        }else {
+        } else {
             ToastUtil.showToast("没有找到您要搜索的食物");
         }
 
-            searchAdapter.appendData(foodses);
-            searchAdapter.notifyDataSetChanged();
-            cursor.close();
-            db.close();
+        searchAdapter.appendData(foodses);
+        searchAdapter.notifyDataSetChanged();
+        cursor.close();
+        db.close();
 
     }
 
+    private void initializeSlidingDeck() {
+        slidingAdapter = new SlidingDeckAdapter(this);
+        SlidingDeckModel slidingDeckModel =new SlidingDeckModel();
+        slidingDeckModel.setSlidingDeckTitle("tianqibucup");
+        slidingAdapter.add(slidingDeckModel);
+        slidingDeck = (SlidingDeck) findViewById(R.id.slidingDeck);
+        slidingDeck.setAdapter(slidingAdapter);
+        slidingDeck.setEmptyView(findViewById(R.id.emptyView));
+        slidingDeck.setSwipeEventListener(new SlidingDeck.SwipeEventListener() {
+            @Override
+            public void onSwipe(SlidingDeck parent, View item) {
+                SlidingDeckModel model = (SlidingDeckModel) item.getTag();
+                slidingAdapter.remove(model);
+                slidingAdapter.insert(model, slidingAdapter.getCount());
+                slidingAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     private void initRecyclerView() {
         searchAdapter = new SearchAdapter(this, R.layout.item_search, foods);
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClicked(Food bean,SearchViewHolder holder) {
+            public void OnItemClicked(Food bean, SearchViewHolder holder) {
                 ToastUtil.showToast("您选择了:" + bean.getName());
                 optionFood(holder);
             }
         });
         plmrvSearch.setAdapter(searchAdapter);
+
         plmrvSearch.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
@@ -146,6 +171,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     OptionsPickerView pvOptions;
+
     private void optionFood(SearchViewHolder holder) {
 
         //选项选择器
@@ -154,14 +180,13 @@ public class SearchActivity extends AppCompatActivity {
         options1Items.add("早餐");
         options1Items.add("午餐");
         options1Items.add("晚餐");
-        ArrayList<Integer> optionsItemsNumber=new ArrayList<>();
-        for (int i = 0;i<100;i++){
-            optionsItemsNumber.add(i*10);
+        ArrayList<Integer> optionsItemsNumber = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            optionsItemsNumber.add(i * 10);
         }
         options2Items.add(optionsItemsNumber);
         options2Items.add(optionsItemsNumber);
         options2Items.add(optionsItemsNumber);
-
 
 
         //三级联动效果
@@ -171,7 +196,7 @@ public class SearchActivity extends AppCompatActivity {
         pvOptions.setTitle("选择克数");
         pvOptions.setCyclic(false, true, true);
         //设置默认选中的三级项目
-        pvOptions.setSelectOptions(1,10);
+        pvOptions.setSelectOptions(1, 10);
         //监听确定选择按钮
 //        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 //            @Override
