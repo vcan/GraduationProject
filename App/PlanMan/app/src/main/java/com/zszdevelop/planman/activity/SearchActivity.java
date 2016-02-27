@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.redbooth.SlidingDeck;
@@ -42,16 +44,21 @@ public class SearchActivity extends AppCompatActivity {
     ImageView ivGoSearch;
     @Bind(R.id.slidingDeck)
     SlidingDeck slidingDeck;
+    @Bind(R.id.emptyView)
+    LinearLayout emptyView;
+    @Bind(R.id.tv_search_save)
+    TextView tvSearchSave;
     private DatabaseHelper helper;
 
     List<Food> foods = new ArrayList<>();
-    private SearchAdapter searchAdapter;
-    private String searchStr;
-    private SlidingDeckAdapter slidingAdapter;
+    List<SlidingDeckModel> lists = new ArrayList<>();
 
-    //    private ArrayList<ArrayList<String>> options1Items = new ArrayList<ArrayList<String>>();
+    OptionsPickerView pvOptions;
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<ArrayList<Integer>>();
+
+    private SearchAdapter searchAdapter;
+    private String searchStr;
 
 
     @Override
@@ -69,6 +76,7 @@ public class SearchActivity extends AppCompatActivity {
 
         initRecyclerView();
         initializeSlidingDeck();
+        initOptionFood();
     }
 
     private void initListener() {
@@ -86,6 +94,12 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        tvSearchSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -123,11 +137,12 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+
+    private SlidingDeckAdapter slidingAdapter;
+
     private void initializeSlidingDeck() {
         slidingAdapter = new SlidingDeckAdapter(this);
-        SlidingDeckModel slidingDeckModel =new SlidingDeckModel();
-        slidingDeckModel.setSlidingDeckTitle("tianqibucup");
-        slidingAdapter.add(slidingDeckModel);
+
         slidingDeck = (SlidingDeck) findViewById(R.id.slidingDeck);
         slidingDeck.setAdapter(slidingAdapter);
         slidingDeck.setEmptyView(findViewById(R.id.emptyView));
@@ -138,9 +153,11 @@ public class SearchActivity extends AppCompatActivity {
                 slidingAdapter.remove(model);
                 slidingAdapter.insert(model, slidingAdapter.getCount());
                 slidingAdapter.notifyDataSetChanged();
+
             }
         });
     }
+
 
     private void initRecyclerView() {
         searchAdapter = new SearchAdapter(this, R.layout.item_search, foods);
@@ -148,7 +165,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void OnItemClicked(Food bean, SearchViewHolder holder) {
                 ToastUtil.showToast("您选择了:" + bean.getName());
-                optionFood(holder);
+//                optionFood(holder);
+                setOptionFood(bean);
+                pvOptions.show();
             }
         });
         plmrvSearch.setAdapter(searchAdapter);
@@ -170,10 +189,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    OptionsPickerView pvOptions;
 
-    private void optionFood(SearchViewHolder holder) {
 
+    private void initOptionFood(){
         //选项选择器
         pvOptions = new OptionsPickerView(this);
 
@@ -197,32 +215,24 @@ public class SearchActivity extends AppCompatActivity {
         pvOptions.setCyclic(false, true, true);
         //设置默认选中的三级项目
         pvOptions.setSelectOptions(1, 10);
-        //监听确定选择按钮
-//        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3) {
-//
-//            }
-//        });
-//        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-//
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3) {
-//                //返回的分别是三个级别的选中位置
-////                String tx = options1Items.get(options1)
-////                        + options2Items.get(options1).get(option2)
-////                        + options3Items.get(options1).get(option2).get(options3);
-////               ToastUtil.showToast(tx);
-////                vMasker.setVisibility(View.GONE);
-//            }
-//        });
-        //点击弹出选项选择器
-        holder.iv_add_search.setOnClickListener(new View.OnClickListener() {
 
+
+
+    }
+
+    private void setOptionFood(final Food bean){
+        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onClick(View v) {
-                pvOptions.show();
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                SlidingDeckModel slidingDeckModel = new SlidingDeckModel();
+                slidingDeckModel.setSlidingDeckTitle(":" + options1Items.get(options1) +bean.getName());
+//                options2Items.get(options1).get(option2)
+                slidingDeckModel.setSlidingDeckContent("吃了"  + "g");
+                LogUtils.e("有执行插入吗");
+                slidingAdapter.insert(slidingDeckModel, 0);//插入在第一条
+                slidingAdapter.notifyDataSetChanged();
             }
         });
     }
+
 }

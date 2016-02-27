@@ -50,7 +50,7 @@ public class SlidingDeckAdapter extends ArrayAdapter<SlidingDeckModel> {
         }
         SlidingDeckModel item = getItem(position);
         view.setTag(item);
-//        ((TextView)view.findViewById(R.id.description)).setText(item.getDescription());
+        ((TextView)view.findViewById(R.id.description)).setText(item.getSlidingDeckContent());
         ((TextView)view.findViewById(R.id.name)).setText(item.getSlidingDeckTitle());
         ImageView avatar = (ImageView)view.findViewById(R.id.avatar);
 //        Picasso.with(parent.getContext())
@@ -76,4 +76,6 @@ public class SlidingDeckAdapter extends ArrayAdapter<SlidingDeckModel> {
         });
         return view;
     }
+
+
 }

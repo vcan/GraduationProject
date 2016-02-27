@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zszdevelop.planman.bean.Food;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseAdapter;
+import com.zszdevelop.planman.bean.Food;
 import com.zszdevelop.planman.view_holder.SearchViewHolder;
 
 import java.util.List;
@@ -45,20 +45,31 @@ public class SearchAdapter extends BaseAdapter<Food, SearchViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.OnItemClicked(food,holder);
+                itemClickListener.OnItemClicked(food, holder);
             }
         });
 
+
+
+
     }
+
+
+
+
+
 
     public interface  OnItemClickListener {
         void OnItemClicked(Food bean,SearchViewHolder holder);
     }
 
+
+
     private OnItemClickListener itemClickListener;
+
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-    };
+    }
 
 
 }
