@@ -29,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.redbooth.SlidingDeck;
@@ -50,14 +49,12 @@ public class SlidingDeckAdapter extends ArrayAdapter<SlidingDeckModel> {
         }
         SlidingDeckModel item = getItem(position);
         view.setTag(item);
-        ((TextView)view.findViewById(R.id.description)).setText(item.getSlidingDeckContent());
-        ((TextView)view.findViewById(R.id.name)).setText(item.getSlidingDeckTitle());
-        ImageView avatar = (ImageView)view.findViewById(R.id.avatar);
-//        Picasso.with(parent.getContext())
-//                .load(item.getAvatarUri())
-//                .placeholder(R.drawable.ic_launcher_48dp)
-//                .transform(new RoundedTransform())
-//                .into(avatar);
+        ((TextView)view.findViewById(R.id.tv_sliding_total_cc)).setText(String.format("%.2f 大卡", item.getTotalCC()));
+        ((TextView)view.findViewById(R.id.tv_sliding_gram)).setText(String.format("摄入: %.2f 克" , item.getGram()));
+        ((TextView)view.findViewById(R.id.tv_sliding_alone_cc)).setText(String.format("每100g热量: %.2f 大卡",item.getAloneCC()));
+        ((TextView)view.findViewById(R.id.tv_sliding_name)).setText(item.getSlidingName());
+        ((TextView)view.findViewById(R.id.tv_sliding_time)).setText(item.getSlidingTime()+" : ");
+        ((TextView)view.findViewById(R.id.tv_sliding_total_ccstr)).setText("摄入的总热量: " );
         final View completeView = view.findViewById(R.id.completeCommand);
         completeView.setTag(view);
         completeView.setOnClickListener(new View.OnClickListener() {

@@ -4,13 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseAdapter;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
+import com.zszdevelop.planman.bean.SlidingDeckModel;
 import com.zszdevelop.planman.utils.TimeUtil;
 import com.zszdevelop.planman.view_holder.ConsumeRecordViewHolder;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -39,8 +44,18 @@ public class ConsumeRecordAdapter extends BaseAdapter<ConsumeRecordInfo, Consume
         ConsumeRecordInfo consumeRecordInfo = getItem(position);
 
         holder.tv_cr_time.setText(TimeUtil.timestampToData(consumeRecordInfo.getConsumeRecordTime()));
-        holder.tv_consume_cc.setText(String.format("今日消耗%s", consumeRecordInfo.getConsumeCC()));
-        holder.tv_consume_content.setText(consumeRecordInfo.getConsumeRecordContent());
+        holder.tv_consume_cc.setText(String.format("摄入:%s大卡", consumeRecordInfo.getConsumeCC()));
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<SlidingDeckModel>>() {}.getType();
+        List<SlidingDeckModel> modelList = gson.fromJson(consumeRecordInfo.getConsumeRecordContent(), listType);
+
+        holder.ll_consume_content.removeAllViews();
+        for (int i = 0;i< modelList.size();i++){
+            TextView textView = new TextView(context);
+            textView.setText(String.format("%s : %s 大卡",modelList.get(i).getSlidingName(),modelList.get(i).getTotalCC()));
+            holder.ll_consume_content.addView(textView);
+        }
 
     }
 

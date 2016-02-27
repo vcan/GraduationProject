@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
         app:cardUseCompatPadding="true"
         android:layout_marginLeft="@dimen/default_distance"
         android:layout_marginRight="@dimen/default_distance"
@@ -17,52 +17,100 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_distance">
 
             <ImageButton
                 android:id="@+id/completeCommand"
                 android:layout_width="48dp"
-                android:layout_height="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/smssdk_input_bg_focus" />
-
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:src="@drawable/checkbox_marked_circle_outline_48dp" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_sliding_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_distance"
                 android:layout_marginLeft="@dimen/default_distance"
                 android:layout_marginStart="@dimen/default_distance"
-                android:layout_toRightOf="@+id/avatar"
+                android:layout_alignParentLeft="true"
+                style="@style/text_title"
+                android:singleLine="true"
+                android:fontFamily="sans-serif-bold"
+                tools:text="晚上:"/>
+
+            <TextView
+                android:id="@+id/tv_sliding_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_distance"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_marginStart="@dimen/default_distance"
+                android:layout_toRightOf="@+id/tv_sliding_time"
                 android:layout_toLeftOf="@+id/completeCommand"
                 style="@style/text_title"
                 android:singleLine="true"
                 android:fontFamily="sans-serif-bold"
                 tools:text="Name"/>
 
+
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/tv_sliding_alone_cc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_sliding_name"
                 android:layout_marginTop="@dimen/default_distance"
                 android:layout_marginLeft="@dimen/default_distance"
                 android:layout_marginStart="@dimen/default_distance"
-                android:layout_toRightOf="@+id/avatar"
+                android:layout_toRightOf="@+id/tv_sliding_time"
                 android:layout_toLeftOf="@+id/completeCommand"
                 android:fontFamily="sans-serif-bold"
-                android:maxLines="5"
                 style="@style/text_content"
-                tools:text="Description"/>
+                tools:text="每100克500大卡热量"/>
+
+
+            <TextView
+                android:id="@+id/tv_sliding_gram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_sliding_alone_cc"
+                android:layout_marginTop="@dimen/default_distance"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_marginStart="@dimen/default_distance"
+                android:layout_toRightOf="@+id/tv_sliding_time"
+                android:fontFamily="sans-serif-bold"
+                style="@style/text_content"
+                tools:text="摄入多少克"/>
+
+            <TextView
+                android:id="@+id/tv_sliding_total_ccstr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_sliding_gram"
+                android:layout_marginTop="@dimen/default_distance"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_marginStart="@dimen/default_distance"
+                android:layout_toRightOf="@+id/tv_sliding_time"
+                android:fontFamily="sans-serif-bold"
+                style="@style/text_content"
+                tools:text="摄入的总热量:"/>
+            <TextView
+                android:id="@+id/tv_sliding_total_cc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_sliding_gram"
+                android:layout_marginTop="@dimen/default_distance"
+                android:layout_toRightOf="@+id/tv_sliding_total_ccstr"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_marginStart="@dimen/default_distance"
+                android:layout_toLeftOf="@+id/completeCommand"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="@color/colorAccent"
+                style="@style/text_content"
+                tools:text="55daka"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

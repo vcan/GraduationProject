@@ -49,9 +49,6 @@ public class SearchAdapter extends BaseAdapter<Food, SearchViewHolder> {
             }
         });
 
-
-
-
     }
 
 

@@ -2,40 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.zszdevelop.planman.activity.SearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
+
         <TextView
             android:id="@+id/tv_search_save"
+            style="@style/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="保存"
-            android:textColor="@color/white"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/default_distance"
-            style="@style/text_title"/>
+            android:text="保存"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til_search"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <EditText
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_distance"
                 android:hint="您想搜索什么呢?" />
@@ -45,30 +46,36 @@
         <ImageView
             android:id="@+id/iv_go_search"
             android:layout_width="30dp"
-            android:src="@drawable/smssdk_search_icon"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/default_distance"
+            android:src="@drawable/smssdk_search_icon" />
+
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <com.redbooth.SlidingDeck
-            style="@style/slideDeck"
-            android:id="@+id/slidingDeck" />
+            android:id="@+id/slidingDeck"
+            style="@style/slideDeck" />
 
         <LinearLayout
             android:id="@+id/emptyView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:minHeight="120dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
+                style="@style/text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-              style="@style/text_title"
-                android:textSize="25sp"
-                android:text="添加饮食记录吧"/>
+                android:text="添加饮食记录吧"
+                android:textSize="25sp" />
 
 
         </LinearLayout>

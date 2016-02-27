@@ -14,20 +14,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.google.gson.Gson;
 import com.redbooth.SlidingDeck;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.adapter.SearchAdapter;
 import com.zszdevelop.planman.adapter.SlidingDeckAdapter;
+import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.Food;
 import com.zszdevelop.planman.bean.SlidingDeckModel;
+import com.zszdevelop.planman.config.API;
+import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.db.DBHelper;
 import com.zszdevelop.planman.db.DatabaseHelper;
+import com.zszdevelop.planman.http.HttpRequest;
+import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
 import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 import com.zszdevelop.planman.view_holder.SearchViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -51,13 +58,14 @@ public class SearchActivity extends AppCompatActivity {
     private DatabaseHelper helper;
 
     List<Food> foods = new ArrayList<>();
-    List<SlidingDeckModel> lists = new ArrayList<>();
 
     OptionsPickerView pvOptions;
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<ArrayList<Integer>>();
 
     private SearchAdapter searchAdapter;
+
+    private SlidingDeckAdapter slidingAdapter;
     private String searchStr;
 
 
@@ -98,6 +106,51 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (slidingAdapter.getCount()>0){
+                    submitData();
+                }else {
+                    ToastUtil.showToast("您还没选保存的食物");
+                    return;
+                }
+
+
+            }
+        });
+
+    }
+
+    private void submitData() {
+        List<SlidingDeckModel> tempList = new ArrayList<SlidingDeckModel>();
+        double totalCC = 0;
+
+        for (int i = 0;i<slidingAdapter.getCount();i++){
+            tempList.add(slidingAdapter.getItem(i));
+            totalCC += slidingAdapter.getItem(i).getTotalCC();
+        }
+        Gson gson =new Gson();
+        String listJson = gson.toJson(tempList);
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("userId",String.valueOf(Helper.getUserId()));
+        map.put("authToken",Helper.getToken());
+        map.put("consumeCC",String.valueOf(totalCC));
+        map.put("consumeRecordType",String.valueOf(ResultCode.EAT_CODE));
+        map.put("consumeRecordContent", listJson);
+        map.put("consumeRecordTime",String.valueOf(System.currentTimeMillis()/1000));
+
+
+        LogUtils.e("userid", String.valueOf(Helper.getUserId()));
+        LogUtils.e("authToken", Helper.getToken());
+        LogUtils.e("consumeCC", String.valueOf(totalCC));
+        LogUtils.e("consumeRecordType", String.valueOf(ResultCode.EAT_CODE));
+        LogUtils.e("consumeRecordContent", listJson);
+        LogUtils.e("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
+
+        HttpRequest.post(API.SUBMIT_CONSUME_RECORD_URI, map, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                ToastUtil.showToast("提交成功");
+                finish();
             }
         });
 
@@ -138,20 +191,18 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    private SlidingDeckAdapter slidingAdapter;
 
     private void initializeSlidingDeck() {
         slidingAdapter = new SlidingDeckAdapter(this);
 
         slidingDeck = (SlidingDeck) findViewById(R.id.slidingDeck);
         slidingDeck.setAdapter(slidingAdapter);
-        slidingDeck.setEmptyView(findViewById(R.id.emptyView));
         slidingDeck.setSwipeEventListener(new SlidingDeck.SwipeEventListener() {
             @Override
             public void onSwipe(SlidingDeck parent, View item) {
                 SlidingDeckModel model = (SlidingDeckModel) item.getTag();
                 slidingAdapter.remove(model);
-                slidingAdapter.insert(model, slidingAdapter.getCount());
+//                slidingAdapter.insert(model, slidingAdapter.getCount());
                 slidingAdapter.notifyDataSetChanged();
 
             }
@@ -164,7 +215,7 @@ public class SearchActivity extends AppCompatActivity {
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void OnItemClicked(Food bean, SearchViewHolder holder) {
-                ToastUtil.showToast("您选择了:" + bean.getName());
+//                ToastUtil.showToast("您选择了:" + bean.getName());
 //                optionFood(holder);
                 setOptionFood(bean);
                 pvOptions.show();
@@ -221,13 +272,19 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setOptionFood(final Food bean){
+
+        slidingDeck.setEmptyView(findViewById(R.id.emptyView));
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 SlidingDeckModel slidingDeckModel = new SlidingDeckModel();
-                slidingDeckModel.setSlidingDeckTitle(":" + options1Items.get(options1) +bean.getName());
-//                options2Items.get(options1).get(option2)
-                slidingDeckModel.setSlidingDeckContent("吃了"  + "g");
+                double aloneCC = bean.getCalory();
+                slidingDeckModel.setAloneCC(aloneCC);
+                Integer gram = options2Items.get(options1).get(option2);
+                slidingDeckModel.setGram(gram);
+                slidingDeckModel.setSlidingName(bean.getName());
+                slidingDeckModel.setSlidingTime(options1Items.get(options1));
+                slidingDeckModel.setTotalCC(aloneCC * (gram / 100));
                 LogUtils.e("有执行插入吗");
                 slidingAdapter.insert(slidingDeckModel, 0);//插入在第一条
                 slidingAdapter.notifyDataSetChanged();

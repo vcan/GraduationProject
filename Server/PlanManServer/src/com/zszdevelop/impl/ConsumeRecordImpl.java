@@ -27,7 +27,7 @@ public class ConsumeRecordImpl implements ConsumeRecordDao{
 			conn = BaseConnection.getConnection();
 			ps = (PreparedStatement) conn.prepareStatement(sql);
 			ps.setString(1, consumeRecordInfo.getConsumeRecordTime());
-			ps.setInt(2, consumeRecordInfo.getConsumeCC());
+			ps.setDouble(2, consumeRecordInfo.getConsumeCC());
 			ps.setInt(3, consumeRecordInfo.getConsumeRecordType());
 			ps.setString(4, consumeRecordInfo.getConsumeRecordContent());
 			ps.setInt(5, userId);

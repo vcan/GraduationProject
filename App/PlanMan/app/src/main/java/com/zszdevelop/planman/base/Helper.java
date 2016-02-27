@@ -59,4 +59,10 @@ public class Helper {
 
     return  user_id;}
 
+    public static final String getToken() {
+//        String token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
+        String token = "aaa";
+
+    return  token;}
+
 }

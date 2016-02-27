@@ -72,7 +72,7 @@ public class ConsumeRecordServlet extends HttpServlet {
 				consumeRecordType = consumeRecordType == null ? "0" : consumeRecordType;
 				
 				ConsumeRecordInfo consumeRecordInfo = new ConsumeRecordInfo();
-				consumeRecordInfo.setConsumeCC(Integer.parseInt(consumeCC));
+				consumeRecordInfo.setConsumeCC(Double.parseDouble(consumeCC));
 				consumeRecordInfo.setConsumeRecordContent(consumeRecordContent);
 				consumeRecordInfo.setConsumeRecordTime(consumeRecordTime);
 				consumeRecordInfo.setConsumeRecordType(Integer.parseInt(consumeRecordType));

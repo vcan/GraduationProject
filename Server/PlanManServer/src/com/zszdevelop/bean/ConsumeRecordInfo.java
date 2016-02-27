@@ -4,7 +4,7 @@ public class ConsumeRecordInfo {
 
 	private int consumeRecordId;
 	private String consumeRecordTime;
-	private int consumeCC;
+	private double consumeCC;
 	private int consumeRecordType;
 	private String consumeRecordContent;
 	public int getConsumeRecordId() {
@@ -19,10 +19,12 @@ public class ConsumeRecordInfo {
 	public void setConsumeRecordTime(String consumeRecordTime) {
 		this.consumeRecordTime = consumeRecordTime;
 	}
-	public int getConsumeCC() {
+
+	
+	public double getConsumeCC() {
 		return consumeCC;
 	}
-	public void setConsumeCC(int consumeCC) {
+	public void setConsumeCC(double consumeCC) {
 		this.consumeCC = consumeCC;
 	}
 	public int getConsumeRecordType() {

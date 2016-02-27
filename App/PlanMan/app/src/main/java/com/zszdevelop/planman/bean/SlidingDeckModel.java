@@ -5,31 +5,52 @@ package com.zszdevelop.planman.bean;
  */
 public class SlidingDeckModel {
 
-    private String SlidingDeckTitle;
-    private String SlidingDeckContent;
-    private double calory;
 
-    public String getSlidingDeckTitle() {
-        return SlidingDeckTitle;
+    private String slidingName;
+    private String slidingTime;
+    private double aloneCC;
+    private double gram;
+    private double totalCC;
+
+    public String getSlidingTime() {
+        return slidingTime;
     }
 
-    public void setSlidingDeckTitle(String slidingDeckTitle) {
-        SlidingDeckTitle = slidingDeckTitle;
+    public void setSlidingTime(String slidingTime) {
+        this.slidingTime = slidingTime;
     }
 
-    public String getSlidingDeckContent() {
-        return SlidingDeckContent;
+    public String getSlidingName() {
+        return slidingName;
     }
 
-    public void setSlidingDeckContent(String slidingDeckContent) {
-        SlidingDeckContent = slidingDeckContent;
+    public double getAloneCC() {
+        return aloneCC;
     }
 
-    public double getCalory() {
-        return calory;
+    public void setAloneCC(double aloneCC) {
+        this.aloneCC = aloneCC;
     }
 
-    public void setCalory(double calory) {
-        this.calory = calory;
+    public double getGram() {
+        return gram;
     }
+
+    public void setGram(double gram) {
+        this.gram = gram;
+    }
+
+    public double getTotalCC() {
+        return totalCC;
+    }
+
+    public void setTotalCC(double totalCC) {
+        this.totalCC = totalCC;
+    }
+
+    public void setSlidingName(String slidingName) {
+        this.slidingName = slidingName;
+    }
+
+
 }
