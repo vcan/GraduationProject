@@ -29,8 +29,5 @@ public class ConsumeRecordViewHolder extends RecyclerView.ViewHolder{
 
 	}
 
-
-		
-		
 	
 }

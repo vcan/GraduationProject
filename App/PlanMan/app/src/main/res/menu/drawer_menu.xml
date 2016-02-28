@@ -11,6 +11,16 @@
             android:id="@+id/navigation_library"
             android:icon="@drawable/smssdk_sharesdk_icon"
             android:title="@string/plan_community"/>
+
+        <item
+            android:id="@+id/navigation_search_food"
+            android:icon="@drawable/smssdk_sharesdk_icon"
+            android:title="@string/plan_search_food"/>
+
+        <item
+            android:id="@+id/navigation_search_sport"
+            android:icon="@drawable/smssdk_sharesdk_icon"
+            android:title="@string/plan_search_sport"/>
     </group>
 
 </menu>

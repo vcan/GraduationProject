@@ -64,7 +64,7 @@ public class ConsumeRecordServlet extends HttpServlet {
 				String consumeCC = request.getParameter("consumeCC");
 				String consumeRecordType = request.getParameter("consumeRecordType");
 				String consumeRecordContent = request.getParameter("consumeRecordContent");
-				
+				System.out.println(consumeRecordContent);
 				// 对数据进行一个容错处理
 				userId = userId == null ? "0" : userId;
 				authToken = authToken == null ? "0" : authToken;

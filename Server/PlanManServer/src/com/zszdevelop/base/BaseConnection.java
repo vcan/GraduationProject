@@ -12,7 +12,8 @@ public class BaseConnection {
 	    Connection conn=null;
 	    try {
 	        Class.forName("com.mysql.jdbc.Driver");
-	        conn=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/PlanMan", "root", "zsz123456");
+	        conn=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/PlanMan?useUnicode=true&amp;characterEncoding=UTF-8", "root", "zsz123456");
+	        
 	    } catch (ClassNotFoundException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();

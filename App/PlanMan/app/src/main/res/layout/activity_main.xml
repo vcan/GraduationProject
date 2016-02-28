@@ -30,7 +30,7 @@
                     android:id="@+id/tabs_change"
                     android:layout_width="match_parent"
                     app:tabIndicatorColor="@color/colorPrimary"
-                    app:tabSelectedTextColor="@color/colorPrimary"
+                    app:tabSelectedTextColor="@color/colorAccent"
                     app:tabTextColor="@color/colorPrimary"
 
                     android:layout_height="@dimen/distance_48dp" />
@@ -55,6 +55,7 @@
 
         <!-- Drawer -->
         <android.support.design.widget.NavigationView
+            android:layout_marginTop="56dp"
             android:id="@+id/navigation"
             android:layout_width="240dp"
             android:layout_height="match_parent"

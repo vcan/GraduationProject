@@ -55,18 +55,22 @@ public class SearchActivity extends AppCompatActivity {
     LinearLayout emptyView;
     @Bind(R.id.tv_search_save)
     TextView tvSearchSave;
+    @Bind(R.id.tv_search_title)
+    TextView tvSearchTitle;
     private DatabaseHelper helper;
 
     List<Food> foods = new ArrayList<>();
 
     OptionsPickerView pvOptions;
     private ArrayList<String> options1Items = new ArrayList<String>();
+    private ArrayList<String> options1ItemsSports = new ArrayList<String>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<ArrayList<Integer>>();
 
     private SearchAdapter searchAdapter;
 
     private SlidingDeckAdapter slidingAdapter;
     private String searchStr;
+    private int searchType;
 
 
     @Override
@@ -81,10 +85,21 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        searchType = getIntent().getIntExtra("SearchType", ResultCode.FOOD_CODE);
 
         initRecyclerView();
         initializeSlidingDeck();
-        initOptionFood();
+        if (searchType == ResultCode.FOOD_CODE) {
+            initOptionFood();
+            initToolbar("搜索食物");
+            tvSearchTitle.setText("添加饮食记录吧");
+        } else {
+            initToolbar("搜索运动");
+            tvSearchTitle.setText("添加运动记录吧");
+            initOptionSport();
+        }
+
+
     }
 
     private void initListener() {
@@ -106,9 +121,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (slidingAdapter.getCount()>0){
+                if (slidingAdapter.getCount() > 0) {
                     submitData();
-                }else {
+                } else {
                     ToastUtil.showToast("您还没选保存的食物");
                     return;
                 }
@@ -123,26 +138,26 @@ public class SearchActivity extends AppCompatActivity {
         List<SlidingDeckModel> tempList = new ArrayList<SlidingDeckModel>();
         double totalCC = 0;
 
-        for (int i = 0;i<slidingAdapter.getCount();i++){
+        for (int i = 0; i < slidingAdapter.getCount(); i++) {
             tempList.add(slidingAdapter.getItem(i));
             totalCC += slidingAdapter.getItem(i).getTotalCC();
         }
-        Gson gson =new Gson();
+        Gson gson = new Gson();
         String listJson = gson.toJson(tempList);
 
-        HashMap<String,String> map = new HashMap<>();
-        map.put("userId",String.valueOf(Helper.getUserId()));
-        map.put("authToken",Helper.getToken());
-        map.put("consumeCC",String.valueOf(totalCC));
-        map.put("consumeRecordType",String.valueOf(ResultCode.EAT_CODE));
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", String.valueOf(Helper.getUserId()));
+        map.put("authToken", Helper.getToken());
+        map.put("consumeCC", String.valueOf(totalCC));
+        map.put("consumeRecordType", String.valueOf(ResultCode.FOOD_CODE));
         map.put("consumeRecordContent", listJson);
-        map.put("consumeRecordTime",String.valueOf(System.currentTimeMillis()/1000));
+        map.put("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
 
 
         LogUtils.e("userid", String.valueOf(Helper.getUserId()));
         LogUtils.e("authToken", Helper.getToken());
         LogUtils.e("consumeCC", String.valueOf(totalCC));
-        LogUtils.e("consumeRecordType", String.valueOf(ResultCode.EAT_CODE));
+        LogUtils.e("consumeRecordType", String.valueOf(ResultCode.FOOD_CODE));
         LogUtils.e("consumeRecordContent", listJson);
         LogUtils.e("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
 
@@ -163,7 +178,13 @@ public class SearchActivity extends AppCompatActivity {
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //            String sql = "select * from foods where name=\""+searchStr+"\"";
-        String sql = "select * from foods where name like \'%" + searchStr + "%\'";
+        String sql;
+        if (searchType == ResultCode.FOOD_CODE) {
+            sql = "select * from foods where name like \'%" + searchStr + "%\'";
+        } else {
+            sql = "select * from activities where name like \'%" + searchStr + "%\'";
+        }
+
         LogUtils.e(sql);
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -189,7 +210,6 @@ public class SearchActivity extends AppCompatActivity {
         db.close();
 
     }
-
 
 
     private void initializeSlidingDeck() {
@@ -240,9 +260,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void initOptionFood(){
+    private void initOptionFood() {
         //选项选择器
         pvOptions = new OptionsPickerView(this);
 
@@ -268,10 +286,29 @@ public class SearchActivity extends AppCompatActivity {
         pvOptions.setSelectOptions(1, 10);
 
 
+    }
+
+    private void initOptionSport() {
+        //选项选择器
+        pvOptions = new OptionsPickerView(this);
+
+        for (int i = 0; i < 100; i++) {
+            options1ItemsSports.add(i + "分钟");
+        }
+
+
+        pvOptions.setPicker(options1ItemsSports);
+        //设置选择的三级单位
+//        pwOptions.setLabels("省", "市", "区");
+        pvOptions.setTitle("选择运动时长");
+        pvOptions.setCyclic(false, true, true);
+        //设置默认选中的三级项目
+        pvOptions.setSelectOptions(10);
+
 
     }
 
-    private void setOptionFood(final Food bean){
+    private void setOptionFood(final Food bean) {
 
         slidingDeck.setEmptyView(findViewById(R.id.emptyView));
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
@@ -280,16 +317,37 @@ public class SearchActivity extends AppCompatActivity {
                 SlidingDeckModel slidingDeckModel = new SlidingDeckModel();
                 double aloneCC = bean.getCalory();
                 slidingDeckModel.setAloneCC(aloneCC);
-                Integer gram = options2Items.get(options1).get(option2);
-                slidingDeckModel.setGram(gram);
+                if (searchType == ResultCode.FOOD_CODE) {
+                    Integer gram = options2Items.get(options1).get(option2);
+                    slidingDeckModel.setGram(gram);
+                    slidingDeckModel.setTotalCC(aloneCC * (gram / 100));
+                    slidingDeckModel.setSlidingTime(options1Items.get(options1));
+                } else {
+                    slidingDeckModel.setSlidingTime(options1ItemsSports.get(options1));
+                }
+
+
                 slidingDeckModel.setSlidingName(bean.getName());
-                slidingDeckModel.setSlidingTime(options1Items.get(options1));
-                slidingDeckModel.setTotalCC(aloneCC * (gram / 100));
-                LogUtils.e("有执行插入吗");
+
+
                 slidingAdapter.insert(slidingDeckModel, 0);//插入在第一条
                 slidingAdapter.notifyDataSetChanged();
             }
         });
     }
+
+    private void initToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
 
 }

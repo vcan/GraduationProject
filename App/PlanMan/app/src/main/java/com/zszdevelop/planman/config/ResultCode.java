@@ -26,7 +26,7 @@ public class ResultCode {
     public static final int FIRST_PAGE_CODE = 1;
 
     // 吃
-    public static final int EAT_CODE = 1;
+    public static final int FOOD_CODE= 1;
 
     // 运动
     public static final int SPORTS_CODE = 2;

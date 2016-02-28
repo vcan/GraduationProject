@@ -9,9 +9,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -167,6 +170,16 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+                intent.putExtra("SearchType",ResultCode.FOOD_CODE);
+                startActivity(intent);
+            }
+        });
+
+        rlIcon2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+                intent.putExtra("SearchType",ResultCode.SPORTS_CODE);
                 startActivity(intent);
             }
         });
@@ -176,6 +189,30 @@ public class MainActivity extends BaseActivity {
 
 
     private void initListener() {
+
+
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                Snackbar.make(MainActivity.this, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                menuItem.setChecked(true);
+                Intent intent;
+                switch (menuItem.getItemId()){
+                    case R.id.navigation_search_food:
+                        intent = new Intent(MainActivity.this,SearchActivity.class);
+                        intent.putExtra("SearchType",ResultCode.FOOD_CODE);
+                        startActivity(intent);
+                        break;
+
+                    case R.id.navigation_search_sport:
+                        intent = new Intent(MainActivity.this,SearchActivity.class);
+                        intent.putExtra("SearchType",ResultCode.SPORTS_CODE);
+                        startActivity(intent);
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
            }
 
@@ -289,11 +326,19 @@ public class MainActivity extends BaseActivity {
     private void initToolbar() {
         toolbar.setTitle("型男计划");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setHomeAsUpIndicator(R.drawable.smssdk_search_icon);
+        }
+        ActionBarDrawerToggle  mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
+                R.string.drawer_close);
+        mDrawerToggle.syncState();
+        drawerLayout.setDrawerListener(mDrawerToggle);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                drawerLayout.openDrawer(GravityCompat.START);
 
             }
         });
@@ -321,4 +366,9 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
 }
