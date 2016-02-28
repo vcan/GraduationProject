@@ -21,10 +21,6 @@
 
             <include layout="@layout/toolbar" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs_change"
@@ -43,9 +39,6 @@
                     android:id="@+id/plmrv_consume_record"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
-
-
-            </LinearLayout>
 
 
 

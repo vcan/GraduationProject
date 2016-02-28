@@ -1,13 +1,19 @@
 package com.zszdevelop.planman.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +63,10 @@ public class SearchActivity extends AppCompatActivity {
     TextView tvSearchSave;
     @Bind(R.id.tv_search_title)
     TextView tvSearchTitle;
+    @Bind(R.id.navigation)
+    NavigationView navigation;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     private DatabaseHelper helper;
 
     List<Food> foods = new ArrayList<>();
@@ -340,11 +350,53 @@ public class SearchActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
+                R.string.drawer_close);
+        mDrawerToggle.syncState();
+        drawerLayout.setDrawerListener(mDrawerToggle);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                drawerLayout.openDrawer(GravityCompat.START);
+
+            }
+        });
+
+
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                Snackbar.make(MainActivity.this, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                menuItem.setChecked(true);
+                Intent intent;
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_mian:
+                        intent = new Intent(SearchActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_record_figure:
+                            intent = new Intent(SearchActivity.this, RecordFigureActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_search_food:
+                        intent = new Intent(SearchActivity.this, SearchActivity.class);
+                        intent.putExtra("SearchType", ResultCode.FOOD_CODE);
+                        startActivity(intent);
+                        finish();
+                        break;
+
+                    case R.id.navigation_search_sport:
+                        intent = new Intent(SearchActivity.this, SearchActivity.class);
+                        intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return true;
             }
         });
     }

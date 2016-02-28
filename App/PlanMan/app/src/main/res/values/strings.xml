@@ -7,4 +7,6 @@
     <string name="plan_search_sport">查询运动消耗</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
+    <string name="my_mian">首页</string>
+    <string name="plan_record_figure">记录身材</string>
 </resources>
