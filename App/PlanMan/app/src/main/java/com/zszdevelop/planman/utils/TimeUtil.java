@@ -1,5 +1,8 @@
 package com.zszdevelop.planman.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by ShengZhong on 2015/12/27.
  * 时间戳转换工具
@@ -40,6 +43,13 @@ public class TimeUtil {
             gapTime = s/60/60/24/30+"月前";
         }
         return gapTime;
+    }
+
+
+
+    public static String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
     }
 
 }

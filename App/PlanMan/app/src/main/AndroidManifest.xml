@@ -41,7 +41,8 @@
         <activity
             android:name=".activity.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.RecordFigureActivity"></activity>
+        <activity android:name=".activity.RecordFigureActivity" />
+        <activity android:name=".activity.PlanActivity"></activity>
     </application>
 
 </manifest>

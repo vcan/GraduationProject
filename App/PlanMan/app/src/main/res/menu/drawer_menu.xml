@@ -8,7 +8,7 @@
             android:title="@string/my_mian"/>
 
         <item
-            android:id="@+id/navigation_original"
+            android:id="@+id/navigation_plan"
             android:icon="@drawable/smssdk_search_icon"
             android:title="@string/my_plan"/>
 

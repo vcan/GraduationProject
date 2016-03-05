@@ -25,13 +25,13 @@ public class API {
    /*十三：获取消耗纪录*/
    public static final String SUBMIT_CONSUME_RECORD_URI ="ConsumeRecordServlet?";
 
- /*十三：获取消耗纪录*/
+    /*十三：获取消耗纪录*/
    public static final String CONSUME_RECORD_URI ="ConsumeRecordServlet?userId=%d";
 
- /*十八：第一条身材记录*/
+    /*十八：第一条身材记录*/
    public static final String FIRST_RECORD_FIGUTR_URI ="FirstGoalRecordServlet?userId=%d&goalRecordType=%d";
 
- /*十八：第一条身材记录*/
+    /*十九：第一条身材记录*/
    public static final String SUBMIT_FIGUTR_URI ="GoalRecordServlet";
 
 

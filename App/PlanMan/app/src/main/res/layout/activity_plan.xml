@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.zszdevelop.planman.activity.PlanActivity">
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="目标类型:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_type"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="体重"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/view_line"/> <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="目标值:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_goal_value"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="60kg"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/view_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="当前值:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_current_value"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="60kg"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/view_line"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="达成时间:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_goal_time"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="2015.9.30"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/view_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="计划开始时间:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_current_time"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="2015.9.30"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/view_line"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_distance"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/text_content"
+                    android:text="添加备注:"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_choose_describe"
+                    android:layout_marginLeft="@dimen/default_distance"
+                    android:layout_width="match_parent"
+                    style="@style/text_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccent"
+                    android:text="我一定要完成,加油"
+                    android:drawableRight="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+
+        <!-- Drawer -->
+        <android.support.design.widget.NavigationView
+            android:layout_marginTop="56dp"
+            android:id="@+id/navigation"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/drawer_menu" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

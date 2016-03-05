@@ -23,7 +23,6 @@ import com.zszdevelop.planman.http.ToastUtil;
 import com.zszdevelop.planman.utils.RiseNumberTextView;
 import com.zszdevelop.planman.utils.TimeUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,7 +120,7 @@ public class FigureFragment extends BaseFragment {
 //        String[] split = format.split(".");
 //        pvOptions.setSelectOptions(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
 
-        pvOptions.setSelectOptions(50,0);
+        pvOptions.setSelectOptions(50, 0);
 
     }
 
@@ -171,7 +170,7 @@ public class FigureFragment extends BaseFragment {
                     return;
                 }
 
-                tvFigureTime.setText(getTime(date));
+                tvFigureTime.setText(TimeUtil.getTime(date));
             }
         });
 
@@ -199,7 +198,7 @@ public class FigureFragment extends BaseFragment {
 
     private void fillData() {
 
-        tvFigureTime.setText(getTime(new Date()));
+        tvFigureTime.setText(TimeUtil.getTime(new Date()));
 
         String url = String.format(API.FIRST_RECORD_FIGUTR_URI, Helper.getUserId(), type);
         HttpRequest.get(url, new HttpRequestListener() {
@@ -263,10 +262,6 @@ public class FigureFragment extends BaseFragment {
         });
     }
 
-    public static String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return String.format("时间:%s",format.format(date));
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
