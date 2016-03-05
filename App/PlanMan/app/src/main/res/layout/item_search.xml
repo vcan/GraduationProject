@@ -34,13 +34,7 @@
                 android:layout_below="@+id/tv_search_title"
                 android:layout_marginTop="@dimen/default_distance"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/iv_phone"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/ic_local_phone_black_24dp"
 
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

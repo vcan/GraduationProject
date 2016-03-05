@@ -31,5 +31,6 @@ public class ResultCode {
     // 运动
     public static final int SPORTS_CODE = 2;
 
-
+    // 修改成功
+    public static final int MODIFY_SUCCESS = 1;
 }

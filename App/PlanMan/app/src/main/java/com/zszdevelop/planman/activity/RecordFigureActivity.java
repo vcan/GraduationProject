@@ -57,12 +57,12 @@ public class RecordFigureActivity extends AppCompatActivity {
 
         initToolbar();
 
-        fragmentList.add(new FigureFragment());
-        fragmentList.add(new FigureFragment());
-        fragmentList.add(new FigureFragment());
-        fragmentList.add(new FigureFragment());
-        fragmentList.add(new FigureFragment());
-        fragmentList.add(new FigureFragment());
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.WEIGHT_CODE));
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.CHEST_CODE));
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.LOIN_CODE));
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.LEFT_ARM_CODE));
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.RIGHT_ARM_CODE));
+        fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.SHOULDER_CODE));
 
         FigureAdapter figureAdapter = new FigureAdapter(getSupportFragmentManager(),this,fragmentList);
         vpRecordFigure.setAdapter(figureAdapter);
