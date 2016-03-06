@@ -40,6 +40,9 @@ public class API {
     /*十九：提交身材记录*/
    public static final String SUBMIT_FIGUTR_URI ="GoalRecordServlet";
 
+    /*二十：修改计划完成度*/
+   public static final String MODIFY_GOAL_COMPLETE_URI ="ModifyGoalStutusServlet";
+
 
 
 

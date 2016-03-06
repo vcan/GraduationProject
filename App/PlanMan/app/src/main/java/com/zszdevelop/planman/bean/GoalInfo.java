@@ -10,7 +10,19 @@ public class GoalInfo extends BaseBean{
 	private long startTime;
 	private long stopTime;
 	private int goalType;
+
+	public int getGoalStatus() {
+		return goalStatus;
+	}
+
+	public void setGoalStatus(int goalStatus) {
+		this.goalStatus = goalStatus;
+	}
+
+	private int goalStatus;
 	private String goalDescribe;
+
+
 
 	public int getGoalId() {
 		return goalId;

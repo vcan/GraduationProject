@@ -36,7 +36,7 @@ public class GoalInfoImpl implements GoalInfoDao{
 			ps.setInt(6, goalInfo.getGoalStatus());
 			ps.setString(7, goalInfo.getGoalDescribe());
 			System.out.println(">>>>>"+goalInfo.getGoalDescribe());
-			ps.setFloat(8, userId);
+			ps.setInt(8, userId);
 			int executeUpdate = ps.executeUpdate();
 			if (executeUpdate > 0) {
 				b = true;
@@ -83,6 +83,39 @@ public class GoalInfoImpl implements GoalInfoDao{
 		}
 		
 		return lists;
+	}
+
+	@Override
+	public boolean modifyGoalStatus(int goalId, int userId) {
+
+		boolean b = false;
+		
+
+		// 根据更新
+		String sql = "update GoalInfo set goalStatus = 1 where userId=? and goalId = ?";
+		System.out.println("查询的sql:" + sql);
+		try {
+			conn = BaseConnection.getConnection();
+			ps = (PreparedStatement) conn.prepareStatement(sql);
+			ps.setInt(1,userId);
+			ps.setInt(2, goalId);
+			
+			int executeUpdate = ps.executeUpdate();
+			if (executeUpdate > 0) {
+				b = true;
+			}else {
+				b = false;
+			}
+			ps.close();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			BaseConnection.closeResource(rs, ps, conn);
+		}
+
+		return b;
 	}
 
 }

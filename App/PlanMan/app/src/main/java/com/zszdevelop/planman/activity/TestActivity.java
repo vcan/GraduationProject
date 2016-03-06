@@ -5,12 +5,7 @@ import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +19,7 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.adapter.ConsumeRecordAdapter;
-import com.zszdevelop.planman.adapter.MainAdapter;
+import com.zszdevelop.planman.adapter.TestAdapter;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
@@ -33,7 +27,6 @@ import com.zszdevelop.planman.bean.GoalRecordInfo;
 import com.zszdevelop.planman.bean.HomeInfo;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
-import com.zszdevelop.planman.fragment.PlanChangeFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.LogUtils;
@@ -46,49 +39,27 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class TestActivity extends BaseActivity {
 
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.plmrv_consume_record)
     PullLoadMoreRecyclerView plmrvConsumeRecord;
     @Bind(R.id.navigation)
     NavigationView navigation;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.tabs_change)
-    TabLayout tabsChange;
-    @Bind(R.id.vp_main_change)
-    ViewPager vpMainChange;
-    private List<Fragment> list_fragment = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordWeights = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordChests = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordLoins = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordLeftArms = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordRightArms = new ArrayList<>();
-    ArrayList<GoalRecordInfo> goalRecordShoulder = new ArrayList<>();
 
 
     List<ConsumeRecordInfo> consumeRecords = new ArrayList<>();
+    private TestAdapter testAdapter;
 
-
-    FragmentManager supportFragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-    private PlanChangeFragment fragment;
-    private ConsumeRecordAdapter consumeAdapter;
-    private PlanChangeFragment weightsFragment;
-    private PlanChangeFragment chestsFragment;
-    private PlanChangeFragment loinsFragment;
-    private PlanChangeFragment leftArmsFragment;
-    private PlanChangeFragment rightArmsFragment;
-    private PlanChangeFragment shoulderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
 
         initView();
@@ -169,7 +140,7 @@ public class MainActivity extends BaseActivity {
         rlIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(TestActivity.this, SearchActivity.class);
                 intent.putExtra("SearchType", ResultCode.FOOD_CODE);
                 startActivity(intent);
             }
@@ -178,7 +149,7 @@ public class MainActivity extends BaseActivity {
         rlIcon2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(TestActivity.this, SearchActivity.class);
                 intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
                 startActivity(intent);
             }
@@ -187,7 +158,7 @@ public class MainActivity extends BaseActivity {
         rlIcon3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RecordFigureActivity.class);
+                Intent intent = new Intent(TestActivity.this, RecordFigureActivity.class);
                 startActivity(intent);
             }
         });
@@ -204,7 +175,6 @@ public class MainActivity extends BaseActivity {
 
     private void fillData() {
 //        int userId = Helper.getInstance().getBaseUser().getUserId();
-
         String url = String.format(API.MAIN_URI, Helper.getUserId());
         HttpRequest.get(url, new HttpRequestListener() {
             @Override
@@ -214,70 +184,18 @@ public class MainActivity extends BaseActivity {
                 Gson gson = new Gson();
                 HomeInfo homeInfo = gson.fromJson(json, HomeInfo.class);
                 ArrayList<GoalRecordInfo> goalRecordInfos = homeInfo.getGoalRecordInfos();
-                for (int i = 0; i < goalRecordInfos.size(); i++) {
-                    GoalRecordInfo goalRecordInfo = goalRecordInfos.get(i);
-                    int goalRecordType = goalRecordInfo.getGoalRecordType();
-                    switch (goalRecordType) {
-
-                        case ResultCode.WEIGHT_CODE:
-                            goalRecordWeights.add(goalRecordInfo);
-
-                            break;
-
-                        case ResultCode.CHEST_CODE:
-                            goalRecordChests.add(goalRecordInfo);
-
-                            break;
-
-                        case ResultCode.LOIN_CODE:
-                            goalRecordLoins.add(goalRecordInfo);
-                            break;
-
-                        case ResultCode.LEFT_ARM_CODE:
-                            goalRecordLeftArms.add(goalRecordInfo);
-                            break;
-
-                        case ResultCode.RIGHT_ARM_CODE:
-                            goalRecordRightArms.add(goalRecordInfo);
-                            break;
-
-                        case ResultCode.SHOULDER_CODE:
-                            goalRecordShoulder.add(goalRecordInfo);
-                            break;
-
-                    }
-                }
-
-                weightsFragment = PlanChangeFragment.newInstanceFragment(goalRecordWeights);
-                chestsFragment = PlanChangeFragment.newInstanceFragment(goalRecordChests);
-                loinsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLoins);
-                leftArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLeftArms);
-                rightArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordRightArms);
-                shoulderFragment = PlanChangeFragment.newInstanceFragment(goalRecordShoulder);
-
-                list_fragment.add(weightsFragment);
-                list_fragment.add(chestsFragment);
-                list_fragment.add(loinsFragment);
-                list_fragment.add(leftArmsFragment);
-                list_fragment.add(rightArmsFragment);
-                list_fragment.add(shoulderFragment);
-
-
-                MainAdapter pagerAdapter = new MainAdapter(getSupportFragmentManager(), MainActivity.this, list_fragment);
-                vpMainChange.setAdapter(pagerAdapter);
-                tabsChange.setTabMode(TabLayout.MODE_FIXED);
-                tabsChange.setupWithViewPager(vpMainChange);
+                testAdapter.setGoalRecordData(goalRecordInfos);
+                testAdapter.notifyDataSetChanged();
 
             }
         });
-
 
     }
 
 
     private void fillConsumeRecordData() {
 
-        consumeAdapter.clear();
+        testAdapter.clear();
 
         loadConsumeRecordData(ResultCode.FIRST_PAGE_CODE);
 
@@ -293,8 +211,8 @@ public class MainActivity extends BaseActivity {
                 Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
                 }.getType();
                 consumeRecords = gson.fromJson(json, listType);
-                consumeAdapter.appendData(consumeRecords);
-                consumeAdapter.notifyDataSetChanged();
+                testAdapter.appendData(consumeRecords);
+                testAdapter.notifyDataSetChanged();
                 plmrvConsumeRecord.setPullLoadMoreCompleted();
             }
         });
@@ -326,33 +244,33 @@ public class MainActivity extends BaseActivity {
                 Intent intent;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_mian:
-                        intent = new Intent(MainActivity.this, MainActivity.class);
+                        intent = new Intent(TestActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_new_plan:
-                        intent = new Intent(MainActivity.this, InsertPlanActivity.class);
+                        intent = new Intent(TestActivity.this, InsertPlanActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_plan:
-                        intent = new Intent(MainActivity.this, MyPlanActivity.class);
+                        intent = new Intent(TestActivity.this, MyPlanActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_record_figure:
-                        intent = new Intent(MainActivity.this, RecordFigureActivity.class);
+                        intent = new Intent(TestActivity.this, RecordFigureActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_search_food:
-                        intent = new Intent(MainActivity.this, SearchActivity.class);
+                        intent = new Intent(TestActivity.this, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.FOOD_CODE);
                         startActivity(intent);
                         break;
 
                     case R.id.navigation_search_sport:
-                        intent = new Intent(MainActivity.this, SearchActivity.class);
+                        intent = new Intent(TestActivity.this, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
                         startActivity(intent);
                         break;
@@ -367,8 +285,8 @@ public class MainActivity extends BaseActivity {
     int currentPage = 1;
 
     private void initRecyclerView() {
-        consumeAdapter = new ConsumeRecordAdapter(this, R.layout.item_consume_record, consumeRecords);
-        plmrvConsumeRecord.setAdapter(consumeAdapter);
+        testAdapter = new TestAdapter(this, R.layout.item_mian_header,R.layout.item_consume_record, consumeRecords);
+        plmrvConsumeRecord.setAdapter(testAdapter);
         plmrvConsumeRecord.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {

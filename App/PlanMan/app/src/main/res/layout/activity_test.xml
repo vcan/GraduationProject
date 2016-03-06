@@ -24,23 +24,10 @@
             <include layout="@layout/toolbar" />
 
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs_change"
-                    android:layout_width="match_parent"
-                    app:tabIndicatorColor="@color/colorAccent"
-                    app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@color/colorPrimary"
-
-                    android:layout_height="@dimen/distance_48dp" />
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/vp_main_change"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"></android.support.v4.view.ViewPager>
-
-                <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
-                    android:id="@+id/plmrv_consume_record"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
+            <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
+                android:id="@+id/plmrv_consume_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
 
 
 
