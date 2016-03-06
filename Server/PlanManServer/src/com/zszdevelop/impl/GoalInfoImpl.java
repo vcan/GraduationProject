@@ -23,7 +23,7 @@ public class GoalInfoImpl implements GoalInfoDao{
 		boolean b = false;
 
 		// 根据更新
-		String sql = "insert GoalInfo (startGoal,stopGoal,startTime,stopTime,goalType,goalStatus,userId) values(?,?,?,?,?,?,?)";
+		String sql = "insert GoalInfo (startGoal,stopGoal,startTime,stopTime,goalType,goalStatus,goalDescribe,userId) values(?,?,?,?,?,?,?,?)";
 		System.out.println("查询的sql:" + sql);
 		try {
 			conn = BaseConnection.getConnection();
@@ -34,7 +34,9 @@ public class GoalInfoImpl implements GoalInfoDao{
 			ps.setString(4, goalInfo.getStopTime());
 			ps.setInt(5, goalInfo.getGoalType());
 			ps.setInt(6, goalInfo.getGoalStatus());
-			ps.setFloat(7, userId);
+			ps.setString(7, goalInfo.getGoalDescribe());
+			System.out.println(">>>>>"+goalInfo.getGoalDescribe());
+			ps.setFloat(8, userId);
 			int executeUpdate = ps.executeUpdate();
 			if (executeUpdate > 0) {
 				b = true;
@@ -71,6 +73,7 @@ public class GoalInfoImpl implements GoalInfoDao{
 				goalInfo.setStopGoal(rs.getFloat("stopGoal"));
 				goalInfo.setStartTime(rs.getString("startTime"));
 				goalInfo.setStopTime(rs.getString("stopTime"));
+				goalInfo.setGoalDescribe(rs.getString("goalDescribe"));
 				lists.add(goalInfo);
 				
 			}

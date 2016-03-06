@@ -74,6 +74,8 @@ public class GoalInfoServlet extends HttpServlet {
 		String stopTime = request.getParameter("stopTime");
 		String goalType = request.getParameter("goalType");
 		String goalStatus = request.getParameter("goalStatus");
+		String goalDescribe = request.getParameter("goalDescribe");
+		System.out.println(goalDescribe+">>>>");
 
 		// 对数据进行一个容错处理
 		userId = userId == null ? "0" : userId;
@@ -90,6 +92,7 @@ public class GoalInfoServlet extends HttpServlet {
 		goalInfo.setStopGoal(Float.parseFloat(stopGoal));
 		goalInfo.setStartTime(startTime);
 		goalInfo.setStopTime(stopTime);
+		goalInfo.setGoalDescribe(goalDescribe);
 		
 		GoalInfoDao goalInfoDao = new GoalInfoImpl();
 		boolean insertGoalInfo = goalInfoDao.insertGoalInfo(goalInfo, Integer.parseInt(userId));

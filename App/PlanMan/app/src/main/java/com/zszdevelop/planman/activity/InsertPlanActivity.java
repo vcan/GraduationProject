@@ -15,19 +15,24 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.FigureType;
 import com.zszdevelop.planman.bean.GoalInfo;
+import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.http.HttpRequest;
+import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
 import com.zszdevelop.planman.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PlanActivity extends AppCompatActivity {
+public class InsertPlanActivity extends AppCompatActivity {
 
 
     @Bind(R.id.toolbar)
@@ -48,6 +53,8 @@ public class PlanActivity extends AppCompatActivity {
     NavigationView navigation;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @Bind(R.id.tv_plan_complete)
+    TextView tvPlanComplete;
 
 
     private TimePickerView pvTime;
@@ -62,11 +69,12 @@ public class PlanActivity extends AppCompatActivity {
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<>();
 
     private GoalInfo goalInfo = new GoalInfo();
+    private TimePickerView pvGoalTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plan);
+        setContentView(R.layout.activity_instert_plan);
         ButterKnife.bind(this);
 
         initView();
@@ -79,6 +87,7 @@ public class PlanActivity extends AppCompatActivity {
         initToolbar();
         initOptionFigure();
         initOptionTime();
+        initOptionGoalTime();
         initOptionPlanType();
     }
 
@@ -127,20 +136,24 @@ public class PlanActivity extends AppCompatActivity {
 
             @Override
             public void onTimeSelect(Date date) {
-                if (isGoalTime) {
-                    if (date.getTime() < System.currentTimeMillis() + 1000 * 60 * 10) {
-                        ToastUtil.showToast("目标时间不能小于当前时间");
-                        return;
-                    }
-                    goalInfo.setStopTime(String.valueOf(date.getTime()));
-                    tvChooseGoalTime.setText(TimeUtil.getTime(date));
 
-                } else {
 
-                    goalInfo.setStartTime(String.valueOf(date.getTime()));
-                    tvChooseCurrentTime.setText(TimeUtil.getTime(date));
+                goalInfo.setStartTime(date.getTime());
+                tvChooseCurrentTime.setText(TimeUtil.getTime(date));
+            }
+        });
 
+        pvGoalTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+
+            @Override
+            public void onTimeSelect(Date date) {
+                if (date.getTime() < System.currentTimeMillis() + 1000 * 60 * 10) {
+                    ToastUtil.showToast("目标时间不能小于当前时间");
+                    return;
                 }
+                goalInfo.setStopTime(date.getTime());
+                tvChooseGoalTime.setText(TimeUtil.getTime(date));
+
             }
         });
 
@@ -150,11 +163,11 @@ public class PlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isGoalTime = true;
-                pvTime.show();
+                pvGoalTime.show();
             }
         });
 
-         //弹出时间选择器
+        //弹出时间选择器
         tvChooseCurrentTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -185,19 +198,53 @@ public class PlanActivity extends AppCompatActivity {
         tvChooseDescribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(InsertPlanActivity.this, ModifyTextActivity.class);
+                startActivityForResult(intent, ResultCode.MODIFY_DESCRIBE);
+            }
+        });
 
+        tvPlanComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitData();
             }
         });
     }
 
+    // 提交数据
+    private void submitData() {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("userId", String.valueOf(Helper.getUserId()));
+        map.put("authToken",Helper.getToken());
+        map.put("goalType",String.valueOf(goalInfo.getGoalType()));
+        map.put("stopTime",String.valueOf(goalInfo.getStopTime()));
+        map.put("startTime",String.valueOf(goalInfo.getStartTime()));
+        map.put("stopGoal",String.valueOf(goalInfo.getStopGoal()));
+        map.put("startGoal",String.valueOf(goalInfo.getStartGoal()));
+        map.put("goalDescribe", goalInfo.getGoalDescribe());
 
+        HttpRequest.post(API.INSTER_GOAL_URI, map, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                ToastUtil.showToast("charu chenggong");
+            }
+        });
+    }
+
+    // 添加默认数据
     private void fillData() {
+        goalInfo.setGoalDescribe("我一定要完成,加油");
+        goalInfo.setStopGoal(60);
+        goalInfo.setStartGoal(60);
+        goalInfo.setStartTime(System.currentTimeMillis());
+        goalInfo.setStopTime(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000);
+        goalInfo.setGoalType(ResultCode.WEIGHT_CODE);
     }
 
 
     private void initOptionFigure() {
         //选项选择器
-        pvOptions = new OptionsPickerView(PlanActivity.this);
+        pvOptions = new OptionsPickerView(InsertPlanActivity.this);
         for (int i = 0; i < 300; i++) {
             options1Items.add(i);
         }
@@ -226,13 +273,13 @@ public class PlanActivity extends AppCompatActivity {
 
     private void initOptionPlanType() {
         //选项选择器
-        pvOptionsType = new OptionsPickerView(PlanActivity.this);
-        options1ItemTypes.add(new FigureType(ResultCode.SHOULDER_CODE,"肩宽"));
-        options1ItemTypes.add(new FigureType(ResultCode.LOIN_CODE,"腰围"));
-        options1ItemTypes.add(new FigureType(ResultCode.WEIGHT_CODE,"体重"));
-        options1ItemTypes.add(new FigureType(ResultCode.CHEST_CODE,"胸围"));
-        options1ItemTypes.add(new FigureType(ResultCode.LEFT_ARM_CODE,"左臂围"));
-        options1ItemTypes.add(new FigureType(ResultCode.RIGHT_ARM_CODE,"右臂围"));
+        pvOptionsType = new OptionsPickerView(InsertPlanActivity.this);
+        options1ItemTypes.add(new FigureType(ResultCode.SHOULDER_CODE, "肩宽"));
+        options1ItemTypes.add(new FigureType(ResultCode.LOIN_CODE, "腰围"));
+        options1ItemTypes.add(new FigureType(ResultCode.WEIGHT_CODE, "体重"));
+        options1ItemTypes.add(new FigureType(ResultCode.CHEST_CODE, "胸围"));
+        options1ItemTypes.add(new FigureType(ResultCode.LEFT_ARM_CODE, "左臂围"));
+        options1ItemTypes.add(new FigureType(ResultCode.RIGHT_ARM_CODE, "右臂围"));
 
 
         //三级联动效果
@@ -247,13 +294,25 @@ public class PlanActivity extends AppCompatActivity {
     private void initOptionTime() {
         //时间选择器
 //            pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
-        pvTime = new TimePickerView(PlanActivity.this, TimePickerView.Type.YEAR_MONTH_DAY);
+        pvTime = new TimePickerView(InsertPlanActivity.this, TimePickerView.Type.YEAR_MONTH_DAY);
         //控制时间范围
 //        Calendar calendar = Calendar.getInstance();
 //        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));
         pvTime.setTime(new Date());
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
+    }
+
+    private void initOptionGoalTime() {
+        //时间选择器
+//            pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+        pvGoalTime = new TimePickerView(InsertPlanActivity.this, TimePickerView.Type.YEAR_MONTH_DAY);
+        //控制时间范围
+//        Calendar calendar = Calendar.getInstance();
+//        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));
+        pvGoalTime.setTime(new Date());
+        pvGoalTime.setCyclic(false);
+        pvGoalTime.setCancelable(true);
     }
 
 
@@ -282,28 +341,28 @@ public class PlanActivity extends AppCompatActivity {
                 Intent intent;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_mian:
-                        intent = new Intent(PlanActivity.this, MainActivity.class);
+                        intent = new Intent(InsertPlanActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_plan:
-                        intent = new Intent(PlanActivity.this, PlanActivity.class);
+                        intent = new Intent(InsertPlanActivity.this, InsertPlanActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_record_figure:
-                        intent = new Intent(PlanActivity.this, RecordFigureActivity.class);
+                        intent = new Intent(InsertPlanActivity.this, RecordFigureActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.navigation_search_food:
-                        intent = new Intent(PlanActivity.this, SearchActivity.class);
+                        intent = new Intent(InsertPlanActivity.this, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.FOOD_CODE);
                         startActivity(intent);
                         break;
 
                     case R.id.navigation_search_sport:
-                        intent = new Intent(PlanActivity.this, SearchActivity.class);
+                        intent = new Intent(InsertPlanActivity.this, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
                         startActivity(intent);
                         break;
@@ -313,5 +372,22 @@ public class PlanActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        switch (requestCode) {
+            case ResultCode.MODIFY_DESCRIBE:
+                String modifyResult = data.getStringExtra("modifyResult");
+                tvChooseDescribe.setText(modifyResult);
+                goalInfo.setGoalDescribe(modifyResult);
+                break;
+        }
     }
 }

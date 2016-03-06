@@ -11,7 +11,13 @@ public class TimeUtil {
 //    String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(Unix timestamp * 1000))
     public static String timestampToData(long timestamp){
 
-        String date = new java.text.SimpleDateFormat("MM-dd").format(new java.util.Date(timestamp * 1000));
+        String date = new java.text.SimpleDateFormat("MM-dd").format(new java.util.Date(timestamp));
+        return date;
+    }
+
+ public static String timestampToYMD(long timestamp){
+
+        String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(timestamp));
         return date;
     }
 

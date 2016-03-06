@@ -13,6 +13,11 @@
             android:title="@string/my_plan"/>
 
         <item
+            android:id="@+id/navigation_new_plan"
+            android:icon="@drawable/smssdk_search_icon"
+            android:title="@string/my_new_plan"/>
+
+        <item
             android:id="@+id/navigation_library"
             android:icon="@drawable/smssdk_sharesdk_icon"
             android:title="@string/plan_community"/>

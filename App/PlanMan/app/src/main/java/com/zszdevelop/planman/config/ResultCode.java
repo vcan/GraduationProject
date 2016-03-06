@@ -33,4 +33,9 @@ public class ResultCode {
 
     // 修改成功
     public static final int MODIFY_SUCCESS = 1;
+
+     // 修改描述
+    public static final int MODIFY_DESCRIBE = 10001;
+
+
 }

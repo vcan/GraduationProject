@@ -22,6 +22,12 @@ public class API {
     /*四：首页数据*/
    public static final String MAIN_URI ="HomeServlet?userId=%d";
 
+    /*八：新增一条目标记录*/
+   public static final String INSTER_GOAL_URI="GoalInfoServlet";
+
+    /*九：获取训练计划信息*/
+   public static final String GET_GOAL_PLAN_URI="GoalInfoServlet?userId=%d";
+
    /*十三：获取消耗纪录*/
    public static final String SUBMIT_CONSUME_RECORD_URI ="ConsumeRecordServlet?";
 
@@ -31,7 +37,7 @@ public class API {
     /*十八：第一条身材记录*/
    public static final String FIRST_RECORD_FIGUTR_URI ="FirstGoalRecordServlet?userId=%d&goalRecordType=%d";
 
-    /*十九：第一条身材记录*/
+    /*十九：提交身材记录*/
    public static final String SUBMIT_FIGUTR_URI ="GoalRecordServlet";
 
 

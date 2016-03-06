@@ -42,7 +42,9 @@
             android:name=".activity.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.RecordFigureActivity" />
-        <activity android:name=".activity.PlanActivity"></activity>
+        <activity android:name=".activity.InsertPlanActivity" />
+        <activity android:name=".activity.ModifyTextActivity" />
+        <activity android:name=".activity.MyPlanActivity"></activity>
     </application>
 
 </manifest>

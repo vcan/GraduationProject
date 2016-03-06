@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.zszdevelop.planman.activity.MyPlanActivity">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+
+
+            <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
+                android:id="@+id/plmrv_my_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
+
+
+
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+
+        <!-- Drawer -->
+        <android.support.design.widget.NavigationView
+            android:layout_marginTop="56dp"
+            android:id="@+id/navigation"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/drawer_menu" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+</RelativeLayout>

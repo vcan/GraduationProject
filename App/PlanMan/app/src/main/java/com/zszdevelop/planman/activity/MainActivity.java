@@ -336,8 +336,13 @@ public class MainActivity extends BaseActivity {
                         startActivity(intent);
                         finish();
                         break;
+                    case R.id.navigation_new_plan:
+                        intent = new Intent(MainActivity.this, InsertPlanActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
                     case R.id.navigation_plan:
-                        intent = new Intent(MainActivity.this, PlanActivity.class);
+                        intent = new Intent(MainActivity.this, MyPlanActivity.class);
                         startActivity(intent);
                         finish();
                         break;

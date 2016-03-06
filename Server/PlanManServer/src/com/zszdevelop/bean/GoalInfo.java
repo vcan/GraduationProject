@@ -8,6 +8,17 @@ public class GoalInfo {
 	private String startTime;
 	private String stopTime;
 	private int goalType;
+	
+	private String goalDescribe;
+
+	public String getGoalDescribe() {
+		return goalDescribe;
+	}
+
+	public void setGoalDescribe(String goalDescribe) {
+		this.goalDescribe = goalDescribe;
+	}
+	
 	public int getGoalType() {
 		return goalType;
 	}
