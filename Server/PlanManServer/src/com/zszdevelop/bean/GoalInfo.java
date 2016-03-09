@@ -8,6 +8,7 @@ public class GoalInfo {
 	private String startTime;
 	private String stopTime;
 	private int goalType;
+	private int goalStatus;
 	
 	private String goalDescribe;
 
@@ -25,7 +26,7 @@ public class GoalInfo {
 	public void setGoalType(int goalType) {
 		this.goalType = goalType;
 	}
-	private int goalStatus;
+	
 	public int getGoalId() {
 		return goalId;
 	}
