@@ -126,8 +126,8 @@
                         android:id="@+id/npb_plan_time"
                         android:layout_width="200dp"
 
-                        custom:progress_unreached_color="@color/black"
-                        custom:progress_reached_color="@color/white"
+                        custom:progress_unreached_color="@color/colorPrimary"
+                        custom:progress_reached_color="@color/black"
 
                         custom:progress_text_size="10sp"
                         custom:progress_text_color="@color/colorAccent"

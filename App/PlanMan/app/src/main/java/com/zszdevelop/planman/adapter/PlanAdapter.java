@@ -58,33 +58,39 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
         holder.tv_plan_goal_describe.setText(item.getGoalDescribe());
 
         String goalStr = "体重";
-        String unitStr = "cm";
+        String unitStr = "kg";
         int goalType = item.getGoalType();
         switch (goalType){
             case ResultCode.WEIGHT_CODE:
                 goalStr = "体重";
-                unitStr = "kg";
+
                 break;
             case ResultCode.CHEST_CODE:
                 goalStr = "胸围";
+                unitStr = "cm";
                 break;
             case ResultCode.LOIN_CODE:
                 goalStr = "腰围";
+                unitStr = "cm";
                 break;
             case ResultCode.LEFT_ARM_CODE:
                 goalStr = "左臂围";
+                unitStr = "cm";
                 break;
             case ResultCode.RIGHT_ARM_CODE:
                 goalStr = "右臂围";
+                unitStr = "cm";
                 break;
             case ResultCode.SHOULDER_CODE:
                 goalStr = "肩宽";
+                unitStr = "cm";
                 break;
 
         }
         holder.tv_plan_title.setText(String.format("目标%s:",goalStr));
         holder.tv_plan_current_value.setText(String.format("训练前%s:  %s%s", goalStr, item.getStartGoal(), unitStr));
         holder.tv_plan_current_time.setText(String.format("训练开始时间:%s", TimeUtil.timestampToYMD(item.getStartTime())));
+        holder.tv_plan_goal_value.setText(String.format("%s%s",item.getStopGoal(),unitStr));
 
         if (item.getGoalStatus() == ResultCode.MODIFY_SUCCESS){
             holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.smssdk_search_icon));
@@ -137,9 +143,12 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        holder.npb_plan_time.setProgress(scaleTime);
-                        holder.npb_plan_time.incrementProgressBy(1);
-                        holder.npb_plan_value.incrementProgressBy(1);
+                        if (holder.npb_plan_time.getProgress()<=scaleTime){
+
+                            holder.npb_plan_time.incrementProgressBy(1);
+                            holder.npb_plan_value.incrementProgressBy(1);
+                        }
+
 
                     }
                 });

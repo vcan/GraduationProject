@@ -41,14 +41,18 @@
         <activity android:name=".activity.InsertPlanActivity" />
         <activity android:name=".activity.ModifyTextActivity" />
         <activity android:name=".activity.MyPlanActivity" />
-     <activity android:name=".activity.TestActivity">
-         <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.TestActivity">
 
-             <category android:name="android.intent.category.LAUNCHER" />
-         </intent-filter>
+        </activity>
+        <activity android:name=".activity.HomeActivity">
 
-     </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
