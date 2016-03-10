@@ -23,6 +23,7 @@ import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
+import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -222,6 +223,16 @@ public class InsertPlanActivity extends AppCompatActivity {
         map.put("stopGoal",String.valueOf(goalInfo.getStopGoal()));
         map.put("startGoal",String.valueOf(goalInfo.getStartGoal()));
         map.put("goalDescribe", goalInfo.getGoalDescribe());
+
+
+        LogUtils.e("userId", String.valueOf(Helper.getUserId()));
+        LogUtils.e("authToken", Helper.getToken());
+        LogUtils.e("goalType", String.valueOf(goalInfo.getGoalType()));
+        LogUtils.e("stopTime", String.valueOf(goalInfo.getStopTime()));
+        LogUtils.e("startTime", String.valueOf(goalInfo.getStartTime()));
+        LogUtils.e("stopGoal", String.valueOf(goalInfo.getStopGoal()));
+        LogUtils.e("startGoal", String.valueOf(goalInfo.getStartGoal()));
+        LogUtils.e("goalDescribe", goalInfo.getGoalDescribe());
 
         HttpRequest.post(API.INSTER_GOAL_URI, map, new HttpRequestListener() {
             @Override

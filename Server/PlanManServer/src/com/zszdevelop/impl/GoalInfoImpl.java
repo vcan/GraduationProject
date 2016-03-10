@@ -31,6 +31,7 @@ public class GoalInfoImpl implements GoalInfoDao{
 			ps.setFloat(1, goalInfo.getStartGoal());
 			ps.setFloat(2, goalInfo.getStopGoal());
 			ps.setString(3, goalInfo.getStartTime());
+			System.out.println("kaishi shijian"+ goalInfo.getStartTime());
 			ps.setString(4, goalInfo.getStopTime());
 			ps.setInt(5, goalInfo.getGoalType());
 			ps.setInt(6, goalInfo.getGoalStatus());

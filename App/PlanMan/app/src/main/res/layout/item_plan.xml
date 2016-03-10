@@ -53,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/tv_plan_current_value"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,16 +126,16 @@
                         android:id="@+id/npb_plan_time"
                         android:layout_width="200dp"
 
-                        custom:progress_unreached_color="#CCCCCC"
-                        custom:progress_reached_color="@color/colorAccent"
+                        custom:progress_unreached_color="@color/black"
+                        custom:progress_reached_color="@color/white"
 
                         custom:progress_text_size="10sp"
-                        custom:progress_text_color="#3498DB"
-                        custom:progress_text_offset="10dp"
+                        custom:progress_text_color="@color/colorAccent"
+                        custom:progress_text_offset="5dp"
                         custom:progress_text_visibility="visible"
 
-                        custom:progress_unreached_bar_height="7.5dp"
-                        custom:progress_reached_bar_height="15dp"
+                        custom:progress_unreached_bar_height="5dp"
+                        custom:progress_reached_bar_height="5dp"
 
 
                         android:layout_height="wrap_content"

@@ -35,7 +35,7 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
 
     private List<GoalInfo> lists;
     private Activity context;
-    private Timer timer;
+
 
     public PlanAdapter(Context context, int layoutResource, List<GoalInfo> consumeRecordInfo) {
         super(context, layoutResource, consumeRecordInfo);
@@ -110,13 +110,34 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
             });
         }
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+//        Timer timerValue = new Timer();
+//        float totalValue = item.getStopGoal() - item.getStartGoal();
+//        float consumeVale = item.get
+//        timerValue.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                context.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        holder.npb_plan_time.incrementProgressBy(1);
+//                        holder.npb_plan_value.incrementProgressBy(1);
+//
+//                    }
+//                });
+//            }
+//        }, 1000, 100);
+
+        long totalTime = item.getStopTime() - item.getStartTime();
+        long consumeTime = System.currentTimeMillis() - item.getStartTime();
+        final int scaleTime = (int)(((float)consumeTime /(float)totalTime)*100);
+        Timer timerTime = new Timer();
+        timerTime.schedule(new TimerTask() {
             @Override
             public void run() {
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        holder.npb_plan_time.setProgress(scaleTime);
                         holder.npb_plan_time.incrementProgressBy(1);
                         holder.npb_plan_value.incrementProgressBy(1);
 

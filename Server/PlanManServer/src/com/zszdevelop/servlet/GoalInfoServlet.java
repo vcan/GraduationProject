@@ -91,6 +91,8 @@ public class GoalInfoServlet extends HttpServlet {
 		goalInfo.setStartGoal(Float.parseFloat(startGoal));
 		goalInfo.setStopGoal(Float.parseFloat(stopGoal));
 		goalInfo.setStartTime(startTime);
+		System.out.println("kaishi:"+startTime);
+		System.out.println("jieshu:"+stopTime);
 		goalInfo.setStopTime(stopTime);
 		goalInfo.setGoalDescribe(goalDescribe);
 		
