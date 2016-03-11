@@ -2,7 +2,6 @@ package com.zszdevelop.planman.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.bean.SlidingDeckModel;
@@ -28,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhangshengzhong on 16/3/6.
+ * Created by zhangshengzhong on 16/3/11.
  */
-public class HomeAdapter extends BaseSectionAdapter<ConsumeRecordInfo> {
+public class MeterialRVAdapter extends BaseSectionAdapter<ConsumeRecordInfo> {
 
-    private BaseActivity context;
+    private Context context;
     private int layoutRes;
     private int headLayout;
     private int otherLayout;
@@ -44,17 +42,19 @@ public class HomeAdapter extends BaseSectionAdapter<ConsumeRecordInfo> {
     private List<Fragment> fragmentLists = new ArrayList<>();
 
 
-    public HomeAdapter(Context context, int layoutRes, List<ConsumeRecordInfo> data) {
+    public MeterialRVAdapter(Context context, int layoutRes, List<ConsumeRecordInfo> data) {
         super(context, layoutRes, data);
+        this.context =context;
+        this.lists = data;
 
     }
 
 
-    public HomeAdapter(Activity context, int headLayout, int layoutRes, List<ConsumeRecordInfo> data) {
+    public MeterialRVAdapter(Activity context, int headLayout, int layoutRes, List<ConsumeRecordInfo> data) {
         this(context, layoutRes, data);
         this.headLayout = headLayout;
         this.layoutRes = layoutRes;
-        this.context = (BaseActivity)context;
+        this.context =context;
         this.lists = data;
     }
 
@@ -110,10 +110,10 @@ public class HomeAdapter extends BaseSectionAdapter<ConsumeRecordInfo> {
             PlanFragment fragment = PlanFragment.newInstanceFragment(goalInfo);
             fragmentLists.add(fragment);
         }
-        HomePagerAdapter pagerAdapter = new HomePagerAdapter(context.getSupportFragmentManager(), context, fragmentLists);
-        holder.vp_home_plan.setAdapter(pagerAdapter);
-        holder.tabs_plan.setTabMode(TabLayout.MODE_FIXED);
-        holder.tabs_plan.setupWithViewPager(holder.vp_home_plan);
+//        HomePagerAdapter pagerAdapter = new HomePagerAdapter(context.getSupportFragmentManager(), context, fragmentLists);
+//        holder.vp_home_plan.setAdapter(pagerAdapter);
+//        holder.tabs_plan.setTabMode(TabLayout.MODE_FIXED);
+//        holder.tabs_plan.setupWithViewPager(holder.vp_home_plan);
     }
 
 

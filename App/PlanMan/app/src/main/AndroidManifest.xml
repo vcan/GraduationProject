@@ -23,9 +23,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -41,18 +39,17 @@
         <activity android:name=".activity.InsertPlanActivity" />
         <activity android:name=".activity.ModifyTextActivity" />
         <activity android:name=".activity.MyPlanActivity" />
-        <activity android:name=".activity.TestActivity">
-
-        </activity>
+        <activity android:name=".activity.TestActivity"></activity>
         <activity android:name=".activity.HomeActivity">
 
+        </activity>
+        <activity android:name=".activity.MaterialMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
