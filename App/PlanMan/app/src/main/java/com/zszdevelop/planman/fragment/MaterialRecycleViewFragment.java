@@ -2,10 +2,13 @@ package com.zszdevelop.planman.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.zszdevelop.planman.R;
@@ -29,6 +32,20 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     @Bind(R.id.plmrv_material)
     PullLoadMoreRecyclerView plmrvMaterial;
+    @Bind(R.id.fab_new_plan)
+    FloatingActionButton fabNewPlan;
+    @Bind(R.id.fab_new_figure)
+    FloatingActionButton fabNewFigure;
+    @Bind(R.id.fab_new_foods)
+    FloatingActionButton fabNewFoods;
+    @Bind(R.id.fab_new_sports)
+    FloatingActionButton fabNewSports;
+    @Bind(R.id.fab_menu)
+    FloatingActionMenu fabMenu;
+
+
+
+    private int mScrollOffset = 4;
     private int currentPage;
     private int actionType;
     List<ConsumeRecordInfo> lists = new ArrayList<>();
@@ -43,7 +60,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         MaterialRecycleViewFragment fragment = new MaterialRecycleViewFragment();
         fragment.actionType = type;
         fragment.goalInfo = goalInfo;
-        fragment.fragment =fragment;
+        fragment.fragment = fragment;
         return fragment;
     }
 
@@ -57,7 +74,6 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         }
         refreshCallBack = (RefreshCallBack) activity;
     }
-
 
 
     //当该Fragment从它所属的Activity中被删除时调用该方法
@@ -82,9 +98,19 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     }
 
 
-
     private void initView() {
         initRecycleView();
+        initFloatActionButton();
+    }
+
+    private void initFloatActionButton() {
+        fabMenu.setClosedOnTouchOutside(true);
+        fabMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMenu.toggle(true);
+            }
+        });
     }
 
     private void fillData() {
@@ -94,7 +120,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
 
         currentPage = 1;
-        refreshCallBack.fillDataListener(currentPage, actionType,fragment);
+        refreshCallBack.fillDataListener(currentPage, actionType, fragment);
     }
 
 
@@ -104,7 +130,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         plmrvMaterial.setLinearLayout();
         plmrvMaterial.getRecyclerView().setHasFixedSize(true);
         // 应用adapter
-        rvAdapter = new TestMaterialRVAdapter(getActivity(),R.layout.item_plan, R.layout.item_consume_record, lists);
+        rvAdapter = new TestMaterialRVAdapter(getActivity(), R.layout.item_plan, R.layout.item_consume_record, lists);
         // 并将应用的adapter 设置给 RecyclerViewMaterialAdapter
         this.adapter = new RecyclerViewMaterialAdapter(rvAdapter);
         plmrvMaterial.setAdapter(this.adapter);
@@ -112,16 +138,29 @@ public class MaterialRecycleViewFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                refreshCallBack.fillDataListener(currentPage, actionType,fragment);
+                refreshCallBack.fillDataListener(currentPage, actionType, fragment);
             }
 
             @Override
             public void onLoadMore() {
-                refreshCallBack.fillDataListener(++currentPage, actionType,fragment);
+                refreshCallBack.fillDataListener(++currentPage, actionType, fragment);
             }
         });
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), plmrvMaterial.getRecyclerView(), null);
+        plmrvMaterial.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (Math.abs(dy) > mScrollOffset) {
+                    if (dy > 0) {
+                        fabMenu.hideMenu(true);
+                    } else {
+                        fabMenu.showMenu(true);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -151,7 +190,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
 
     public interface RefreshCallBack {
-         void fillDataListener(int currentPage,int actionType,MaterialRecycleViewFragment fragment);
+        void fillDataListener(int currentPage, int actionType, MaterialRecycleViewFragment fragment);
     }
 
 }

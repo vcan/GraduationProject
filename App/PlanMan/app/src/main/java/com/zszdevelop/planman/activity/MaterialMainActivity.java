@@ -37,10 +37,6 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     private DrawerLayout drawer_layout_pager;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
-    private MaterialRecycleViewFragment meterialFragment1;
-    private MaterialRecycleViewFragment meterialFragment2;
-    private MaterialRecycleViewFragment meterialFragment3;
-    private MaterialRecycleViewFragment meterialFragment4;
     List<Fragment> fragmentList = new ArrayList<>();
 
     @Override

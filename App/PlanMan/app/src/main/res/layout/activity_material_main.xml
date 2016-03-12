@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout_pager"
     android:layout_width="match_parent"
+    android:background="@color/gray"
     android:layout_height="match_parent">
 
     <com.github.florent37.materialviewpager.MaterialViewPager
