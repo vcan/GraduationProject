@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.base.BaseApplication;
 import com.zszdevelop.planman.base.BaseFragment;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.GoalInfo;
@@ -142,7 +143,7 @@ public class PlanFragment extends BaseFragment {
                     Snackbar.make(v,"此项计划已完成?",Snackbar.LENGTH_LONG).setAction("完成", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            submitGoalComplte(item);
+                            submitGoalComplete(item);
                         }
                     }).show();
 
@@ -206,11 +207,13 @@ public class PlanFragment extends BaseFragment {
         LogUtils.e("onStart");
     }
 
-    private void submitGoalComplte(final GoalInfo item) {
-        HashMap<String,String> map = new HashMap<>();
+    private void submitGoalComplete(final GoalInfo item) {
+
+
+        HashMap<String, String> map = new HashMap<>();
         map.put("userId", String.valueOf(Helper.getUserId()));
         map.put("authToken", Helper.getToken());
-        map.put("goalId",String.valueOf(item.getGoalId()));
+        map.put("goalId", String.valueOf(item.getGoalId()));
 
         HttpRequest.post(API.MODIFY_GOAL_COMPLETE_URI, map, new HttpRequestListener() {
             @Override
@@ -218,14 +221,14 @@ public class PlanFragment extends BaseFragment {
                 LogUtils.e(json);
                 int modifyStatus = JsonUtil.getIntJsonValueByKey(json, "modifyStatus");
                 if (modifyStatus == ResultCode.MODIFY_SUCCESS) {
+
                     item.setGoalStatus(modifyStatus);
-                    ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.smssdk_search_icon));
+                    ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(BaseApplication.getApplication(), R.drawable.smssdk_search_icon));
+
                 }
             }
         });
-
     }
-
 
     private void initListener() {
 

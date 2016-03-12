@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.adapter.MeterialRVAdapter;
+import com.zszdevelop.planman.adapter.TestMaterialRVAdapter;
 import com.zszdevelop.planman.base.BaseFragment;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
+import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -21,22 +24,26 @@ import butterknife.ButterKnife;
 /**
  * Created by zhangshengzhong on 16/3/11.
  */
-public class MeterialRecycleViewFragment extends BaseFragment {
+public class MaterialRecycleViewFragment extends BaseFragment {
 
 
     @Bind(R.id.plmrv_material)
     PullLoadMoreRecyclerView plmrvMaterial;
-    private MeterialRVAdapter adapter;
     private int currentPage;
     private int actionType;
     List<ConsumeRecordInfo> lists = new ArrayList<>();
     private RefreshCallBack refreshCallBack;
+    private RecyclerViewMaterialAdapter adapter;
+    private GoalInfo goalInfo;
+    private TestMaterialRVAdapter rvAdapter;
+    private MaterialRecycleViewFragment fragment;
 
+    public static MaterialRecycleViewFragment newInstanceFragment(int type, GoalInfo goalInfo) {
 
-    public static MeterialRecycleViewFragment newInstanceFragment(int type) {
-
-        MeterialRecycleViewFragment fragment = new MeterialRecycleViewFragment();
+        MaterialRecycleViewFragment fragment = new MaterialRecycleViewFragment();
         fragment.actionType = type;
+        fragment.goalInfo = goalInfo;
+        fragment.fragment =fragment;
         return fragment;
     }
 
@@ -50,6 +57,8 @@ public class MeterialRecycleViewFragment extends BaseFragment {
         }
         refreshCallBack = (RefreshCallBack) activity;
     }
+
+
 
     //当该Fragment从它所属的Activity中被删除时调用该方法
     @Override
@@ -69,6 +78,7 @@ public class MeterialRecycleViewFragment extends BaseFragment {
         initView();
         fillData();
 
+
     }
 
 
@@ -78,30 +88,40 @@ public class MeterialRecycleViewFragment extends BaseFragment {
     }
 
     private void fillData() {
-        adapter.clear();
+
+        // 设置头部文件\
+        rvAdapter.setHeaderData(goalInfo);
+        adapter.notifyDataSetChanged();
+
         currentPage = 1;
-        refreshCallBack.fillDataListener(currentPage, actionType);
+        refreshCallBack.fillDataListener(currentPage, actionType,fragment);
     }
 
 
     private void initRecycleView() {
 
-        adapter = new MeterialRVAdapter(getActivity(), R.layout.item_consume_record,lists);
-        plmrvMaterial.setAdapter(adapter);
+
         plmrvMaterial.setLinearLayout();
+        plmrvMaterial.getRecyclerView().setHasFixedSize(true);
+        // 应用adapter
+        rvAdapter = new TestMaterialRVAdapter(getActivity(),R.layout.item_plan, R.layout.item_consume_record, lists);
+        // 并将应用的adapter 设置给 RecyclerViewMaterialAdapter
+        this.adapter = new RecyclerViewMaterialAdapter(rvAdapter);
+        plmrvMaterial.setAdapter(this.adapter);
         plmrvMaterial.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                adapter.clear();
                 currentPage = 1;
-                refreshCallBack.fillDataListener(currentPage, actionType);
+                refreshCallBack.fillDataListener(currentPage, actionType,fragment);
             }
 
             @Override
             public void onLoadMore() {
-                refreshCallBack.fillDataListener(++currentPage, actionType);
+                refreshCallBack.fillDataListener(++currentPage, actionType,fragment);
             }
         });
+
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), plmrvMaterial.getRecyclerView(), null);
     }
 
     @Override
@@ -118,7 +138,8 @@ public class MeterialRecycleViewFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    public void notifyAdapter(List<ConsumeRecordInfo> data) {
+
+    public void setViewPagerData(List<ConsumeRecordInfo> data) {
         plmrvMaterial.setPullLoadMoreCompleted();
         if (data == null) {
             return;
@@ -130,7 +151,7 @@ public class MeterialRecycleViewFragment extends BaseFragment {
 
 
     public interface RefreshCallBack {
-         void fillDataListener(int currentPage,int actionType);
+         void fillDataListener(int currentPage,int actionType,MaterialRecycleViewFragment fragment);
     }
 
 }

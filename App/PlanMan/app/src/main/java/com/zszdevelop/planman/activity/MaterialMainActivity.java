@@ -16,12 +16,13 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.adapter.MeterialPagerAdapter;
+import com.zszdevelop.planman.adapter.MaterialPagerAdapter;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
+import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.config.API;
-import com.zszdevelop.planman.fragment.MeterialRecycleViewFragment;
+import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 
@@ -29,17 +30,17 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialMainActivity extends BaseActivity implements MeterialRecycleViewFragment.RefreshCallBack {
+public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack {
 
     private MaterialViewPager mViewPager;
 
-    private DrawerLayout mDrawer;
+    private DrawerLayout drawer_layout_pager;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
-    private MeterialRecycleViewFragment meterialFragment1;
-    private MeterialRecycleViewFragment meterialFragment2;
-    private MeterialRecycleViewFragment meterialFragment3;
-    private MeterialRecycleViewFragment meterialFragment4;
+    private MaterialRecycleViewFragment meterialFragment1;
+    private MaterialRecycleViewFragment meterialFragment2;
+    private MaterialRecycleViewFragment meterialFragment3;
+    private MaterialRecycleViewFragment meterialFragment4;
     List<Fragment> fragmentList = new ArrayList<>();
 
     @Override
@@ -47,15 +48,21 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_main);
 
-//        if (!BuildConfig.DEBUG)
-//            Fabric.with(this, new Crashlytics());
+
+        initListener();
+        fillData();
+        initView();
+    }
+
+
+
+    private void initView() {
 
         setTitle("");
 
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
-
         toolbar = mViewPager.getToolbar();
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_layout_pager = (DrawerLayout) findViewById(R.id.drawer_layout_pager);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -70,20 +77,10 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
             }
         }
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout_pager, 0, 0);
+        drawer_layout_pager.setDrawerListener(mDrawerToggle);
 
-        meterialFragment1 = MeterialRecycleViewFragment.newInstanceFragment(1);
-        meterialFragment2 = MeterialRecycleViewFragment.newInstanceFragment(2);
-        meterialFragment3 = MeterialRecycleViewFragment.newInstanceFragment(3);
-        meterialFragment4 = MeterialRecycleViewFragment.newInstanceFragment(4);
-        fragmentList.add(meterialFragment1);
-        fragmentList.add(meterialFragment2);
-        fragmentList.add(meterialFragment3);
-        fragmentList.add(meterialFragment4);
-        MeterialPagerAdapter pagerAdapter = new MeterialPagerAdapter(getSupportFragmentManager(),fragmentList);
 
-        mViewPager.getViewPager().setAdapter(pagerAdapter);
 
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
@@ -96,7 +93,7 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
                     case 0:
                         return HeaderDesign.fromColorAndDrawable(
                                 ContextCompat.getColor(MaterialMainActivity.this, R.color.colorPrimaryDark),
-                                ContextCompat.getDrawable(MaterialMainActivity.this,R.drawable.smssdk_search_icon));
+                                ContextCompat.getDrawable(MaterialMainActivity.this, R.drawable.smssdk_search_icon));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
@@ -117,8 +114,6 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
             }
         });
 
-        mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
-        mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
         View logo = findViewById(R.id.logo_white);
         if (logo != null)
@@ -129,7 +124,41 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
+
     }
+
+    private void initListener() {
+
+    }
+
+
+    private void fillData() {
+
+        // 填充目标记录数据,根据目标数量显示Viewpager/fragment 的数量
+        String url = String.format(API.GET_GOAL_PLAN_URI, Helper.getUserId());
+        HttpRequest.get(url, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<GoalInfo>>(){}.getType();
+                List<GoalInfo> goalList = gson.fromJson(json, listType);
+
+                for (int i = 0; i < goalList.size() ; i++){
+                    // 填充数据
+                    MaterialRecycleViewFragment fragment = MaterialRecycleViewFragment.newInstanceFragment(i, goalList.get(i));
+                    fragmentList.add(fragment);
+                }
+                MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getSupportFragmentManager(),fragmentList);
+                mViewPager.getViewPager().setAdapter(pagerAdapter);
+                mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+                mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+
+
+
+            }
+        });
+    }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -144,7 +173,7 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
     }
 
     @Override
-    public void fillDataListener(int currentPage, final int actionType) {
+    public void fillDataListener(int currentPage, final int actionType, final MaterialRecycleViewFragment fragment) {
         String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
         HttpRequest.get(url, new HttpRequestListener() {
             @Override
@@ -153,16 +182,8 @@ public class MaterialMainActivity extends BaseActivity implements MeterialRecycl
                 Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
                 }.getType();
                 List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
-                if (actionType == 1){
-                    meterialFragment1.notifyAdapter(consumeRecords);
-                }if (actionType == 2){
-                    meterialFragment2.notifyAdapter(consumeRecords);
-                }if (actionType == 3){
-                    meterialFragment3.notifyAdapter(consumeRecords);
-                }if (actionType == 4){
-                    meterialFragment4.notifyAdapter(consumeRecords);
-                }
 
+                fragment.setViewPagerData(consumeRecords);
 
             }
         });

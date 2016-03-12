@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Created by zhangshengzhong on 16/3/11.
  */
-public class MeterialPagerAdapter extends FragmentStatePagerAdapter {
+public class MaterialPagerAdapter extends FragmentStatePagerAdapter {
     List<Fragment> fragments;
-    public MeterialPagerAdapter(FragmentManager fm ,List<Fragment> fragments) {
+    public MaterialPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }
@@ -28,16 +28,8 @@ public class MeterialPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position % 4) {
-            case 0:
-                return "Selection";
-            case 1:
-                return "Actualites";
-            case 2:
-                return "Professionnel";
-            case 3:
-                return "Divertissement";
-        }
-        return "";
+            return "计划 "+ (position+1);
     }
+
+
 }
