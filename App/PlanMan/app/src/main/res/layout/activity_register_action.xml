@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context="com.zszdevelop.planman.activity.RegisterActionActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_register_action_title"
+        style="@style/text_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="根据自身情况,选择活动强度" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_light"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/tv_register_action_title"
+        android:layout_margin="@dimen/default_distance"
+        android:padding="@dimen/default_distance">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_light_action"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:src="@mipmap/ic_light_person" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_toRightOf="@+id/iv_light_action"
+                android:layout_toLeftOf="@+id/iv_selected_light"
+                android:layout_marginRight="@dimen/default_distance"
+                android:orientation="vertical">
+
+                <TextView
+
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="轻体力活动"
+
+                    />
+
+                <TextView
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_distance"
+                    android:text="久坐少动,如办公室文员,司机等"
+
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_selected_light"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@mipmap/ic_selected"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/default_distance"
+                />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView><android.support.v7.widget.CardView
+    android:id="@+id/cv_common"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/cv_light"
+        android:layout_margin="@dimen/default_distance"
+        android:padding="@dimen/default_distance">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_common_action"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:src="@mipmap/ic_common_person" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_toRightOf="@+id/iv_common_action"
+                android:layout_toLeftOf="@+id/iv_selected_common"
+                android:layout_marginRight="@dimen/default_distance"
+                android:orientation="vertical">
+
+                <TextView
+
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="中体力活动"
+
+                    />
+
+                <TextView
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_distance"
+                    android:text="常走动,如服务员,业务员等"
+
+                    />
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_selected_common"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@mipmap/ic_selected"
+                android:visibility="invisible"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/default_distance"
+                />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_hard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/cv_common"
+        android:layout_margin="@dimen/default_distance"
+        android:padding="@dimen/default_distance">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_hard_action"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:src="@mipmap/ic_hard_person" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_distance"
+                android:layout_toRightOf="@+id/iv_hard_action"
+                android:layout_toLeftOf="@+id/iv_selected_hard"
+                android:layout_marginRight="@dimen/default_distance"
+                android:orientation="vertical">
+
+                <TextView
+
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重体力活动"
+
+                    />
+
+                <TextView
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_distance"
+                    android:text="体力消耗较大的劳动,如快递员,建筑工等"
+
+                    />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_selected_hard"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:visibility="invisible"
+                android:src="@mipmap/ic_selected"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/default_distance"
+                />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_register_action"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="下一步"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        />
+
+</RelativeLayout>

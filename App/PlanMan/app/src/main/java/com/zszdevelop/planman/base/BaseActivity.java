@@ -1,10 +1,8 @@
 package com.zszdevelop.planman.base;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.WindowManager;
 
 import com.zszdevelop.planman.R;
 
@@ -26,11 +24,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 
-		// 经测试在代码里直接声明透明状态栏更有效
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-		}
+//		// 经测试在代码里直接声明透明状态栏更有效
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//			WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//			localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//		}
 		initToolbar();
 	}
 
@@ -42,21 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 
-
-
-
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		activity = this;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		activity = null;
-	}
 
 
 

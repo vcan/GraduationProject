@@ -37,5 +37,18 @@ public class ResultCode {
      // 修改描述
     public static final int MODIFY_DESCRIBE = 10001;
 
+    // 活 动 内 容 活动系数
+    // 卧床（全天） 1.2
+    // 轻活动生活模式（多坐或缓步） 1.3
+    // 一般活动度 1.5~1.75
+    // 活动量大的生活模式（重工作者） 2.0
 
+    // 轻活动类型
+    public static float lIGHT_ACTION_CODE = (float)1.3;
+
+    // 轻活动类型
+    public static float COMMON_ACTION_CODE = (float)1.6;
+
+    // 轻活动类型
+    public static float HARD_ACTION_CODE = (float)2.0;
 }

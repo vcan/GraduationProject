@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zszdevelop.planman.activity.RegisterSuggestActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/default_distance"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/default_distance">
+
+            <TextView
+                android:id="@+id/tv_suggest_title"
+                style="@style/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="了解我自己"
+
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="@dimen/default_distance">
+
+                <TextView
+                    android:id="@+id/tv_suggest_bmi"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BMI(身体质量指数) : "
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_suggest_bmi_value"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_suggest_bmi"
+                    android:text="22"
+                    android:textColor="@color/colorAccent" />
+                <TextView
+                    android:id="@+id/tv_suggest_bmi_describe"
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_suggest_bmi"
+                    android:layout_marginLeft="20dp"
+                    android:text="国际上常用的衡量人体胖瘦程度以及是否健康的一个标准"
+                    android:textColor="@color/gray" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="@dimen/default_distance">
+
+                <TextView
+                    android:id="@+id/tv_suggest_bmr"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BMR(最低热量值) : "
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_suggest_bmr_value"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_suggest_bmr"
+                    android:text="1500大卡"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tv_suggest_bmr_describe"
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_suggest_bmr"
+                    android:layout_marginLeft="20dp"
+                    android:text="维持基本生理机能的最低热量值,当一个人处于植物人状态时所需的热量"
+                    android:textColor="@color/gray" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="@dimen/default_distance">
+
+                <TextView
+                    android:id="@+id/tv_suggest_ree"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REE(静态能量消耗值) : "
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_suggest_ree_value"
+                    style="@style/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_suggest_ree"
+                    android:text="1700大卡"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tv_suggest_ree_describe"
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_suggest_ree"
+                    android:layout_marginLeft="20dp"
+                    android:text="根据活动强度计算得出人体所需的最小热能需求量"
+                    android:textColor="@color/gray" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
