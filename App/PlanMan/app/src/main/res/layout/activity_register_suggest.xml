@@ -3,151 +3,254 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context="com.zszdevelop.planman.activity.RegisterSuggestActivity">
 
     <include layout="@layout/toolbar" />
 
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_margin="@dimen/default_distance"
 
-        >
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/default_distance">
+            android:layout_height="wrap_content"
 
-            <TextView
-                android:id="@+id/tv_suggest_title"
-                style="@style/text_title"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_my_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="了解我自己"
+                android:layout_marginBottom="58dp"
 
-                />
+                >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="@dimen/default_distance">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_distance">
 
-                <TextView
-                    android:id="@+id/tv_suggest_bmi"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BMI(身体质量指数) : "
+                    <TextView
+                        android:id="@+id/tv_suggest_title"
+                        style="@style/text_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textSize="22sp"
+                        android:layout_marginTop="@dimen/default_distance"
+                        android:text="1分钟彻底了解自己"
 
-                    />
+                        />
 
-                <TextView
-                    android:id="@+id/tv_suggest_bmi_value"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_suggest_bmi"
-                    android:text="22"
-                    android:textColor="@color/colorAccent" />
-                <TextView
-                    android:id="@+id/tv_suggest_bmi_describe"
-                    style="@style/text_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_suggest_bmi"
-                    android:layout_marginLeft="20dp"
-                    android:text="国际上常用的衡量人体胖瘦程度以及是否健康的一个标准"
-                    android:textColor="@color/gray" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_distance"
+                        android:layout_marginRight="@dimen/default_distance"
+                        android:layout_marginTop="@dimen/default_distance">
 
-            </RelativeLayout>
+                        <TextView
+                            android:id="@+id/tv_suggest_bmi"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="您的身体质量指数(BMI)为  : "
 
+                            />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="@dimen/default_distance">
+                        <TextView
+                            android:id="@+id/tv_suggest_bmi_value"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_suggest_bmi"
+                            android:text="22"
+                            android:textColor="@color/colorAccent" />
 
-                <TextView
-                    android:id="@+id/tv_suggest_bmr"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BMR(最低热量值) : "
+                        <TextView
+                            android:id="@+id/tv_suggest_bmi_describe"
+                            style="@style/text_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_suggest_bmi"
+                            android:layout_marginLeft="20dp"
+                            android:text="轻体重BMI:BMI &lt; 18.5\n健康体重BMI:18.5&lt; BMI&lt; 24\n超重BMI:24&lt; BMI&lt; 28\n肥胖BMI:28&lt; BMI" />
 
-                    />
-
-                <TextView
-                    android:id="@+id/tv_suggest_bmr_value"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_suggest_bmr"
-                    android:text="1500大卡"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/tv_suggest_bmr_describe"
-                    style="@style/text_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_suggest_bmr"
-                    android:layout_marginLeft="20dp"
-                    android:text="维持基本生理机能的最低热量值,当一个人处于植物人状态时所需的热量"
-                    android:textColor="@color/gray" />
+                    </RelativeLayout>
 
 
-            </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_suggest_weight_scope"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_distance"
+                        android:layout_marginRight="@dimen/default_distance"
+                        android:layout_marginTop="@dimen/default_distance"
+                        android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="@dimen/default_distance">
+                        <TextView
+                            android:id="@+id/tv_suggest_weight_scope"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="您的健康体重范围为 : "
 
-                <TextView
-                    android:id="@+id/tv_suggest_ree"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="REE(静态能量消耗值) : "
+                            />
 
-                    />
-
-                <TextView
-                    android:id="@+id/tv_suggest_ree_value"
-                    style="@style/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_suggest_ree"
-                    android:text="1700大卡"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:id="@+id/tv_suggest_ree_describe"
-                    style="@style/text_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_suggest_ree"
-                    android:layout_marginLeft="20dp"
-                    android:text="根据活动强度计算得出人体所需的最小热能需求量"
-                    android:textColor="@color/gray" />
+                        <TextView
+                            android:id="@+id/tv_suggest_weight_scope_value"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_suggest_weight"
+                            android:text="57~74 KG"
+                            android:textColor="@color/colorAccent" />
 
 
-            </RelativeLayout>
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/ll_suggest_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_distance"
+                        android:layout_marginRight="@dimen/default_distance"
+                        android:layout_marginTop="@dimen/default_distance"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_suggest_weight"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="您的年龄身高对应标准体重为 : "
+
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_suggest_weight_value"
+                            style="@style/text_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_suggest_weight"
+                            android:text="60kg"
+                            android:textColor="@color/colorAccent" />
+
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_distance"
+                        android:layout_marginRight="@dimen/default_distance"
+                        android:layout_marginTop="@dimen/default_distance">
+
+                        <LinearLayout
+                            android:id="@+id/ll_suggest_ree"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tv_suggest_ree"
+                                style="@style/text_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="您的每天所需的热量 : "
+
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_suggest_ree_value"
+                                style="@style/text_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/tv_suggest_ree"
+                                android:text="1700大卡"
+                                android:textColor="@color/colorAccent" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv_suggest_ree_describe"
+                            style="@style/text_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ll_suggest_ree"
+                            android:layout_marginLeft="20dp"
+                            android:text="在活动强度不变情况下消耗的最低热量.\n当摄入 &lt; 支出时体重下降\n当摄入 &gt; 支出时体重增加" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/default_distance"
+                        android:layout_marginRight="@dimen/default_distance"
+                        android:layout_marginTop="@dimen/default_distance">
+
+                        <LinearLayout
+                            android:id="@+id/ll_suggest_heart_rate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_suggest_heart_rate"
+                                style="@style/text_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="中低强度运动心率 : "
+
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_suggest_heart_rate_value"
+                                style="@style/text_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/tv_suggest_heart_rate"
+                                android:text=" 119 次/分钟到 159 次/分钟"
+                                android:textColor="@color/colorAccent" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_suggest_heart_rate_describe"
+                            style="@style/text_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ll_suggest_heart_rate"
+                            android:layout_marginLeft="20dp"
+                            android:text="@string/heart_rate_content" />
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
+    </ScrollView>
 
-    </android.support.v7.widget.CardView>
-
-
+    <TextView
+        android:id="@+id/tv_suggest_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="根据健身建议制定计划吧"
+        android:textColor="@color/white" />
 </RelativeLayout>

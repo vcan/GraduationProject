@@ -16,15 +16,15 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.HelperRegister;
-import com.zszdevelop.planman.bean.FigureType;
 import com.zszdevelop.planman.bean.RegisterData;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.config.UserConfig;
-import com.zszdevelop.planman.http.ToastUtil;
 import com.zszdevelop.planman.utils.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,10 +61,12 @@ public class RegisterBaseDataActivity extends BaseActivity {
     private TimePickerView pvTime;
     private OptionsPickerView pvOptions;
     private ArrayList<Integer> options1Items = new ArrayList<>();
-    private ArrayList<FigureType> options1ItemTypes = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<>();
+    private ArrayList<Integer> options1ItemsHigh = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> options2ItemsHigh = new ArrayList<>();
     boolean isHigh = true;
     private RegisterData registerData;
+    private OptionsPickerView pvOptionsHigh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class RegisterBaseDataActivity extends BaseActivity {
         initToolbar();
         initOptionTime();
         initOptionFigure();
+        initOptionHigh();
     }
 
 
@@ -101,10 +104,10 @@ public class RegisterBaseDataActivity extends BaseActivity {
         tvRegisterHigh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pvOptions.setLabels(".", "cm");
-                pvOptions.setTitle("设置身高");
+                pvOptionsHigh.setLabels(".", "cm");
+                pvOptionsHigh.setTitle("设置身高");
                 isHigh = true;
-                pvOptions.show();
+                pvOptionsHigh.show();
             }
         });
 
@@ -119,23 +122,31 @@ public class RegisterBaseDataActivity extends BaseActivity {
             }
         });
 
-        // 身高/或者体重回调
+        // 体重回调
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 float value = Float.parseFloat(String.format("%s.%s", options1Items.get(options1), options2Items.get(options1).get(option2)));
 
-                if (isHigh) {
-                    registerData.setHigh(value);
-                    tvRegisterHigh.setText(String.valueOf(value) + "cm");
-                } else {
                     registerData.setGoalRecordData(value);
                     registerData.setGoalRecordType(ResultCode.WEIGHT_CODE);
                     tvRegisterWeight.setText(String.valueOf(value) + "kg");
-                }
 
-                ToastUtil.showToast("目标完成");
+
+            }
+        });
+
+        // 身高回调
+        pvOptionsHigh.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                float value = Float.parseFloat(String.format("%s.%s", options1ItemsHigh.get(options1), options2ItemsHigh.get(options1).get(option2)));
+
+                    registerData.setHigh(value);
+                    tvRegisterHigh.setText(String.valueOf(value) + "cm");
+
             }
         });
 
@@ -234,9 +245,10 @@ public class RegisterBaseDataActivity extends BaseActivity {
 //            pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
         pvTime = new TimePickerView(RegisterBaseDataActivity.this, TimePickerView.Type.YEAR_MONTH_DAY);
         //控制时间范围
-//        Calendar calendar = Calendar.getInstance();
-//        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));
-        pvTime.setTime(new Date());
+        Calendar calendar = Calendar.getInstance();
+        pvTime.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR));
+        GregorianCalendar gcd = new GregorianCalendar(1993,8,7);
+        pvTime.setTime( gcd.getTime());
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
     }
@@ -245,18 +257,17 @@ public class RegisterBaseDataActivity extends BaseActivity {
     private void initOptionFigure() {
         //选项选择器
         pvOptions = new OptionsPickerView(RegisterBaseDataActivity.this);
-        for (int i = 0; i < 300; i++) {
-            options1Items.add(i);
+        for (int i = 0; i < 100; i++) {
+            options1Items.add(i+30);
         }
 
         ArrayList<Integer> optionsItemsNumber = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             optionsItemsNumber.add(i);
         }
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             options2Items.add(optionsItemsNumber);
         }
-
 
         //三级联动效果
         pvOptions.setPicker(options1Items, options2Items, true);
@@ -264,7 +275,32 @@ public class RegisterBaseDataActivity extends BaseActivity {
         //设置默认选中的三级项目
         //监听确定选择按钮
 
-        pvOptions.setSelectOptions(50, 0);
+        pvOptions.setSelectOptions(30, 0);
+
+    }
+
+    private void initOptionHigh() {
+        //选项选择器
+        pvOptionsHigh = new OptionsPickerView(RegisterBaseDataActivity.this);
+        for (int i = 0; i < 150; i++) {
+            options1ItemsHigh.add(i+100);
+        }
+
+        ArrayList<Integer> optionsItemsNumber = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            optionsItemsNumber.add(i);
+        }
+        for (int i = 0; i < 150; i++) {
+            options2ItemsHigh.add(optionsItemsNumber);
+        }
+
+        //三级联动效果
+        pvOptionsHigh.setPicker(options1ItemsHigh, options2ItemsHigh, true);
+        pvOptionsHigh.setCyclic(true, true, true);
+        //设置默认选中的三级项目
+        //监听确定选择按钮
+
+        pvOptionsHigh.setSelectOptions(75, 0);
 
     }
 
