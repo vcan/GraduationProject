@@ -25,9 +25,7 @@
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -65,16 +63,21 @@
         <activity
             android:name=".activity.RegisterBaseDataActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.RegisterActionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterSuggestActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.RegisterPlanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.RegisterActionActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.RegisterSuggestActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

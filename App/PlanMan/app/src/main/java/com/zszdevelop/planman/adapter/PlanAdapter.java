@@ -187,6 +187,6 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
     private OnItemClickListener itemClickListener;
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-    };
+    }
 
 }
