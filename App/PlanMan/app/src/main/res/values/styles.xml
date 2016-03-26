@@ -9,14 +9,17 @@
         <!-- 箭头颜色 -->
         <item name="colorControlNormal">@color/white</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="text_title" >
+    <style name="text_title">
         <item name="android:textColor">@color/colorTextOrIcon</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -39,7 +42,6 @@
         <item name="itemsMarginLeftRight">8dp</item>
         <item name="animationDuration">200</item>
     </style>
-
 
 
     <style name="MenuLabelsStyle">
@@ -80,4 +82,8 @@
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

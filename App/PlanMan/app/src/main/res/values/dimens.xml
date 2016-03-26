@@ -5,5 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="distance_48dp">48dp</dimen>
     <dimen name="default_distance">8dp</dimen>
+    <dimen name="double_distance">16dp</dimen>
     <dimen name="height_toolbar">48dp</dimen>
 </resources>

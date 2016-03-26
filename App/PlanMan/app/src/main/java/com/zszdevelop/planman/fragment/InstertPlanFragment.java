@@ -236,6 +236,7 @@ public class InstertPlanFragment extends BaseFragment {
         HttpRequest.post(API.INSTER_GOAL_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
+                LogUtils.e("tijiao");
                 Intent intent = new Intent(getActivity(), MaterialMainActivity.class);
                 startActivity(intent);
             }

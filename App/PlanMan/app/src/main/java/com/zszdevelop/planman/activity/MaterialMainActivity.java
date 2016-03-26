@@ -1,6 +1,7 @@
 package com.zszdevelop.planman.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,16 +26,24 @@ import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
+import com.zszdevelop.planman.utils.DrawerLayoutUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack {
 
-    private MaterialViewPager mViewPager;
+    @Bind(R.id.materialViewPager)
+    MaterialViewPager materialViewPager;
+    @Bind(R.id.navigation)
+    NavigationView navigation;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
-    private DrawerLayout drawer_layout_pager;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     List<Fragment> fragmentList = new ArrayList<>();
@@ -43,6 +52,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_main);
+        ButterKnife.bind(this);
 
 
         initListener();
@@ -51,15 +61,27 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     }
 
 
-
     private void initView() {
 
+        initToolbar();
+
+
+        View logo = findViewById(R.id.logo_white);
+        if (logo != null)
+            logo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    materialViewPager.notifyHeaderChanged();
+                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+    }
+
+    private void initToolbar() {
         setTitle("");
 
-        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
-        toolbar = mViewPager.getToolbar();
-        drawer_layout_pager = (DrawerLayout) findViewById(R.id.drawer_layout_pager);
-
+        toolbar = materialViewPager.getToolbar();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
 
@@ -73,12 +95,15 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             }
         }
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout_pager, 0, 0);
-        drawer_layout_pager.setDrawerListener(mDrawerToggle);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
+        drawerLayout.setDrawerListener(mDrawerToggle);
+        DrawerLayoutUtils.interactorNavigation(this, navigation, drawerLayout);
+    }
 
+    private void initListener() {
 
-
-        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+        // viewpager 滑动监听
+        materialViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
@@ -110,21 +135,6 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             }
         });
 
-
-        View logo = findViewById(R.id.logo_white);
-        if (logo != null)
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-    }
-
-    private void initListener() {
-
     }
 
 
@@ -136,19 +146,19 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             @Override
             public void onSuccess(String json) {
                 Gson gson = new Gson();
-                Type listType = new TypeToken<List<GoalInfo>>(){}.getType();
+                Type listType = new TypeToken<List<GoalInfo>>() {
+                }.getType();
                 List<GoalInfo> goalList = gson.fromJson(json, listType);
 
-                for (int i = 0; i < goalList.size() ; i++){
+                for (int i = 0; i < goalList.size(); i++) {
                     // 填充数据
                     MaterialRecycleViewFragment fragment = MaterialRecycleViewFragment.newInstanceFragment(i, goalList.get(i));
                     fragmentList.add(fragment);
                 }
-                MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getSupportFragmentManager(),fragmentList);
-                mViewPager.getViewPager().setAdapter(pagerAdapter);
-                mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
-                mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
-
+                MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getSupportFragmentManager(), fragmentList);
+                materialViewPager.getViewPager().setAdapter(pagerAdapter);
+                materialViewPager.getViewPager().setOffscreenPageLimit(materialViewPager.getViewPager().getAdapter().getCount());
+                materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
 
 
             }
