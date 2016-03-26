@@ -9,7 +9,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.bean.ComsumeCCInfo;
-import com.zszdevelop.bean.RegisterData;
+import com.zszdevelop.bean.BaseData;
 import com.zszdevelop.dao.ModifyUserinfoDao;
 import com.zszdevelop.utils.BirthDayUtil;
 
@@ -20,7 +20,7 @@ public class ModifyUserinfoImpl implements ModifyUserinfoDao {
 	private ResultSet rs = null;
 
 	@Override
-	public ComsumeCCInfo modifyUser(RegisterData userinfo) {
+	public ComsumeCCInfo modifyUser(BaseData userinfo) {
 		float goalRecordWeight = userinfo.getGoalRecordWeight();
 		float high = userinfo.getHigh();
 

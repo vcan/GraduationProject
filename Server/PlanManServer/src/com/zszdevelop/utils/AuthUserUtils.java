@@ -59,7 +59,6 @@ public class AuthUserUtils {
 
 		String userIdStr = request.getParameter("userId");
 		String authToken = request.getParameter("authToken");
-		System.out.println(userIdStr+">>>>"+authToken);
 		Gson gson = new Gson();
 		if (TextUtils.isEmpty(userIdStr)) {
 			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_NO_USERID, response,ResultCode.HTTP_ERROR);

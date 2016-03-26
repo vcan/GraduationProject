@@ -3,6 +3,7 @@ package com.zszdevelop.planman.utils;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +22,7 @@ import com.zszdevelop.planman.config.ResultCode;
 /**
  * Created by zhangshengzhong on 16/3/26.
  */
-public class DrawerLayoutUtils {
+public class DrawerToolUtils {
 
     public static void interactorNavigation(final BaseActivity act, NavigationView navigation, final DrawerLayout drawerLayout) {
 
@@ -94,6 +95,21 @@ public class DrawerLayoutUtils {
                 }
                 drawerLayout.closeDrawers();
                 return true;
+            }
+        });
+    }
+
+    public static void initToolbar(final BaseActivity act,Toolbar toolbar,String title) {
+        toolbar.setTitle(title);
+        act.setSupportActionBar(toolbar);
+        if (act.getSupportActionBar() != null) {
+            act.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                act.onBackPressed();
             }
         });
     }

@@ -9,7 +9,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.ComsumeCCInfo;
 import com.zszdevelop.bean.GoalRecordInfo;
-import com.zszdevelop.bean.RegisterData;
+import com.zszdevelop.bean.BaseData;
 import com.zszdevelop.dao.ThereMeasureDao;
 import com.zszdevelop.dao.ModifyUserinfoDao;
 

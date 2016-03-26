@@ -10,10 +10,14 @@ import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
+import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.base.HelperRegister;
 import com.zszdevelop.planman.bean.RegisterData;
-import com.zszdevelop.planman.config.UserConfig;
-import com.zszdevelop.planman.utils.TimeUtil;
+import com.zszdevelop.planman.config.API;
+import com.zszdevelop.planman.http.HttpRequest;
+import com.zszdevelop.planman.http.HttpRequestListener;
+
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,6 +66,11 @@ public class RegisterSuggestActivity extends BaseActivity {
     CardView cvMyData;
     @Bind(R.id.tv_suggest_next)
     TextView tvSuggestNext;
+    private RegisterData registerData;
+    private float standardWeight;
+    private float bmi;
+    private int intakeCC;
+    private float consumeREE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +93,38 @@ public class RegisterSuggestActivity extends BaseActivity {
         tvSuggestNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterSuggestActivity.this,RegisterPlanActivity.class);
+                submitData();
+
+            }
+        });
+
+    }
+
+    private void submitData() {
+
+        standardWeight = registerData.getStandardWeight();
+        bmi = registerData.getBmi();
+        intakeCC = registerData.getIntakeCC();
+        consumeREE = registerData.getConsumeREE();
+
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", String.valueOf(Helper.getUserId()));
+        map.put("authToken", Helper.getToken());
+        map.put("birthday", String.valueOf(registerData.getBirthday()));
+        map.put("high", String.valueOf(registerData.getHigh()));
+        map.put("goalRecordData", String.valueOf(registerData.getGoalRecordData()));
+        map.put("goalRecordType", String.valueOf(registerData.getGoalRecordType()));
+        map.put("actionType", String.valueOf(registerData.getActionType()));
+        map.put("standardWeight", String.valueOf(registerData.getStandardWeight()));
+        map.put("bmi", String.valueOf(registerData.getBmi()));
+        map.put("intakeCC", String.valueOf(registerData.getIntakeCC()));
+        map.put("consumeREE", String.valueOf(registerData.getConsumeREE()));
+
+        HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                Intent intent = new Intent(RegisterSuggestActivity.this, RegisterPlanActivity.class);
                 startActivity(intent);
             }
         });
@@ -93,46 +133,17 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     private void fillData() {
 
-        RegisterData registerData = HelperRegister.getInstance().getRegisterData();
-        float goalRecordWeight = registerData.getGoalRecordData();
-        float high = registerData.getHigh();
-
-        float actionType = registerData.getActionType();
-
-        // 男性静态能量消耗值 男性REE = (10 × 体重) ＋ (6.25 × 身高) - (5 × 年龄) ＋ 5
-        // 女性静态能量消耗值 女性REE = (10 × 体重) ＋ (6.25 × 身高) - (5 × 年龄) - 161
-        // 其每天所需的热量 = REE × 活动系数 = 1294 × 1.5 = 1941(大卡)
-
-//        男性：(身高cm－80)×70﹪=标准体重 女性：(身高cm－70)×60﹪=标准体重
-//        标准体重正负10﹪为正常体重
-
-        int intakeCC = 1500;
-        float consumeREE = 1500;
-        float standardWeight = 60;
-
-        try {
-            String birthdayStr = String.valueOf(registerData.getBirthday());
-            if (registerData.getSex() == UserConfig.MAN) {// 男性
-                consumeREE = (int) ((10 * goalRecordWeight) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) + 5);
-                standardWeight = (float) ((high -80)*0.7);
-            } else {// 女性
-                consumeREE = (int) ((10 * goalRecordWeight) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) - 161);
-                standardWeight = (float) ((high -70)*0.6);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        intakeCC = (int) (consumeREE * actionType);
-
-
-        float highM = high / 100;
-        float bmi = goalRecordWeight / (highM * highM);
+        registerData = HelperRegister.getInstance().getRegisterData();
+        standardWeight = registerData.getStandardWeight();
+        bmi = registerData.getBmi();
+        intakeCC = registerData.getIntakeCC();
+        consumeREE = registerData.getConsumeREE();
 
 
         tvSuggestBmiValue.setText(String.valueOf(bmi));
         tvSuggestReeValue.setText(String.format("%s大卡", intakeCC));
-        tvSuggestWeightValue.setText(String.format("%.2fKG",standardWeight));
-        tvSuggestWeightScopeValue.setText(String.format("%.2f~%.2fKG",standardWeight*0.9,standardWeight*1.1));
+        tvSuggestWeightValue.setText(String.format("%.2fKG", standardWeight));
+        tvSuggestWeightScopeValue.setText(String.format("%.2f~%.2fKG", standardWeight * 0.9, standardWeight * 1.1));
 
     }
 

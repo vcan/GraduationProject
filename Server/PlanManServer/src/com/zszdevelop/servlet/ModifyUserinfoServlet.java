@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.zszdevelop.bean.BaseUser;
 import com.zszdevelop.bean.ComsumeCCInfo;
-import com.zszdevelop.bean.RegisterData;
+import com.zszdevelop.bean.BaseData;
 import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.config.ResultCode;
 import com.zszdevelop.dao.ModifyUserinfoDao;
@@ -77,7 +77,7 @@ public class ModifyUserinfoServlet extends HttpServlet {
 		actionType=actionType==null?"1.3":actionType;
 		
 		//把参数保存在数据对象
-		RegisterData userinfo = new RegisterData();
+		BaseData userinfo = new BaseData();
 		userinfo.setBirthday(birthdayStr);
 		userinfo.setGoalRecordChest(Float.parseFloat(goalRecordChest));
 		userinfo.setGoalRecordLeftArm(Float.parseFloat(goalRecordLeftArm));

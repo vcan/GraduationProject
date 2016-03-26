@@ -43,6 +43,9 @@ public class API {
     /*二十：修改计划完成度*/
    public static final String MODIFY_GOAL_COMPLETE_URI ="ModifyGoalStutusServlet";
 
+    /*二十一：修改基本数据*/
+   public static final String MODIFY_BASE_DATA_URI ="ModifyBaseDataServlet";
+
 
 
 

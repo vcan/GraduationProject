@@ -26,7 +26,7 @@ import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
-import com.zszdevelop.planman.utils.DrawerLayoutUtils;
+import com.zszdevelop.planman.utils.DrawerToolUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
         drawerLayout.setDrawerListener(mDrawerToggle);
-        DrawerLayoutUtils.interactorNavigation(this, navigation, drawerLayout);
+        DrawerToolUtils.interactorNavigation(this, navigation, drawerLayout);
     }
 
     private void initListener() {
