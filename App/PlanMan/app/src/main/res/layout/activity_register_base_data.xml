@@ -21,7 +21,7 @@
     <fragment
         android:layout_below="@+id/tv_register_describe"
         android:id="@+id/fm_register_base_data"
-        android:name="com.zszdevelop.planman.fragment.BaseDataFragment"
+        android:name="com.zszdevelop.planman.fragment.BodyDataFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_base_data_layout">

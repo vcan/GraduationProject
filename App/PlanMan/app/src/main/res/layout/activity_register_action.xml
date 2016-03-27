@@ -6,14 +6,21 @@
     android:background="@color/gray"
     tools:context="com.zszdevelop.planman.activity.RegisterActionActivity">
 
-    <include layout="@layout/toolbar" />
+    <RelativeLayout
+        android:id="@+id/rl_register_action_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/toolbar" />
+        <include layout="@layout/textview_complete"/>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/tv_register_action_title"
         style="@style/text_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/rl_register_action_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="根据自身情况,选择活动强度" />

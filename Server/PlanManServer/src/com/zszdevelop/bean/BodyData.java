@@ -3,7 +3,7 @@ package com.zszdevelop.bean;
 /**
  * Created by zhangshengzhong on 16/3/13.
  */
-public class RegisterData {
+public class BodyData {
 
     private int sex;
     private String birthday;
@@ -15,8 +15,18 @@ public class RegisterData {
     private int intakeCC = 1500;
     private float consumeREE = 1500;
     private float standardWeight = 60;
+    private float maxHeart = 200;
+    
+    
+    public float getMaxHeart() {
+		return maxHeart;
+	}
 
-    public float getBmi() {
+	public void setMaxHeart(float maxHeart) {
+		this.maxHeart = maxHeart;
+	}
+
+	public float getBmi() {
 		return bmi;
 	}
 

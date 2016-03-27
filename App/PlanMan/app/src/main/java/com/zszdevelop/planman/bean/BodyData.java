@@ -3,10 +3,12 @@ package com.zszdevelop.planman.bean;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.utils.TimeUtil;
 
+import java.io.Serializable;
+
 /**
  * Created by zhangshengzhong on 16/3/13.
  */
-public class RegisterData {
+public class BodyData implements Serializable{
 
     private int sex;
     private long birthday;
@@ -18,6 +20,18 @@ public class RegisterData {
     private int intakeCC = 1500;
     private float consumeREE = 1500;
     private float standardWeight = 60;
+    private float maxHeart = 200;
+
+
+    //        中低强度的运动应该达到人最大心率(最大心率=220-实际年龄)的60%~75%
+    public float getMaxHeart() {
+        try {
+            maxHeart = 220 - TimeUtil.BirthDayToAge(String.valueOf(getBirthday()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return maxHeart;
+    }
 
     public float getActionType() {
         return actionType;
@@ -69,7 +83,8 @@ public class RegisterData {
 
     public float getBmi() {
 //       bmi = goalRecordWeight / (highM * highM)
-        bmi = getGoalRecordData()/(getHigh()*getHigh());
+        float high = getHigh()/100;
+        bmi = getGoalRecordData()/(high * high);
         return bmi;
     }
 

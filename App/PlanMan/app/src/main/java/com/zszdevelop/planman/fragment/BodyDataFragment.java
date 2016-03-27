@@ -1,6 +1,5 @@
 package com.zszdevelop.planman.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +12,8 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.activity.RegisterActionActivity;
 import com.zszdevelop.planman.base.BaseFragment;
-import com.zszdevelop.planman.base.HelperRegister;
-import com.zszdevelop.planman.bean.RegisterData;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.utils.TimeUtil;
@@ -32,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * Created by zhangshengzhong on 16/2/21.
  */
-public class BaseDataFragment extends BaseFragment {
+public class BodyDataFragment extends BaseFragment {
 
 
     @Bind(R.id.rb_register_male)
@@ -64,7 +61,7 @@ public class BaseDataFragment extends BaseFragment {
     private ArrayList<Integer> options1ItemsHigh = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> options2ItemsHigh = new ArrayList<>();
     boolean isHigh = true;
-    public RegisterData registerData;
+    public BodyData bodyData;
     private OptionsPickerView pvOptionsHigh;
 
     @Override
@@ -82,7 +79,7 @@ public class BaseDataFragment extends BaseFragment {
 
 
     private void initView() {
-        registerData = new RegisterData();
+        bodyData = new BodyData();
 
         initOptionTime();
         initOptionFigure();
@@ -129,8 +126,8 @@ public class BaseDataFragment extends BaseFragment {
             public void onOptionsSelect(int options1, int option2, int options3) {
                 float value = Float.parseFloat(String.format("%s.%s", options1Items.get(options1), options2Items.get(options1).get(option2)));
 
-                registerData.setGoalRecordData(value);
-                registerData.setGoalRecordType(ResultCode.WEIGHT_CODE);
+                bodyData.setGoalRecordData(value);
+                bodyData.setGoalRecordType(ResultCode.WEIGHT_CODE);
                 tvRegisterWeight.setText(String.valueOf(value) + "kg");
 
 
@@ -144,7 +141,7 @@ public class BaseDataFragment extends BaseFragment {
             public void onOptionsSelect(int options1, int option2, int options3) {
                 float value = Float.parseFloat(String.format("%s.%s", options1ItemsHigh.get(options1), options2ItemsHigh.get(options1).get(option2)));
 
-                registerData.setHigh(value);
+                bodyData.setHigh(value);
                 tvRegisterHigh.setText(String.valueOf(value) + "cm");
 
             }
@@ -156,10 +153,10 @@ public class BaseDataFragment extends BaseFragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_register_male:
-                        registerData.setSex(UserConfig.MAN);
+                        bodyData.setSex(UserConfig.MAN);
                         break;
                     case R.id.rb_register_female:
-                        registerData.setSex(UserConfig.WOMAN);
+                        bodyData.setSex(UserConfig.WOMAN);
                         break;
                 }
             }
@@ -172,7 +169,7 @@ public class BaseDataFragment extends BaseFragment {
 
             @Override
             public void onTimeSelect(Date date) {
-                registerData.setBirthday(date.getTime());
+                bodyData.setBirthday(date.getTime());
                 tvRegisterBirthday.setText(TimeUtil.getTime(date));
             }
         });
@@ -187,19 +184,10 @@ public class BaseDataFragment extends BaseFragment {
 
     private void fillData() {
         // 默认男的选中
-        registerData.setSex(UserConfig.MAN);
+        bodyData.setSex(UserConfig.MAN);
     }
 
 
-
-    private void submitData() {
-
-        HelperRegister helper = HelperRegister.getInstance();
-        helper.setRegisterData(registerData);
-        Intent intent = new Intent(getActivity(), RegisterActionActivity.class);
-        startActivity(intent);
-
-    }
 
     private void initOptionTime() {
         //时间选择器
@@ -264,6 +252,24 @@ public class BaseDataFragment extends BaseFragment {
         pvOptionsHigh.setSelectOptions(75, 0);
 
     }
+
+    /**
+     * 如果是从其他地方登录的，用eventbus 接收事件
+     */
+    public void setbodyData(BodyData bodyData) {
+        this.bodyData = bodyData;
+        tvRegisterBirthday.setText(TimeUtil.timestampToYMD(bodyData.getBirthday()));
+        tvRegisterHigh.setText(String.format("%s cm",bodyData.getHigh()));
+        if (bodyData.getSex() == UserConfig.MAN){
+            rbRegisterFemale.setChecked(false);
+            rbRegisterMale.setChecked(true);
+        }else {
+            rbRegisterFemale.setChecked(true);
+            rbRegisterMale.setChecked(false);
+        }
+        tvRegisterWeight.setText(String.format("%s kg", bodyData.getGoalRecordData()));
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -20,7 +20,6 @@ public class UuidImpl implements UuidDao {
 	@Override
 	public BaseUser getUuidinfo(String uuid) {
 
-		boolean b = false;
 		BaseUser baseUser = new BaseUser();
 
 		// 根据查询的类型返回数据

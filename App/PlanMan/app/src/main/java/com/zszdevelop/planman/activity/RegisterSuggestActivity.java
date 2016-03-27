@@ -11,8 +11,7 @@ import android.widget.TextView;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
-import com.zszdevelop.planman.base.HelperRegister;
-import com.zszdevelop.planman.bean.RegisterData;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
@@ -66,7 +65,7 @@ public class RegisterSuggestActivity extends BaseActivity {
     CardView cvMyData;
     @Bind(R.id.tv_suggest_next)
     TextView tvSuggestNext;
-    private RegisterData registerData;
+    private BodyData bodyData;
     private float standardWeight;
     private float bmi;
     private int intakeCC;
@@ -78,9 +77,14 @@ public class RegisterSuggestActivity extends BaseActivity {
         setContentView(R.layout.activity_register_suggest);
         ButterKnife.bind(this);
 
+        initSuperData();
         initView();
         initListener();
         fillData();
+    }
+
+    private void initSuperData() {
+        bodyData = (BodyData) getIntent().getSerializableExtra("bodyData");
     }
 
     private void initView() {
@@ -102,24 +106,26 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     private void submitData() {
 
-        standardWeight = registerData.getStandardWeight();
-        bmi = registerData.getBmi();
-        intakeCC = registerData.getIntakeCC();
-        consumeREE = registerData.getConsumeREE();
+//        standardWeight = bodyData.getStandardWeight();
+//        bmi = bodyData.getBmi();
+//        intakeCC = bodyData.getIntakeCC();
+//        consumeREE = bodyData.getConsumeREE();
 
 
         HashMap<String, String> map = new HashMap<>();
         map.put("userId", String.valueOf(Helper.getUserId()));
         map.put("authToken", Helper.getToken());
-        map.put("birthday", String.valueOf(registerData.getBirthday()));
-        map.put("high", String.valueOf(registerData.getHigh()));
-        map.put("goalRecordData", String.valueOf(registerData.getGoalRecordData()));
-        map.put("goalRecordType", String.valueOf(registerData.getGoalRecordType()));
-        map.put("actionType", String.valueOf(registerData.getActionType()));
-        map.put("standardWeight", String.valueOf(registerData.getStandardWeight()));
-        map.put("bmi", String.valueOf(registerData.getBmi()));
-        map.put("intakeCC", String.valueOf(registerData.getIntakeCC()));
-        map.put("consumeREE", String.valueOf(registerData.getConsumeREE()));
+        map.put("birthday", String.valueOf(bodyData.getBirthday()));
+        map.put("high", String.valueOf(bodyData.getHigh()));
+        map.put("sex", String.valueOf(bodyData.getSex()));
+        map.put("goalRecordData", String.valueOf(bodyData.getGoalRecordData()));
+        map.put("goalRecordType", String.valueOf(bodyData.getGoalRecordType()));
+        map.put("actionType", String.valueOf(bodyData.getActionType()));
+        map.put("standardWeight", String.valueOf(bodyData.getStandardWeight()));
+        map.put("bmi", String.valueOf(bodyData.getBmi()));
+        map.put("intakeCC", String.valueOf(bodyData.getIntakeCC()));
+        map.put("consumeREE", String.valueOf(bodyData.getConsumeREE()));
+        map.put("maxHeart", String.valueOf(bodyData.getMaxHeart()));
 
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
@@ -133,18 +139,18 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     private void fillData() {
 
-        registerData = HelperRegister.getInstance().getRegisterData();
-        standardWeight = registerData.getStandardWeight();
-        bmi = registerData.getBmi();
-        intakeCC = registerData.getIntakeCC();
-        consumeREE = registerData.getConsumeREE();
-
+        standardWeight = bodyData.getStandardWeight();
+        bmi = bodyData.getBmi();
+        intakeCC = bodyData.getIntakeCC();
+        consumeREE = bodyData.getConsumeREE();
+        float maxHeart = bodyData.getMaxHeart();
+//        中低强度的运动应该达到人最大心率(最大心率=220-实际年龄)的60%~75%
 
         tvSuggestBmiValue.setText(String.valueOf(bmi));
         tvSuggestReeValue.setText(String.format("%s大卡", intakeCC));
         tvSuggestWeightValue.setText(String.format("%.2fKG", standardWeight));
         tvSuggestWeightScopeValue.setText(String.format("%.2f~%.2fKG", standardWeight * 0.9, standardWeight * 1.1));
-
+        tvSuggestHeartRateValue.setText(String.format("%s 次/分钟到 %s 次/分钟",maxHeart*0.6,maxHeart*0.75));
     }
 
 

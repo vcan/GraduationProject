@@ -36,6 +36,7 @@ public class ResultCode {
 
      // 修改描述
     public static final int MODIFY_DESCRIBE = 10001;
+    public static final int MODIFY_ACTION = 10002;
 
     // 活 动 内 容 活动系数
     // 卧床（全天） 1.2

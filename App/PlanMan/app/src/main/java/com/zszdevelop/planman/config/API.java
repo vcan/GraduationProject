@@ -44,7 +44,10 @@ public class API {
    public static final String MODIFY_GOAL_COMPLETE_URI ="ModifyGoalStutusServlet";
 
     /*二十一：修改基本数据*/
-   public static final String MODIFY_BASE_DATA_URI ="ModifyBaseDataServlet";
+   public static final String MODIFY_BASE_DATA_URI ="BodyDataServlet";
+
+    /*二十二：得到身体数据*/
+   public static final String BODY_DATA_URI ="BodyDataServlet?userId=%d";
 
 
 

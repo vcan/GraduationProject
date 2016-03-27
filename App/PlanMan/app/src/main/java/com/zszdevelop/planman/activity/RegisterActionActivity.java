@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
-import com.zszdevelop.planman.base.HelperRegister;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.ResultCode;
 
 import butterknife.Bind;
@@ -42,6 +42,10 @@ public class RegisterActionActivity extends BaseActivity {
     CardView cvHard;
     @Bind(R.id.tv_register_action)
     TextView tvRegisterAction;
+    @Bind(R.id.tv_complete)
+    TextView tvComplete;
+    private BodyData bodyData;
+    private float actionType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,32 @@ public class RegisterActionActivity extends BaseActivity {
         setContentView(R.layout.activity_register_action);
         ButterKnife.bind(this);
 
-
         initView();
+        initSuperData();
         initListener();
         fillData();
+    }
+
+    private void initSuperData() {
+        boolean isRegister = getIntent().getBooleanExtra("isRegister", true);
+        if (isRegister) {
+            bodyData = (BodyData) getIntent().getSerializableExtra("bodyData");
+            tvComplete.setVisibility(View.GONE);
+            tvRegisterAction.setVisibility(View.VISIBLE);
+        } else {
+            tvComplete.setVisibility(View.VISIBLE);
+            tvRegisterAction.setVisibility(View.GONE);
+
+            actionType = getIntent().getFloatExtra("actionType", ResultCode.lIGHT_ACTION_CODE);
+            if (actionType == ResultCode.lIGHT_ACTION_CODE) {
+                checkedLight();
+            } else if (actionType == ResultCode.COMMON_ACTION_CODE) {
+                checkedCommon();
+            } else if (actionType == ResultCode.HARD_ACTION_CODE) {
+                checkedHard();
+            }
+        }
+
     }
 
 
@@ -64,15 +90,11 @@ public class RegisterActionActivity extends BaseActivity {
     private void initListener() {
 
 
-
         // 轻体力活
         cvLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivSelectedLight.setVisibility(View.VISIBLE);
-                ivSelectedCommon.setVisibility(View.INVISIBLE);
-                ivSelectedHard.setVisibility(View.INVISIBLE);
-                HelperRegister.getInstance().getRegisterData().setActionType(ResultCode.lIGHT_ACTION_CODE);
+                checkedLight();
             }
         });
 
@@ -80,10 +102,7 @@ public class RegisterActionActivity extends BaseActivity {
         cvCommon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivSelectedLight.setVisibility(View.INVISIBLE);
-                ivSelectedCommon.setVisibility(View.VISIBLE);
-                ivSelectedHard.setVisibility(View.INVISIBLE);
-                HelperRegister.getInstance().getRegisterData().setActionType(ResultCode.COMMON_ACTION_CODE);
+                checkedCommon();
             }
         });
 
@@ -91,21 +110,49 @@ public class RegisterActionActivity extends BaseActivity {
         cvHard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivSelectedLight.setVisibility(View.INVISIBLE);
-                ivSelectedCommon.setVisibility(View.INVISIBLE);
-                ivSelectedHard.setVisibility(View.VISIBLE);
-                HelperRegister.getInstance().getRegisterData().setActionType(ResultCode.HARD_ACTION_CODE);
+                checkedHard();
             }
         });
 
         tvRegisterAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActionActivity.this,RegisterSuggestActivity.class);
+                bodyData.setActionType(actionType);
+                Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
+                intent.putExtra("bodyData",bodyData);
                 startActivity(intent);
             }
         });
 
+        tvComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getIntent().putExtra("actionType", actionType);
+                setResult(RESULT_OK,getIntent());
+                finish();
+            }
+        });
+    }
+
+    private void checkedHard() {
+        ivSelectedLight.setVisibility(View.INVISIBLE);
+        ivSelectedCommon.setVisibility(View.INVISIBLE);
+        ivSelectedHard.setVisibility(View.VISIBLE);
+        actionType = ResultCode.HARD_ACTION_CODE;
+    }
+
+    private void checkedCommon() {
+        ivSelectedLight.setVisibility(View.INVISIBLE);
+        ivSelectedCommon.setVisibility(View.VISIBLE);
+        ivSelectedHard.setVisibility(View.INVISIBLE);
+        actionType = ResultCode.COMMON_ACTION_CODE;
+    }
+
+    private void checkedLight() {
+        ivSelectedLight.setVisibility(View.VISIBLE);
+        ivSelectedCommon.setVisibility(View.INVISIBLE);
+        ivSelectedHard.setVisibility(View.INVISIBLE);
+        actionType = ResultCode.lIGHT_ACTION_CODE;
     }
 
     private void initView() {

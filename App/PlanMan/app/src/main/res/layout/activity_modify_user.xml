@@ -6,14 +6,20 @@
     android:orientation="vertical"
     tools:context="com.zszdevelop.planman.activity.ModifyUserActivity">
 
-    <include layout="@layout/toolbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/toolbar"/>
+        <include layout="@layout/textview_complete"/>
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/fl_modify_base_data"
         android:layout_width="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_base_data_layout"
-        android:name="com.zszdevelop.planman.fragment.BaseDataFragment"
+        android:name="com.zszdevelop.planman.fragment.BodyDataFragment"
         />
 
     <TextView

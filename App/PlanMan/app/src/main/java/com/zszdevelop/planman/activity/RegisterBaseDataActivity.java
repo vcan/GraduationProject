@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
-import com.zszdevelop.planman.base.HelperRegister;
-import com.zszdevelop.planman.fragment.BaseDataFragment;
+import com.zszdevelop.planman.fragment.BodyDataFragment;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
+
+import java.io.Serializable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +28,7 @@ public class RegisterBaseDataActivity extends BaseActivity {
     @Bind(R.id.btn_register_base_next)
     Button btnRegisterBaseNext;
 
-    private BaseDataFragment fragment;
+    private BodyDataFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,8 @@ public class RegisterBaseDataActivity extends BaseActivity {
     private void initView() {
         DrawerToolUtils.initToolbar(this, toolbar, "个人数据");
 
-        fragment = (BaseDataFragment) getSupportFragmentManager().findFragmentById(R.id.fm_register_base_data);
+        fragment = (BodyDataFragment) getSupportFragmentManager().findFragmentById(R.id.fm_register_base_data);
+
     }
 
 
@@ -87,9 +89,10 @@ public class RegisterBaseDataActivity extends BaseActivity {
 
     private void submitData() {
 
-        HelperRegister helper = HelperRegister.getInstance();
-        helper.setRegisterData(fragment.registerData);
+
         Intent intent = new Intent(RegisterBaseDataActivity.this, RegisterActionActivity.class);
+        intent.putExtra("bodyData",(Serializable)fragment.bodyData);
+        intent.putExtra("isRegister",true);
         startActivity(intent);
 
     }

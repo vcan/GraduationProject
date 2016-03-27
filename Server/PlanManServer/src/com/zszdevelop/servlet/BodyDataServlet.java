@@ -9,41 +9,57 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.zszdevelop.bean.InsertStatus;
-import com.zszdevelop.bean.RegisterData;
+import com.zszdevelop.bean.BodyData;
 import com.zszdevelop.config.ResponseMessage;
 import com.zszdevelop.config.ResultCode;
-import com.zszdevelop.dao.GoalInfoDao;
-import com.zszdevelop.dao.ModifyBaseDataDao;
-import com.zszdevelop.impl.GoalInfoImpl;
-import com.zszdevelop.impl.ModifyBaseDataImpl;
+import com.zszdevelop.dao.BodyDataDao;
+import com.zszdevelop.impl.BodyDataImpl;
 import com.zszdevelop.utils.AuthUserUtils;
 import com.zszdevelop.utils.OutJsonUtils;
 import com.zszdevelop.utils.ServerSettingUtils;
 
 /**
- * Servlet implementation class ModifyBaseDataServlet
+ * Servlet implementation class BodyDataServlet
  */
-@WebServlet("/ModifyBaseDataServlet")
-public class ModifyBaseDataServlet extends HttpServlet {
+@WebServlet("/BodyDataServlet")
+public class BodyDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifyBaseDataServlet() {
+    public BodyDataServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		ServerSettingUtils.settingEncode(request, response);
+		// 取得参数
+		String userId = request.getParameter("userId");
+		// 对数据进行一个容错处理
+		userId=userId==null?"0":userId;
+		
+		BodyDataDao dao = new BodyDataImpl();
+		BodyData bodyData = dao.getBodyData(Integer.parseInt(userId));
+		if (bodyData== null) {
+			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_OPERATE_EXCEPTION, response,ResultCode.HTTP_ERROR);
+			return;
+		}
+		
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(bodyData);
+		OutJsonUtils.outJson(jsonData,ResponseMessage.MESSAGE_CUCCESS,response,ResultCode.HTTP_OK);
+
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-ServerSettingUtils.settingEncode(request, response);
+		ServerSettingUtils.settingEncode(request, response);
 		
 		// 验证token
 		boolean passAuthUser = AuthUserUtils.passAuthUser(request, response);
@@ -74,6 +90,7 @@ ServerSettingUtils.settingEncode(request, response);
 		String intakeCC = request.getParameter("intakeCC");
 		String consumeREE = request.getParameter("consumeREE");
 		String standardWeight = request.getParameter("standardWeight");
+		String maxHeart = request.getParameter("maxHeart");
 		
 		// 对数据进行一个容错处理
 		userId=userId==null?"0":userId;
@@ -86,22 +103,24 @@ ServerSettingUtils.settingEncode(request, response);
 		intakeCC=intakeCC==null?"0":intakeCC;
 		consumeREE=consumeREE==null?"0":consumeREE;
 		standardWeight=standardWeight==null?"0":standardWeight;
+		maxHeart=maxHeart==null?"0":maxHeart;
 		
 		
 		// 用户基本数据
-		ModifyBaseDataDao dao = new ModifyBaseDataImpl();
-		RegisterData registerData = new RegisterData();
-		registerData.setActionType(Float.parseFloat(actionType));
-		registerData.setBirthday(birthday);
-		registerData.setGoalRecordData(Float.parseFloat(goalRecordData));
-		registerData.setGoalRecordType(Integer.parseInt(goalRecordType));
-		registerData.setHigh(Float.parseFloat(high));
-		registerData.setSex(Integer.parseInt(sex));
-		registerData.setBmi(Float.parseFloat(bmi));
-		registerData.setIntakeCC(Integer.parseInt(intakeCC));
-		registerData.setConsumeREE(Float.parseFloat(consumeREE));
-		registerData.setStandardWeight(Float.parseFloat(standardWeight));
-		boolean modifyGoalStatus = dao.modifyBaseData(Integer.parseInt(userId), registerData);
+		BodyDataDao dao = new BodyDataImpl();
+		BodyData bodyData = new BodyData();
+		bodyData.setActionType(Float.parseFloat(actionType));
+		bodyData.setBirthday(birthday);
+		bodyData.setGoalRecordData(Float.parseFloat(goalRecordData));
+		bodyData.setGoalRecordType(Integer.parseInt(goalRecordType));
+		bodyData.setHigh(Float.parseFloat(high));
+		bodyData.setSex(Integer.parseInt(sex));
+		bodyData.setBmi(Float.parseFloat(bmi));
+		bodyData.setIntakeCC(Integer.parseInt(intakeCC));
+		bodyData.setConsumeREE(Float.parseFloat(consumeREE));
+		bodyData.setStandardWeight(Float.parseFloat(standardWeight));
+		bodyData.setMaxHeart(Float.parseFloat(maxHeart));
+		boolean modifyGoalStatus = dao.modifyBodyData(Integer.parseInt(userId), bodyData);
 		
 		
 		if (!modifyGoalStatus) {
