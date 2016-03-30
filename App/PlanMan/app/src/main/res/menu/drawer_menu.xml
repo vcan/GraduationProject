@@ -3,7 +3,6 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_mian"
-            android:checked="true"
             android:icon="@drawable/smssdk_search_icon"
             android:title="@string/my_mian"/>
 
@@ -17,15 +16,16 @@
             android:icon="@drawable/smssdk_search_icon"
             android:title="@string/my_new_plan"/>
 
-        <item
-            android:id="@+id/navigation_library"
-            android:icon="@drawable/smssdk_sharesdk_icon"
-            android:title="@string/plan_community"/>
 
         <item
             android:id="@+id/navigation_record_figure"
             android:icon="@drawable/smssdk_sharesdk_icon"
             android:title="@string/plan_record_figure"/>
+
+        <item
+            android:id="@+id/navigation_change"
+            android:icon="@drawable/smssdk_sharesdk_icon"
+            android:title="@string/plan_change"/>
 
         <item
             android:id="@+id/navigation_search_food"

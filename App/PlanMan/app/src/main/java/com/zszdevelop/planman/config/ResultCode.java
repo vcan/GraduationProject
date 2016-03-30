@@ -52,4 +52,12 @@ public class ResultCode {
 
     // 轻活动类型
     public static float HARD_ACTION_CODE = (float)2.0;
+
+    // 全部目标记录
+    public static int ALL_GOAL_RECORED_CODE = 1;
+
+    // 未完成的目标记录
+    public static int NO_COMPLETE_GOAL_RECODE_CODE = 0;
+
+
 }

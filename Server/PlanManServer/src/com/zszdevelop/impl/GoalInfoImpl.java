@@ -9,6 +9,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.GoalInfo;
 import com.zszdevelop.bean.GoalRecordInfo;
+import com.zszdevelop.config.ResultCode;
 import com.zszdevelop.dao.GoalInfoDao;
 
 public class GoalInfoImpl implements GoalInfoDao{
@@ -57,9 +58,15 @@ public class GoalInfoImpl implements GoalInfoDao{
 	}
 
 	@Override
-	public ArrayList<GoalInfo> getGoalInfo(int userId) {
+	public ArrayList<GoalInfo> getGoalInfo(int userId,int goalStatus) {
 		ArrayList<GoalInfo> lists = new ArrayList<>();
-		String sql = "SELECT * FROM GoalInfo WHERE userId=?";
+		String sql;
+		if (goalStatus == ResultCode.ALL_GOAL_RECORED_CODE) {
+			sql = "SELECT * FROM GoalInfo WHERE userId=? ";
+		}else {
+			sql = "SELECT * FROM GoalInfo WHERE userId=? and goalStatus = 0";
+		}
+		 
 		conn = BaseConnection.getConnection();
 		try {
 			ps = (PreparedStatement) conn.prepareStatement(sql);

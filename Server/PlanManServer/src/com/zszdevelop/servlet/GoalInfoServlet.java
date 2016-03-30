@@ -45,8 +45,9 @@ public class GoalInfoServlet extends HttpServlet {
 		ServerSettingUtils.settingEncode(request, response);
 		// 取得参数
 		String userId = request.getParameter("userId");
+		String goalStatus = request.getParameter("goalStatus");
 		GoalInfoDao goalInfoDao = new GoalInfoImpl();
-		ArrayList<GoalInfo> lists = goalInfoDao.getGoalInfo(Integer.parseInt(userId));
+		ArrayList<GoalInfo> lists = goalInfoDao.getGoalInfo(Integer.parseInt(userId),Integer.parseInt(goalStatus));
 
 		// 将数据以json的形式传递回来
 		Gson gson = new Gson();

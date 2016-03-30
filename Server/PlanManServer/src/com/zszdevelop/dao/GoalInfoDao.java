@@ -8,7 +8,7 @@ public interface GoalInfoDao {
 	
 	public boolean insertGoalInfo(GoalInfo goalInfo,int userId);
 	
-	public ArrayList<GoalInfo> getGoalInfo(int userId);
+	public ArrayList<GoalInfo> getGoalInfo(int userId,int goalStatus);
 	public boolean modifyGoalStatus(int goalId,int userId);
 
 }

@@ -28,5 +28,10 @@ public class ResultCode {
 	public static final int SHOULDER_CODE = 6;
 	
 
+    // 全部目标记录
+    public static int ALL_GOAL_RECORED_CODE = 1;
+
+    // 未完成的目标记录
+    public static int NO_COMPLETE_GOAL_RECODE_CODE = 0;
 	
 }

@@ -10,24 +10,16 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.activity.MaterialMainActivity;
 import com.zszdevelop.planman.activity.ModifyTextActivity;
-import com.zszdevelop.planman.activity.RegisterPlanActivity;
 import com.zszdevelop.planman.base.BaseFragment;
-import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.FigureType;
 import com.zszdevelop.planman.bean.GoalInfo;
-import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
-import com.zszdevelop.planman.http.HttpRequest;
-import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
-import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by zhangshengzhong on 16/2/21.
  */
-public class InstertPlanFragment extends BaseFragment {
+public class InsertPlanFragment extends BaseFragment {
 
 
     @Bind(R.id.tv_choose_type)
@@ -62,20 +54,18 @@ public class InstertPlanFragment extends BaseFragment {
     private ArrayList<FigureType> options1ItemTypes = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<>();
 
-    private GoalInfo goalInfo = new GoalInfo();
+    public GoalInfo goalInfo = new GoalInfo();
     private TimePickerView pvGoalTime;
-    private TextView tvInsertPlanNext;
 
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_instert_plan;
+        return R.layout.fragment_insert_plan;
     }
 
     @Override
     protected void onBindFragment(View view) {
 
-        tvInsertPlanNext = (TextView) ((RegisterPlanActivity) getActivity()).findViewById(R.id.tv_insert_plan_next);
 
         initView();
         initlistener();
@@ -202,46 +192,10 @@ public class InstertPlanFragment extends BaseFragment {
             }
         });
 
-        tvInsertPlanNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitData();
-            }
-        });
+
 
     }
 
-    // 提交数据
-    private void submitData() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("userId", String.valueOf(Helper.getUserId()));
-        map.put("authToken", Helper.getToken());
-        map.put("goalType", String.valueOf(goalInfo.getGoalType()));
-        map.put("stopTime", String.valueOf(goalInfo.getStopTime()));
-        map.put("startTime", String.valueOf(goalInfo.getStartTime()));
-        map.put("stopGoal", String.valueOf(goalInfo.getStopGoal()));
-        map.put("startGoal", String.valueOf(goalInfo.getStartGoal()));
-        map.put("goalDescribe", goalInfo.getGoalDescribe());
-
-
-        LogUtils.e("userId", String.valueOf(Helper.getUserId()));
-        LogUtils.e("authToken", Helper.getToken());
-        LogUtils.e("goalType", String.valueOf(goalInfo.getGoalType()));
-        LogUtils.e("stopTime", String.valueOf(goalInfo.getStopTime()));
-        LogUtils.e("startTime", String.valueOf(goalInfo.getStartTime()));
-        LogUtils.e("stopGoal", String.valueOf(goalInfo.getStopGoal()));
-        LogUtils.e("startGoal", String.valueOf(goalInfo.getStartGoal()));
-        LogUtils.e("goalDescribe", goalInfo.getGoalDescribe());
-
-        HttpRequest.post(API.INSTER_GOAL_URI, map, new HttpRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                LogUtils.e("tijiao");
-                Intent intent = new Intent(getActivity(), MaterialMainActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
 
     // 添加默认数据
     private void fillData() {

@@ -6,12 +6,7 @@
     android:orientation="vertical"
     tools:context="com.zszdevelop.planman.activity.ModifyUserActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/toolbar"/>
-        <include layout="@layout/textview_complete"/>
-    </RelativeLayout>
+    <include layout="@layout/action_toolbar"/>
 
     <fragment
         android:id="@+id/fl_modify_base_data"

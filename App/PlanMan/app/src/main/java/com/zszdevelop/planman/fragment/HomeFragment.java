@@ -1,14 +1,12 @@
-package com.zszdevelop.planman.activity;
+package com.zszdevelop.planman.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
@@ -16,16 +14,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.adapter.MaterialPagerAdapter;
-import com.zszdevelop.planman.base.BaseActivity;
+import com.zszdevelop.planman.base.BaseFragment;
 import com.zszdevelop.planman.base.Helper;
-import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
-import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
-import com.zszdevelop.planman.utils.DrawerToolUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,56 +29,75 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack {
+/**
+ * Created by zhangshengzhong on 16/2/21.
+ */
+public class HomeFragment extends BaseFragment {
+
 
     @Bind(R.id.materialViewPager)
     MaterialViewPager materialViewPager;
-    @Bind(R.id.navigation)
-    NavigationView navigation;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-
-    private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
     List<Fragment> fragmentList = new ArrayList<>();
+    private Toolbar actToolbar;
+    public Toolbar toolbar;
+    private BindToolbarCallBack bindToolbarCallBack;
+
+    public static HomeFragment newInstanceFragment(Toolbar toolbar) {
+        HomeFragment fragment = new HomeFragment();
+        fragment.actToolbar = toolbar;
+        fragment.actToolbar.setVisibility(View.GONE);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_main);
-        ButterKnife.bind(this);
+    public void onPause() {
+        super.onPause();
+//        actToolbar.setVisibility(View.VISIBLE);
+    }
+
+    //当该Fragment被添加,显示到Activity时调用该方法
+    //在此判断显示到的Activity是否已经实现了接口
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof HomeFragment.BindToolbarCallBack)) {
+            throw new IllegalStateException("TitlesListFragment所在的Activity必须实现TitlesListFragmentCallBack接口");
+        }
+        bindToolbarCallBack = (BindToolbarCallBack) activity;
+    }
+
+    //当该Fragment从它所属的Activity中被删除时调用该方法
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        bindToolbarCallBack = null;
+    }
 
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void onBindFragment(View view) {
+        initView();
         initListener();
         fillData();
-        initView();
+
     }
 
 
     private void initView() {
 
-        initToolbar();
-
-
-        View logo = findViewById(R.id.logo_white);
-        if (logo != null)
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    materialViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (bindToolbarCallBack != null){
+            Toolbar toolbar = materialViewPager.getToolbar();
+            bindToolbarCallBack.getToolbar(toolbar);
+        }
+//        DrawerToolUtils.initToolbar((AppCompatActivity) getActivity(), toolbar, "");
 
     }
 
-    private void initToolbar() {
-        setTitle("");
-
-        toolbar = materialViewPager.getToolbar();
-        DrawerToolUtils.initToolbar(this,toolbar,"");
-        DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
-    }
 
     private void initListener() {
 
@@ -92,14 +106,14 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
-//                    case 0:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.green,
-//                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
                     case 0:
-                        return HeaderDesign.fromColorAndDrawable(
-                                ContextCompat.getColor(MaterialMainActivity.this, R.color.colorPrimaryDark),
-                                ContextCompat.getDrawable(MaterialMainActivity.this, R.drawable.smssdk_search_icon));
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.green,
+                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+//                    case 0:
+//                        return HeaderDesign.fromColorAndDrawable(
+//                                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark),
+//                                ContextCompat.getDrawable(getActivity(), R.drawable.smssdk_search_icon));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
@@ -140,7 +154,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                     MaterialRecycleViewFragment fragment = MaterialRecycleViewFragment.newInstanceFragment(i, goalList.get(i));
                     fragmentList.add(fragment);
                 }
-                MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getSupportFragmentManager(), fragmentList);
+                MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList);
                 materialViewPager.getViewPager().setAdapter(pagerAdapter);
                 materialViewPager.getViewPager().setOffscreenPageLimit(materialViewPager.getViewPager().getAdapter().getCount());
                 materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
@@ -149,25 +163,23 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             }
         });
     }
-
-
-
     @Override
-    public void fillDataListener(int currentPage, final int actionType, final MaterialRecycleViewFragment fragment) {
-        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
-        HttpRequest.get(url, new HttpRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
-                }.getType();
-                List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
-
-                fragment.setViewPagerData(consumeRecords);
-
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    public interface BindToolbarCallBack {
+         void getToolbar(Toolbar toolbar);
+    }
 
 }
+

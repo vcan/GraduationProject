@@ -1,65 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity">
+    android:background="@color/gray"
+    android:layout_height="match_parent">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
+        <include layout="@layout/toolbar"/>
 
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <FrameLayout
+            android:id="@+id/fl_main_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Drawer -->
+    <include layout="@layout/navigation_view"/>
 
 
-
-            <include layout="@layout/toolbar" />
-
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs_change"
-                    android:layout_width="match_parent"
-                    app:tabIndicatorColor="@color/colorAccent"
-                    app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@color/colorPrimary"
-
-                    android:layout_height="@dimen/distance_48dp" />
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/vp_main_change"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"></android.support.v4.view.ViewPager>
-
-                <com.zszdevelop.planman.view.PullLoadMoreRecyclerView
-                    android:id="@+id/plmrv_consume_record"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.zszdevelop.planman.view.PullLoadMoreRecyclerView>
-
-
-
-        </LinearLayout>
-
-        <!-- The navigation drawer -->
-
-        <!-- Drawer -->
-        <android.support.design.widget.NavigationView
-            android:layout_marginTop="56dp"
-            android:id="@+id/navigation"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer_menu" />
-
-    </android.support.v4.widget.DrawerLayout>
-
-
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

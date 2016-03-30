@@ -37,7 +37,7 @@ public class HomeImpl implements HomeDao {
 		String queryShowType = "SELECT showType FROM UserInfo WHERE userId=?";
 		String queryGoalRecordInfo = "SELECT * FROM GoalRecordInfo WHERE userId=?";
 		String queryConsumeRecordInfo = "SELECT * FROM ConsumeRecordInfo WHERE userId=?";
-		String queryGoalInfo = "SELECT * FROM GoalInfo WHERE userId=?";
+		String queryGoalInfo = "SELECT * FROM GoalInfo WHERE userId=? and goalStatus = 0";//只查询已完成的记录
 
 		try {
 			conn = BaseConnection.getConnection();

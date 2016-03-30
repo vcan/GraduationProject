@@ -8,7 +8,7 @@ public class API {
 
 
     public static final String SERVER_URI = "http://172.25.114.12:8080/PlanManServer/%s";
-    public static final String SERVER_DEBUG_URI = "http://172.25.114.12:8080/PlanManServer/%s";
+    public static final String SERVER_DEBUG_URI = "http://192.168.0.101:8080/PlanManServer/%s";
 
     public static final String SERVER_IMAGE_URL = "http://play.mengtta.com/";
     public static final String DEBUG_SERVER_IMAGE_URL = "http://192.168.0.183/";
@@ -26,7 +26,7 @@ public class API {
    public static final String INSTER_GOAL_URI="GoalInfoServlet";
 
     /*九：获取训练计划信息*/
-   public static final String GET_GOAL_PLAN_URI="GoalInfoServlet?userId=%d";
+   public static final String GET_GOAL_PLAN_URI="GoalInfoServlet?userId=%d&goalStatus=%d";
 
    /*十三：获取消耗纪录*/
    public static final String SUBMIT_CONSUME_RECORD_URI ="ConsumeRecordServlet?";

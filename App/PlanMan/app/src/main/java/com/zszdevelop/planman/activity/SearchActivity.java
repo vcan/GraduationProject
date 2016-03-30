@@ -1,20 +1,16 @@
 package com.zszdevelop.planman.activity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +31,7 @@ import com.zszdevelop.planman.db.DatabaseHelper;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
+import com.zszdevelop.planman.utils.DrawerToolUtils;
 import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 import com.zszdevelop.planman.view_holder.SearchViewHolder;
@@ -47,28 +44,30 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SearchActivity extends AppCompatActivity {
+
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.til_search)
-    TextInputLayout tilSearch;
-    @Bind(R.id.plmrv_search)
-    PullLoadMoreRecyclerView plmrvSearch;
     @Bind(R.id.iv_go_search)
     ImageView ivGoSearch;
-    @Bind(R.id.slidingDeck)
-    SlidingDeck slidingDeck;
-    @Bind(R.id.emptyView)
-    LinearLayout emptyView;
+    @Bind(R.id.et_search)
+    EditText etSearch;
     @Bind(R.id.tv_search_save)
     TextView tvSearchSave;
+    @Bind(R.id.slidingDeck)
+    SlidingDeck slidingDeck;
     @Bind(R.id.tv_search_title)
     TextView tvSearchTitle;
+    @Bind(R.id.emptyView)
+    LinearLayout emptyView;
+    @Bind(R.id.plmrv_search)
+    PullLoadMoreRecyclerView plmrvSearch;
     @Bind(R.id.navigation)
     NavigationView navigation;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    private DatabaseHelper helper;
 
+    private DatabaseHelper helper;
     List<Food> foods = new ArrayList<>();
 
     OptionsPickerView pvOptions;
@@ -99,12 +98,14 @@ public class SearchActivity extends AppCompatActivity {
 
         initRecyclerView();
         initializeSlidingDeck();
+        DrawerToolUtils.initToolbar(this, toolbar, "");
+        DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
         if (searchType == ResultCode.FOOD_CODE) {
             initOptionFood();
-            initToolbar("搜索食物");
+            etSearch.setHint("搜索饮食");
             tvSearchTitle.setText("添加饮食记录吧");
         } else {
-            initToolbar("搜索运动");
+            etSearch.setHint("搜索运动");
             tvSearchTitle.setText("添加运动记录吧");
             initOptionSport();
         }
@@ -118,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                searchStr = tilSearch.getEditText().getText().toString().trim();
+                searchStr = etSearch.getText().toString().trim();
                 if (TextUtils.isEmpty(searchStr)) {
                     ToastUtil.showToast("请输入搜索内容");
                     return;
@@ -162,14 +163,6 @@ public class SearchActivity extends AppCompatActivity {
         map.put("consumeRecordType", String.valueOf(ResultCode.FOOD_CODE));
         map.put("consumeRecordContent", listJson);
         map.put("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
-
-
-        LogUtils.e("userid", String.valueOf(Helper.getUserId()));
-        LogUtils.e("authToken", Helper.getToken());
-        LogUtils.e("consumeCC", String.valueOf(totalCC));
-        LogUtils.e("consumeRecordType", String.valueOf(ResultCode.FOOD_CODE));
-        LogUtils.e("consumeRecordContent", listJson);
-        LogUtils.e("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
 
         HttpRequest.post(API.SUBMIT_CONSUME_RECORD_URI, map, new HttpRequestListener() {
             @Override
@@ -342,61 +335,6 @@ public class SearchActivity extends AppCompatActivity {
 
                 slidingAdapter.insert(slidingDeckModel, 0);//插入在第一条
                 slidingAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    private void initToolbar(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
-                R.string.drawer_close);
-        mDrawerToggle.syncState();
-        drawerLayout.setDrawerListener(mDrawerToggle);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-
-            }
-        });
-
-
-        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                Snackbar.make(MainActivity.this, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
-                menuItem.setChecked(true);
-                Intent intent;
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_mian:
-                        intent = new Intent(SearchActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.navigation_record_figure:
-                            intent = new Intent(SearchActivity.this, RecordFigureActivity.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case R.id.navigation_search_food:
-                        intent = new Intent(SearchActivity.this, SearchActivity.class);
-                        intent.putExtra("SearchType", ResultCode.FOOD_CODE);
-                        startActivity(intent);
-                        finish();
-                        break;
-
-                    case R.id.navigation_search_sport:
-                        intent = new Intent(SearchActivity.this, SearchActivity.class);
-                        intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return true;
             }
         });
     }
