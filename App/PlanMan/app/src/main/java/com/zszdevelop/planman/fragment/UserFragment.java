@@ -18,4 +18,9 @@ public class UserFragment extends BaseFragment {
     protected void onBindFragment(View view) {
 
     }
+
+    @Override
+    protected void lazyLoad() {
+
+    }
 }

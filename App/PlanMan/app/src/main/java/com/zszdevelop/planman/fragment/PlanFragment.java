@@ -86,6 +86,11 @@ public class PlanFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void lazyLoad() {
+
+    }
+
     private void initView() {
         tvPlanGoalTime.setText(TimeUtil.timestampToYMD(item.getStopTime()));
 

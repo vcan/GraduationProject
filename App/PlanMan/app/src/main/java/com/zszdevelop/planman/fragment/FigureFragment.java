@@ -20,6 +20,7 @@ import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.http.ToastUtil;
+import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.utils.RiseNumberTextView;
 import com.zszdevelop.planman.utils.TimeUtil;
 
@@ -48,6 +49,8 @@ public class FigureFragment extends BaseFragment {
     @Bind(R.id.tv_figure_old_time)
     TextView tvFigureOldTime;
 
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     private ArrayList<Integer> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> options2Items = new ArrayList<>();
@@ -72,7 +75,19 @@ public class FigureFragment extends BaseFragment {
 
     @Override
     protected void onBindFragment(View view) {
+        isPrepared = true;
+        lazyLoad();
+        LogUtils.e(">>>>>>>>>>>onBindFragment(View view)");
 
+    }
+
+    @Override
+    protected void lazyLoad() {
+        LogUtils.e(">>>>>>>>>>>到ll");
+        if(!isPrepared ||!isVisible) {
+            return;
+        }
+        LogUtils.e(">>>>>>>>>>>lazyLoad(View view)");
         initView();
         initListener();
         fillData();
@@ -150,13 +165,17 @@ public class FigureFragment extends BaseFragment {
             }
         });
         //点击弹出选项选择器
-        rntvFigureNumber.setOnClickListener(new View.OnClickListener() {
+        if (rntvFigureNumber!=null){
+            rntvFigureNumber.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                pvOptions.show();
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    pvOptions.show();
+                }
+            });
+        }
+
+
 
 
         //时间选择后回调
@@ -175,30 +194,39 @@ public class FigureFragment extends BaseFragment {
         });
 
         //弹出时间选择器
-        tvFigureTime.setOnClickListener(new View.OnClickListener() {
+        if (tvFigureTime != null){
+            tvFigureTime.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                pvTime.show();
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    pvTime.show();
+                }
+            });
+        }
+
 
 
         // 添加记录
-        btnFigureComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitFigure();
+        if (btnFigureComplete!=null){
+            btnFigureComplete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    submitFigure();
 
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 
     private void fillData() {
 
-        tvFigureTime.setText(TimeUtil.getTime(new Date()));
+        if (tvFigureTime!=null){
+            tvFigureTime.setText(TimeUtil.getTime(new Date()));
+        }
+
 
         String url = String.format(API.FIRST_RECORD_FIGUTR_URI, Helper.getUserId(), type);
         HttpRequest.get(url, new HttpRequestListener() {

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
  * Created by ShengZhong on 2015/12/28.
  */
 public abstract class BaseFragment extends Fragment {
+    protected boolean isVisible;
 
     protected abstract int getLayoutResource();
 
@@ -50,4 +51,25 @@ public abstract class BaseFragment extends Fragment {
     protected void onBroadcastReceive(Intent intent) {
 
     }
+
+    /**
+     * 在这里实现Fragment数据的缓加载.
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+    protected void onVisible(){
+        lazyLoad();
+    }
+    protected abstract void lazyLoad();
+    protected void onInvisible(){}
 }

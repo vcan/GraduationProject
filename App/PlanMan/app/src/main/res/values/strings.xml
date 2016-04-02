@@ -46,5 +46,7 @@ OK！现在你该知道，该如何计算出自己每天该摄取多少热量，
 低于或高于这个范围，都不算中低强度运动心率，燃烧的也就不是脂肪了~</string>
     <string name="title_activity_test11">Test11Activity</string>
     <string name="plan_change">变化趋势</string>
+    <string name="my_plan_group">计划</string>
+    <string name="plan_figure_group">身材</string>
 
 </resources>

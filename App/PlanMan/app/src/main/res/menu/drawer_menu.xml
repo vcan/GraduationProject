@@ -4,38 +4,38 @@
         <item
             android:id="@+id/navigation_mian"
             android:icon="@drawable/smssdk_search_icon"
-            android:title="@string/my_mian"/>
+            android:title="@string/my_mian" />
 
         <item
             android:id="@+id/navigation_plan"
             android:icon="@drawable/smssdk_search_icon"
-            android:title="@string/my_plan"/>
-
+            android:title="@string/my_plan" />
         <item
             android:id="@+id/navigation_new_plan"
             android:icon="@drawable/smssdk_search_icon"
-            android:title="@string/my_new_plan"/>
+            android:title="@string/my_new_plan" />
 
 
         <item
             android:id="@+id/navigation_record_figure"
             android:icon="@drawable/smssdk_sharesdk_icon"
-            android:title="@string/plan_record_figure"/>
+            android:title="@string/plan_record_figure" />
 
         <item
             android:id="@+id/navigation_change"
             android:icon="@drawable/smssdk_sharesdk_icon"
-            android:title="@string/plan_change"/>
+            android:title="@string/plan_change" />
+
 
         <item
             android:id="@+id/navigation_search_food"
             android:icon="@drawable/smssdk_sharesdk_icon"
-            android:title="@string/plan_search_food"/>
+            android:title="@string/plan_search_food" />
 
         <item
             android:id="@+id/navigation_search_sport"
             android:icon="@drawable/smssdk_sharesdk_icon"
-            android:title="@string/plan_search_sport"/>
+            android:title="@string/plan_search_sport" />
     </group>
 
 </menu>

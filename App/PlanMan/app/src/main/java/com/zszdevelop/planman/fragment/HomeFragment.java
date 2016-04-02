@@ -81,9 +81,18 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void onBindFragment(View view) {
+
+
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if(!isVisible) {
+            return;
+        }
+        fillData();
         initView();
         initListener();
-        fillData();
 
     }
 

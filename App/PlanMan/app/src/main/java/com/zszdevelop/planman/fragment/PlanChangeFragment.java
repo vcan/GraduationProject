@@ -59,6 +59,11 @@ public class PlanChangeFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void lazyLoad() {
+
+    }
+
     public void refreshFragment(ArrayList<GoalRecordInfo> data){
         goalRecordInfos = data;
         generateInitialLineData();

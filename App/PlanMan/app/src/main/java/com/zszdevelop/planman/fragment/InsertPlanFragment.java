@@ -72,6 +72,11 @@ public class InsertPlanFragment extends BaseFragment {
         fillData();
     }
 
+    @Override
+    protected void lazyLoad() {
+
+    }
+
 
     private void initView() {
         initOptionFigure();

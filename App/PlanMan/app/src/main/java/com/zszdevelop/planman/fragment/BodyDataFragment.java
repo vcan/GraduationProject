@@ -77,6 +77,11 @@ public class BodyDataFragment extends BaseFragment {
         fillData();
     }
 
+    @Override
+    protected void lazyLoad() {
+
+    }
+
 
     private void initView() {
         bodyData = new BodyData();

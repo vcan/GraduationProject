@@ -3,7 +3,6 @@ package com.zszdevelop.planman.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -92,14 +91,14 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
-//                    case 0:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.green,
-//                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
                     case 0:
-                        return HeaderDesign.fromColorAndDrawable(
-                                ContextCompat.getColor(MaterialMainActivity.this, R.color.colorPrimaryDark),
-                                ContextCompat.getDrawable(MaterialMainActivity.this, R.drawable.smssdk_search_icon));
+                        return HeaderDesign.fromColorResAndUrl(
+                                R.color.green,
+                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+//                    case 0:
+//                        return HeaderDesign.fromColorAndDrawable(
+//                                ContextCompat.getColor(MaterialMainActivity.this, R.color.colorPrimaryDark),
+//                                ContextCompat.getDrawable(MaterialMainActivity.this, R.drawable.smssdk_search_icon));
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,

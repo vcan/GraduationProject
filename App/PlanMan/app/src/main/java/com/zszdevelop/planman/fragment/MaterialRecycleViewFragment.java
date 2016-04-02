@@ -91,8 +91,15 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     @Override
     protected void onBindFragment(View view) {
 
+
         initView();
         fillData();
+
+
+    }
+
+    @Override
+    protected void lazyLoad() {
 
 
     }
