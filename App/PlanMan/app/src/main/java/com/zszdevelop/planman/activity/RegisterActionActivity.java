@@ -10,8 +10,14 @@ import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
+import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BodyData;
+import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.http.HttpRequest;
+import com.zszdevelop.planman.http.HttpRequestListener;
+
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,9 +68,11 @@ public class RegisterActionActivity extends BaseActivity {
     private void initSuperData() {
         boolean isRegister = getIntent().getBooleanExtra("isRegister", true);
         if (isRegister) {
+
             bodyData = (BodyData) getIntent().getSerializableExtra("bodyData");
             tvComplete.setVisibility(View.GONE);
             tvRegisterAction.setVisibility(View.VISIBLE);
+            checkedLight();
         } else {
             tvComplete.setVisibility(View.VISIBLE);
             tvRegisterAction.setVisibility(View.GONE);
@@ -118,9 +126,7 @@ public class RegisterActionActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 bodyData.setActionType(actionType);
-                Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
-                intent.putExtra("bodyData",bodyData);
-                startActivity(intent);
+                submitData();
             }
         });
 
@@ -173,6 +179,35 @@ public class RegisterActionActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void submitData() {
+
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", String.valueOf(Helper.getUserId()));
+        map.put("authToken", Helper.getToken());
+        map.put("birthday", String.valueOf(bodyData.getBirthday()));
+        map.put("high", String.valueOf(bodyData.getHigh()));
+        map.put("sex", String.valueOf(bodyData.getSex()));
+        map.put("goalRecordData", String.valueOf(bodyData.getGoalRecordData()));
+        map.put("goalRecordType", String.valueOf(bodyData.getGoalRecordType()));
+        map.put("actionType", String.valueOf(bodyData.getActionType()));
+        map.put("standardWeight", String.valueOf(bodyData.getStandardWeight()));
+        map.put("bmi", String.valueOf(bodyData.getBmi()));
+        map.put("intakeCC", String.valueOf(bodyData.getIntakeCC()));
+        map.put("consumeREE", String.valueOf(bodyData.getConsumeREE()));
+        map.put("maxHeart", String.valueOf(bodyData.getMaxHeart()));
+
+        HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
+                intent.putExtra("bodyData",bodyData);
+                startActivity(intent);
+            }
+        });
+
     }
 
 }

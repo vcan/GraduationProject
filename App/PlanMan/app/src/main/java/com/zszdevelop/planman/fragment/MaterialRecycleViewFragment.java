@@ -1,6 +1,7 @@
 package com.zszdevelop.planman.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +13,14 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.activity.InsertPlanActivity;
+import com.zszdevelop.planman.activity.RecordFigureActivity;
+import com.zszdevelop.planman.activity.SearchActivity;
 import com.zszdevelop.planman.adapter.TestMaterialRVAdapter;
 import com.zszdevelop.planman.base.BaseFragment;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalInfo;
+import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -40,8 +45,8 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     FloatingActionButton fabNewFoods;
     @Bind(R.id.fab_new_sports)
     FloatingActionButton fabNewSports;
-    @Bind(R.id.fab_menu)
-    FloatingActionMenu fabMenu;
+    @Bind(R.id.fab_main_menu)
+    FloatingActionMenu fabMainMenu;
 
 
 
@@ -93,9 +98,54 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
 
         initView();
+        initListener();
         fillData();
 
 
+    }
+
+    private void initListener() {
+        fabNewFigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(getActivity(), RecordFigureActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewFoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("SearchType", ResultCode.FOOD_CODE);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewSports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+               Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(getActivity(), InsertPlanActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -111,11 +161,11 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     }
 
     private void initFloatActionButton() {
-        fabMenu.setClosedOnTouchOutside(true);
-        fabMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
+        fabMainMenu.setClosedOnTouchOutside(true);
+        fabMainMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fabMenu.toggle(true);
+                fabMainMenu.toggle(true);
             }
         });
     }
@@ -161,9 +211,9 @@ public class MaterialRecycleViewFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (Math.abs(dy) > mScrollOffset) {
                     if (dy > 0) {
-                        fabMenu.hideMenu(true);
+                        fabMainMenu.hideMenu(true);
                     } else {
-                        fabMenu.showMenu(true);
+                        fabMainMenu.showMenu(true);
                     }
                 }
             }

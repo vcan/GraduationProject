@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context="com.zszdevelop.planman.activity.MyPlanActivity">
 
     <android.support.v4.widget.DrawerLayout
@@ -37,5 +37,22 @@
 
     </android.support.v4.widget.DrawerLayout>
 
+
+    <!--左下角 关键按钮-->
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_my_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/default_distance"
+        android:layout_margin="@dimen/default_distance"
+        fab:fab_size="normal"
+
+        fab:menu_labels_ellipsize="end"
+        fab:fab_label="添加计划"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fab="http://schemas.android.com/apk/res-auto" />
 
 </RelativeLayout>

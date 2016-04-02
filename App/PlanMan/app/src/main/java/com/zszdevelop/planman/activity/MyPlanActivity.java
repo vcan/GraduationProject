@@ -1,10 +1,14 @@
 package com.zszdevelop.planman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
@@ -38,7 +42,11 @@ public class MyPlanActivity extends BaseActivity {
     NavigationView navigation;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @Bind(R.id.fab_my_plan)
+    FloatingActionButton fabMyPlan;
     private PlanAdapter planAdapter;
+
+    private int mScrollOffset = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +61,20 @@ public class MyPlanActivity extends BaseActivity {
 
 
     private void initView() {
-        DrawerToolUtils.initToolbar(this,toolbar,"我的计划");
-        DrawerToolUtils.interactorNavigation(this,toolbar,navigation,drawerLayout);
+        DrawerToolUtils.initToolbar(this, toolbar, "我的计划");
+        DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
         initRecyclerView();
     }
 
     private void initListener() {
 
+        fabMyPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyPlanActivity.this, InsertPlanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -80,11 +95,25 @@ public class MyPlanActivity extends BaseActivity {
         });
     }
 
+
     private void initRecyclerView() {
 
         planAdapter = new PlanAdapter(this, R.layout.item_plan, goalLists);
         plmrvMyPlan.setAdapter(planAdapter);
         plmrvMyPlan.setLinearLayout();
+        plmrvMyPlan.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (Math.abs(dy) > mScrollOffset) {
+                    if (dy > 0) {
+                        fabMyPlan.hide(true);
+                    } else {
+                        fabMyPlan.show(true);
+                    }
+                }
+            }
+        });
     }
 
 

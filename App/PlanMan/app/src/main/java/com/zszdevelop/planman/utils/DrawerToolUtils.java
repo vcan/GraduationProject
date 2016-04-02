@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.activity.ChangeActivity;
 import com.zszdevelop.planman.activity.InsertPlanActivity;
+import com.zszdevelop.planman.activity.KnowMeActivity;
 import com.zszdevelop.planman.activity.MaterialMainActivity;
 import com.zszdevelop.planman.activity.ModifyUserActivity;
 import com.zszdevelop.planman.activity.MyPlanActivity;
@@ -112,6 +113,11 @@ public class DrawerToolUtils {
                         break;
                     case R.id.navigation_change:
                         intent = new Intent(act, ChangeActivity.class);
+                        act.startActivity(intent);
+                        isFinish(menuItem);
+                        break;
+                    case R.id.navigation_know_me:
+                        intent = new Intent(act, KnowMeActivity.class);
                         act.startActivity(intent);
                         isFinish(menuItem);
                         break;

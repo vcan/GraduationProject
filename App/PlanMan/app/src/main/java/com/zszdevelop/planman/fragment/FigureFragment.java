@@ -49,7 +49,7 @@ public class FigureFragment extends BaseFragment {
     @Bind(R.id.tv_figure_old_time)
     TextView tvFigureOldTime;
 
-    // 标志位，标志已经初始化完成。
+    // 标志位，标志已经初始化完成。isPrepared是为了确保contentView已经加载好
     private boolean isPrepared;
 
     private ArrayList<Integer> options1Items = new ArrayList<>();

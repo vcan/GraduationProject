@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -64,15 +64,15 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         initToolbar();
 
 
-        View logo = findViewById(R.id.logo_white);
-        if (logo != null)
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    materialViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-                }
-            });
+//        View logo = findViewById(R.id.logo_white);
+//        if (logo != null)
+//            logo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    materialViewPager.notifyHeaderChanged();
+//                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
     }
 
@@ -80,7 +80,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         setTitle("");
 
         toolbar = materialViewPager.getToolbar();
-        DrawerToolUtils.initToolbar(this,toolbar,"");
+        DrawerToolUtils.initToolbar(this, toolbar, "");
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
     }
 
@@ -168,5 +168,26 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         });
     }
 
+
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 
 }

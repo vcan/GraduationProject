@@ -20,9 +20,7 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
@@ -58,21 +56,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.MaterialMainActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activity.RegisterBaseDataActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.RegisterBaseDataActivity"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.RegisterActionActivity"
             android:screenOrientation="portrait" />
@@ -85,7 +83,8 @@
             android:label="@string/title_activity_test11"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ModifyUserActivity" />
-        <activity android:name=".activity.ChangeActivity"></activity>
+        <activity android:name=".activity.ChangeActivity" />
+        <activity android:name=".activity.KnowMeActivity"></activity>
     </application>
 
 </manifest>

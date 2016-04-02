@@ -36,6 +36,11 @@
             android:id="@+id/navigation_search_sport"
             android:icon="@drawable/smssdk_sharesdk_icon"
             android:title="@string/plan_search_sport" />
+
+        <item
+            android:id="@+id/navigation_know_me"
+            android:icon="@drawable/smssdk_sharesdk_icon"
+            android:title="@string/know_me" />
     </group>
 
 </menu>
