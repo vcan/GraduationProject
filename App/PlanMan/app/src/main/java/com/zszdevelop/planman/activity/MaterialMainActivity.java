@@ -124,6 +124,10 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
     private void fillData() {
 
+
+
+
+
         // 填充目标记录数据,根据目标数量显示Viewpager/fragment 的数量
         String url = String.format(API.GET_GOAL_PLAN_URI, Helper.getUserId(), ResultCode.NO_COMPLETE_GOAL_RECODE_CODE);
         HttpRequest.get(url, new HttpRequestListener() {

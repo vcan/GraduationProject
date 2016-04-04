@@ -77,7 +77,7 @@ public class DrawerToolUtils {
 
                         intent = new Intent(act, MaterialMainActivity.class);
                         act.startActivity(intent);
-                        act.finish();;
+                        act.finish();
 
                         break;
                     case R.id.navigation_new_plan:

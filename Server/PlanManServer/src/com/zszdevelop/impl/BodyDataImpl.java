@@ -192,5 +192,33 @@ public class BodyDataImpl implements BodyDataDao {
 				
 		return bodyData;
 	}
+	
+	@Override
+	public boolean isExist(int userId) {
+		boolean b = false;
+		BaseUser baseUser = new BaseUser();
+
+		// 根据查询的类型返回数据
+		String queryUuid = "SELECT * FROM GoalRecordInfo WHERE userId=\"" + userId + "\"";
+		System.out.println("查询uuid是否存在:" + queryUuid);
+		try {
+			conn = BaseConnection.getConnection();
+			ps = (PreparedStatement) conn.prepareStatement(queryUuid);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {// 如果有值，把值塞进去返回。
+				b = true;
+			} else {// 如果没有值，新增一条记录
+				b = false;
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			BaseConnection.closeResource(rs, ps, conn);
+		}
+
+		return b;
+	}
 
 }

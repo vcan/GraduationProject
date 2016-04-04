@@ -6,5 +6,6 @@ import com.zszdevelop.bean.BodyData;
 public interface BodyDataDao {
 	public boolean modifyBodyData(int userId,BodyData baseData);
 	public BodyData getBodyData(int userId);
+	public boolean isExist(int userId);
 	
 }

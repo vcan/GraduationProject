@@ -42,13 +42,7 @@ public class HttpRequest {
         HttpRequest(url, null, listener, Request.Method.GET);
     }
 
-    /**
-     * HTTP使用POST发送请求的方法
-     *
-     * @param url
-     * @param data     g
-     * @param listener h
-     */
+
     public static void post(String url, final Map<String, String> data, HttpRequestListener listener) {
         HttpRequest(url, data, listener, Request.Method.POST);
     }

@@ -55,13 +55,15 @@ public class UuidServlet extends HttpServlet {
 		// 用户基本数据
 		BaseUser uuidinfo = new BaseUser();
 		boolean isUuidExist = uuidDao.isExist(uuid);
+		
+		
 		if (isUuidExist) {
 			uuidinfo = uuidDao.getUuidinfo(uuid);
 		} else {
 			uuidDao.insertUuid(uuid);
 			uuidinfo = uuidDao.getUuidinfo(uuid);
 		}
-
+		uuidinfo.setFirstLogin(!isUuidExist);
 		// 将数据以json的形式传递回来
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(uuidinfo);

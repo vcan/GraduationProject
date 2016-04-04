@@ -23,6 +23,34 @@ public class BodyData implements Serializable{
     private float maxHeart = 200;
 
 
+    public float getBmi() {
+        float high = getHigh()/100;
+        bmi = getGoalRecordData()/(high * high);
+        return bmi;
+    }
+
+    public float getConsumeREE() {
+        try {
+            String birthdayStr = String.valueOf(getBirthday());
+            if (getSex() == UserConfig.MAN) {// 男性
+                consumeREE = (int) ((10 * getGoalRecordData()) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) + 5);
+            } else {// 女性
+                consumeREE = (int) ((10 * getGoalRecordData()) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) - 161);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return consumeREE;
+    }
+
+    public int getIntakeCC() {
+
+        intakeCC = (int) (getConsumeREE() * getActionType());
+
+        return intakeCC;
+    }
+
+
     //        中低强度的运动应该达到人最大心率(最大心率=220-实际年龄)的60%~75%
     public float getMaxHeart() {
         try {
@@ -33,6 +61,15 @@ public class BodyData implements Serializable{
         return maxHeart;
     }
 
+
+    public float getStandardWeight() {
+        if (getSex() == UserConfig.MAN) {// 男性
+            standardWeight = (float) ((high - 80) * 0.7);
+        } else {// 女性
+            standardWeight = (float) ((high - 70) * 0.6);
+        }
+        return standardWeight;
+    }
     public float getActionType() {
         return actionType;
     }
@@ -80,44 +117,4 @@ public class BodyData implements Serializable{
     public void setGoalRecordType(int goalRecordType) {
         this.goalRecordType = goalRecordType;
     }
-
-    public float getBmi() {
-//       bmi = goalRecordWeight / (highM * highM)
-        float high = getHigh()/100;
-        bmi = getGoalRecordData()/(high * high);
-        return bmi;
-    }
-
-    public float getConsumeREE() {
-        try {
-            String birthdayStr = String.valueOf(getBirthday());
-            if (getSex() == UserConfig.MAN) {// 男性
-                consumeREE = (int) ((10 * getGoalRecordData()) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) + 5);
-            } else {// 女性
-                consumeREE = (int) ((10 * getGoalRecordData()) + (6.25 * high) - (5 * TimeUtil.BirthDayToAge(birthdayStr)) - 161);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return consumeREE;
-    }
-
-    public int getIntakeCC() {
-
-        intakeCC = (int) (getConsumeREE() * getActionType());
-
-        return intakeCC;
-    }
-
-
-
-    public float getStandardWeight() {
-        if (getSex() == UserConfig.MAN) {// 男性
-            standardWeight = (float) ((high - 80) * 0.7);
-        } else {// 女性
-            standardWeight = (float) ((high - 70) * 0.6);
-        }
-        return standardWeight;
-    }
-
 }

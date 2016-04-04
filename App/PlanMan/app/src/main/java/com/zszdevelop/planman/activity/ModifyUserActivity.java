@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
 
 public class ModifyUserActivity extends BaseActivity {
 
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.tv_complete)
@@ -49,13 +48,31 @@ public class ModifyUserActivity extends BaseActivity {
         initListener();
         fillData();
     }
-
-
     private void initView() {
 
         fragment = (BodyDataFragment) getSupportFragmentManager().findFragmentById(R.id.fl_modify_base_data);
         DrawerToolUtils.initToolbar(this, toolbar, "编辑个人资料");
     }
+
+    private void fillData() {
+        String url = String.format(API.BODY_DATA_URI, Helper.getUserId());
+        HttpRequest.get(url, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+
+                Gson gson = new Gson();
+                bodyData = gson.fromJson(json, BodyData.class);
+
+                fragment.setbodyData(bodyData);
+                actionType = bodyData.getActionType();
+                setActionType();
+
+            }
+        });
+    }
+
+
+
 
     private void initListener() {
 
@@ -78,22 +95,6 @@ public class ModifyUserActivity extends BaseActivity {
 
     }
 
-    private void fillData() {
-        String url = String.format(API.BODY_DATA_URI, Helper.getUserId());
-        HttpRequest.get(url, new HttpRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-
-                Gson gson = new Gson();
-                bodyData = gson.fromJson(json, BodyData.class);
-
-                fragment.setbodyData(bodyData);
-                actionType = bodyData.getActionType();
-                setActionType();
-
-            }
-        });
-    }
 
     private void setActionType() {
         if (actionType == ResultCode.lIGHT_ACTION_CODE) {

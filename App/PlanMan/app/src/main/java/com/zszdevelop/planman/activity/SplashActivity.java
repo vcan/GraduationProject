@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         initView();
         initListener();
 
-        firstLoging();
+        firstLogin();
 
 
 
@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * 判断是不是第一次登陆
      */
-    private void firstLoging() {
+    private void firstLogin() {
         boolean isFirstLogin = SharedPreferencesUtil.getBoolean(Config.FIRST_APP, true);
         if (isFirstLogin) {
             registerUUID();
@@ -73,9 +73,16 @@ public class SplashActivity extends AppCompatActivity {
                 Helper.getInstance().setBaseUser(baseUser);
                 SharedPreferencesUtil.setInt(UserConfig.USER_ID, baseUser.getUserId());
                 SharedPreferencesUtil.setString(UserConfig.AUTH_TOKEN, baseUser.getAuthToken());
-                SharedPreferencesUtil.setBoolean(Config.FIRST_APP,false);
+                SharedPreferencesUtil.setBoolean(Config.FIRST_APP, false);
 
-                Jump2Home();
+                if (baseUser.isFirstLogin()){
+                    Intent intent = new Intent(SplashActivity.this,RegisterBaseDataActivity.class);
+                    startActivity(intent);
+                }else {
+                    Jump2Home();
+                }
+
+
             }
         });
 
@@ -86,7 +93,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 //        if (Helper.getLoginStatus()) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MaterialMainActivity.class);
             startActivity(intent);
             finish();
 //        }else {

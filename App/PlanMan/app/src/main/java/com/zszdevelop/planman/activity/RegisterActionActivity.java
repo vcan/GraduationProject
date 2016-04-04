@@ -16,6 +16,7 @@ import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
+import com.zszdevelop.planman.utils.LogUtils;
 
 import java.util.HashMap;
 
@@ -198,6 +199,21 @@ public class RegisterActionActivity extends BaseActivity {
         map.put("intakeCC", String.valueOf(bodyData.getIntakeCC()));
         map.put("consumeREE", String.valueOf(bodyData.getConsumeREE()));
         map.put("maxHeart", String.valueOf(bodyData.getMaxHeart()));
+
+
+        LogUtils.e("userId", String.valueOf(Helper.getUserId()));
+        LogUtils.e("authToken", Helper.getToken());
+        LogUtils.e("birthday", String.valueOf(bodyData.getBirthday()));
+        LogUtils.e("high", String.valueOf(bodyData.getHigh()));
+        LogUtils.e("sex", String.valueOf(bodyData.getSex()));
+        LogUtils.e("goalRecordData", String.valueOf(bodyData.getGoalRecordData()));
+        LogUtils.e("goalRecordType", String.valueOf(bodyData.getGoalRecordType()));
+        LogUtils.e("actionType", String.valueOf(bodyData.getActionType()));
+        LogUtils.e("standardWeight", String.valueOf(bodyData.getStandardWeight()));
+        LogUtils.e("bmi", String.valueOf(bodyData.getBmi()));
+        LogUtils.e("intakeCC", String.valueOf(bodyData.getIntakeCC()));
+        LogUtils.e("consumeREE", String.valueOf(bodyData.getConsumeREE()));
+        LogUtils.e("maxHeart", String.valueOf(bodyData.getMaxHeart()));
 
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
