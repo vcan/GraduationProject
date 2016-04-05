@@ -1,7 +1,6 @@
 package com.zszdevelop.planman.fragment;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -250,9 +249,9 @@ public class FigureFragment extends BaseFragment {
                         }
                         tvFigureTitle.setText(String.format("您最近一次记录%s", typeStr));
 
-                        String goalRecordTime = goalRecordInfo.getGoalRecordTime();
-                        if (!TextUtils.isEmpty(goalRecordTime)) {
-                            tvFigureOldTime.setText(String.format("上次记录时间%s", TimeUtil.timestampToData(Long.parseLong(goalRecordTime))));
+                        long goalRecordTime = goalRecordInfo.getGoalRecordTime();
+                        if (goalRecordTime == 0) {
+                            tvFigureOldTime.setText(String.format("上次记录时间%s", TimeUtil.timestampToData(goalRecordTime)));
 
                         } else {
                             tvFigureOldTime.setText("您暂无此记录");

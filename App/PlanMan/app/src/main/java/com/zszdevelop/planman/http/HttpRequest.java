@@ -105,8 +105,9 @@ public class HttpRequest {
 
         String message = volleyError.getMessage();
         if (NetworkState.isNetworkAvailable()) {// 检测网络连接是否可用
-            ToastUtil.showToast(BaseApplication.getApplication().getApplicationContext(), "系统出错了");
 
+            ToastUtil.showToast(BaseApplication.getApplication().getApplicationContext(), "系统出错了");
+            LogUtils.e("网络请求异常:"+message);
 
         } else {
             ToastUtil.showToast("您的网络连接异常，请检查网络");

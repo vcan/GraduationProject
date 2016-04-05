@@ -49,5 +49,6 @@ dependencies {
         transitive = true
     }
     compile 'com.github.clans:fab:1.6.2'
+    compile 'org.greenrobot:eventbus:3.0.0'
 
 }

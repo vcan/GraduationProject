@@ -117,12 +117,13 @@ public class TestAdapter extends BaseSectionAdapter<ConsumeRecordInfo> {
 
         HeadViewHolder holder = (HeadViewHolder)headHolder ;
 
-        weightsFragment = PlanChangeFragment.newInstanceFragment(goalRecordWeights);
-        chestsFragment = PlanChangeFragment.newInstanceFragment(goalRecordChests);
-        loinsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLoins);
-        leftArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLeftArms);
-        rightArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordRightArms);
-        shoulderFragment = PlanChangeFragment.newInstanceFragment(goalRecordShoulder);
+        weightsFragment = PlanChangeFragment.newInstanceFragment(goalRecordWeights,ResultCode.WEIGHT_CODE);
+        chestsFragment = PlanChangeFragment.newInstanceFragment(goalRecordChests,ResultCode.CHEST_CODE);
+        loinsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLoins,ResultCode.LOIN_CODE);
+        leftArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordLeftArms,ResultCode.LEFT_ARM_CODE);
+        rightArmsFragment = PlanChangeFragment.newInstanceFragment(goalRecordRightArms,ResultCode.RIGHT_ARM_CODE);
+        shoulderFragment = PlanChangeFragment.newInstanceFragment(goalRecordShoulder,ResultCode.SHOULDER_CODE);
+
 
         list_fragment.add(weightsFragment);
         list_fragment.add(chestsFragment);

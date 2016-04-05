@@ -14,9 +14,12 @@ import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.event.ExitRegisterEvent;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -163,6 +166,7 @@ public class RegisterActionActivity extends BaseActivity {
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         initToolbar();
     }
 
@@ -224,6 +228,19 @@ public class RegisterActionActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+
+    }
+
+    public void onEventMainThread(ExitRegisterEvent event) {
+        if (event.isExit()){
+            finish();
+        }
     }
 
 }

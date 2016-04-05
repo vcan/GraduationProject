@@ -50,8 +50,8 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
     }
 
     @Override
-    public void onBindItemViewHolder(final PlanViewHolder holder, int position) {
-        final GoalInfo item = getItem(position);
+    public void onBindItemViewHolder(final PlanViewHolder holder, final int position) {
+         GoalInfo item = getItem(position);
         holder.tv_plan_goal_time.setText(TimeUtil.timestampToYMD(item.getStopTime()));
 
         holder.tv_plan_goal_value.setText(item.getStopGoal()+"cm");
@@ -108,7 +108,7 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
                     Snackbar.make(v,"此项计划已完成?",Snackbar.LENGTH_LONG).setAction("完成", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            submitGoalComplte(item,holder);
+                            submitGoalComplte(getItem(position),holder);
                         }
                     }).show();
 

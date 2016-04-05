@@ -54,14 +54,14 @@ public class Helper {
     }
 
     public static final int getUserId() {
-        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
-//        int user_id = 10001;
+//        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
+        int user_id = 10001;
 
     return  user_id;}
 
     public static final String getToken() {
-        String token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
-//        String token = "aaa";
+//        String token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
+        String token = "aaa";
 
     return  token;}
 

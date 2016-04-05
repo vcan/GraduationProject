@@ -12,10 +12,13 @@ import android.widget.TextView;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.config.API;
+import com.zszdevelop.planman.event.ExitRegisterEvent;
 import com.zszdevelop.planman.fragment.InsertPlanFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -108,9 +111,9 @@ public class RegisterPlanActivity extends AppCompatActivity {
         HttpRequest.post(API.INSTER_GOAL_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
-                LogUtils.e("tijiao");
                 Intent intent = new Intent(RegisterPlanActivity.this, MaterialMainActivity.class);
                 startActivity(intent);
+                EventBus.getDefault().post(new ExitRegisterEvent(true));
                 finish();
             }
         });

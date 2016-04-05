@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
+import com.zszdevelop.planman.event.ExitRegisterEvent;
 import com.zszdevelop.planman.fragment.BodyDataFragment;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
@@ -42,6 +45,7 @@ public class RegisterBaseDataActivity extends BaseActivity {
 
 
     private void initView() {
+        EventBus.getDefault().register(this);
         DrawerToolUtils.initToolbar(this, toolbar, "个人数据");
 
         fragment = (BodyDataFragment) getSupportFragmentManager().findFragmentById(R.id.fm_register_base_data);
@@ -50,8 +54,6 @@ public class RegisterBaseDataActivity extends BaseActivity {
 
 
     private void initListener() {
-
-
 
         btnRegisterBaseNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +87,18 @@ public class RegisterBaseDataActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
 
+    }
+
+    public void onEventMainThread(ExitRegisterEvent event) {
+        if (event.isExit()){
+            finish();
+        }
+    }
 
     private void submitData() {
 

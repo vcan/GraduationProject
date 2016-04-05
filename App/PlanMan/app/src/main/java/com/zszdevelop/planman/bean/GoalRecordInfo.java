@@ -2,7 +2,7 @@ package com.zszdevelop.planman.bean;
 
 public class GoalRecordInfo {
 	private int goalRecordId;
-	private String goalRecordTime;
+	private long goalRecordTime;
 	private float goalRecordData;
 	private int goalRecordType;
 	
@@ -18,12 +18,7 @@ public class GoalRecordInfo {
 	public void setGoalRecordId(int goalRecordId) {
 		this.goalRecordId = goalRecordId;
 	}
-	public String getGoalRecordTime() {
-		return goalRecordTime;
-	}
-	public void setGoalRecordTime(String goalRecordTime) {
-		this.goalRecordTime = goalRecordTime;
-	}
+
 	public float getGoalRecordData() {
 		return goalRecordData;
 	}
@@ -31,4 +26,11 @@ public class GoalRecordInfo {
 		this.goalRecordData = goalRecordData;
 	}
 
+	public long getGoalRecordTime() {
+		return goalRecordTime;
+	}
+
+	public void setGoalRecordTime(long goalRecordTime) {
+		this.goalRecordTime = goalRecordTime;
+	}
 }

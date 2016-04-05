@@ -11,8 +11,11 @@ import android.widget.TextView;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.bean.BodyData;
+import com.zszdevelop.planman.event.ExitRegisterEvent;
 import com.zszdevelop.planman.fragment.SuggestFragment;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +54,7 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     private void initView() {
 
+        EventBus.getDefault().register(this);
         DrawerToolUtils.initToolbar(this, toolbar, "一分钟了解自己");
 
     }
@@ -74,4 +78,16 @@ public class RegisterSuggestActivity extends BaseActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+
+    }
+
+    public void onEventMainThread(ExitRegisterEvent event) {
+        if (event.isExit()){
+            finish();
+        }
+    }
 }
