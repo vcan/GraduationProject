@@ -55,7 +55,7 @@ public abstract class BaseAdapter<T extends BaseBean, VH extends RecyclerView.Vi
     }
 
     private int getBaseItemCount() {
-        return data.size();
+        return data.size()+1;
     }
 
     /**

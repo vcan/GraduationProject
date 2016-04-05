@@ -25,7 +25,7 @@ public class BodyDataImpl implements BodyDataDao {
 
 
 	@Override
-	public boolean modifyBodyData(int userId, BodyData baseData) {
+	public boolean modifyBodyData(int userId, BodyData baseData,boolean existGoalRecordUserid) {
 		boolean b = false;
 		
 //private int sex;
@@ -43,6 +43,14 @@ public class BodyDataImpl implements BodyDataDao {
 		// 根据更新
 		String sql = "update UserInfo set sex = ?,birthday = ?,high = ? ,actionType = ? ,bmi = ?,intakeCC = ? ,consumeREE = ? ,standardWeight = ?,maxHeart = ? where userId=?";
 		String modifyWeight = "update GoalRecordInfo set goalRecordData = ?,goalRecordType = ?  where userId=?";
+		
+		if (existGoalRecordUserid) {
+			modifyWeight = "update GoalRecordInfo set goalRecordData = ?,goalRecordType = ?  where userId=?";
+		}else {
+//			insert UserInfo (uuid,authToken,registerAppTime) values(?,?,?)
+			modifyWeight = "insert GoalRecordInfo (goalRecordData,goalRecordType,userId) values(?,?,?)";
+
+		}
 		
 		System.out.println("查询的sql:" + sql);
 		try {
@@ -129,6 +137,7 @@ public class BodyDataImpl implements BodyDataDao {
 				String sql = "SELECT sex,birthday,high,actionType FROM UserInfo WHERE  userId=?";
 //				goalRecordData = ?,goalRecordType = ? 
 				String queryWeightSql = "SELECT goalRecordData FROM GoalRecordInfo WHERE  userId=? and goalRecordType = 1";
+			
 				System.out.println("查询uuid:" + sql);
 				try {
 					conn = BaseConnection.getConnection();
@@ -194,7 +203,7 @@ public class BodyDataImpl implements BodyDataDao {
 	}
 	
 	@Override
-	public boolean isExist(int userId) {
+	public boolean isExistGoalRecordUserid(int userId) {
 		boolean b = false;
 		BaseUser baseUser = new BaseUser();
 

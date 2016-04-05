@@ -111,6 +111,7 @@ public class RegisterPlanActivity extends AppCompatActivity {
                 LogUtils.e("tijiao");
                 Intent intent = new Intent(RegisterPlanActivity.this, MaterialMainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

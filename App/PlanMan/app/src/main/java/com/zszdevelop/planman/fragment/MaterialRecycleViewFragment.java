@@ -205,6 +205,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         });
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), plmrvMaterial.getRecyclerView(), null);
+
         plmrvMaterial.getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

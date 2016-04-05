@@ -68,7 +68,8 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return lists.size();
+
+        return lists.size()+1;
     }
 
     @Override
@@ -150,7 +151,7 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             Snackbar.make(v,"此项计划已完成?",Snackbar.LENGTH_LONG).setAction("完成", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    submitGoalComplte(goalInfo,holder.iv_plan_stutus);
+                                    submitGoalComplete(goalInfo,holder.iv_plan_stutus);
                                 }
                             }).show();
 
@@ -167,7 +168,7 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ConsumeRecordViewHolder holderItem = (ConsumeRecordViewHolder)itemHolder;
 
                 // 通过getItem 取得数据
-                ConsumeRecordInfo item = lists.get(position);
+                ConsumeRecordInfo item = getItem(position);
                 holderItem.tv_cr_time.setText(TimeUtil.timestampToData(item.getConsumeRecordTime()));
                 holderItem.tv_consume_cc.setText(String.format("摄入:%s大卡", item.getConsumeCC()));
 
@@ -185,9 +186,12 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
+    public ConsumeRecordInfo getItem(int position) {
 
+        return lists.get(position-1);
+    }
 
-    private void submitGoalComplte(final GoalInfo item, final ImageView iv) {
+    private void submitGoalComplete(final GoalInfo item, final ImageView iv) {
 
 
         HashMap<String, String> map = new HashMap<>();

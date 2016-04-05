@@ -45,6 +45,7 @@ public class BodyDataServlet extends HttpServlet {
 		userId=userId==null?"0":userId;
 		
 		BodyDataDao dao = new BodyDataImpl();
+		 
 		BodyData bodyData = dao.getBodyData(Integer.parseInt(userId));
 		if (bodyData== null) {
 			OutJsonUtils.outJson("", ResponseMessage.MESSAGE_OPERATE_EXCEPTION, response,ResultCode.HTTP_ERROR);
@@ -120,7 +121,8 @@ public class BodyDataServlet extends HttpServlet {
 		bodyData.setConsumeREE(Float.parseFloat(consumeREE));
 		bodyData.setStandardWeight(Float.parseFloat(standardWeight));
 		bodyData.setMaxHeart(Float.parseFloat(maxHeart));
-		boolean modifyGoalStatus = dao.modifyBodyData(Integer.parseInt(userId), bodyData);
+		boolean existGoalRecordUserid = dao.isExistGoalRecordUserid(Integer.parseInt(userId));
+		boolean modifyGoalStatus = dao.modifyBodyData(Integer.parseInt(userId), bodyData, existGoalRecordUserid);
 		
 		
 		if (!modifyGoalStatus) {
