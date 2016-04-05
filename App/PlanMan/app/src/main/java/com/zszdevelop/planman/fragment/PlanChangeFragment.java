@@ -15,6 +15,7 @@ import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.utils.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -100,48 +101,43 @@ public class PlanChangeFragment extends BaseFragment{
     private void generateInitialLineData() {
 
 
-        float heightMax = 0;
-        float heightMin = 0;
+        String unit = "kg";
         switch (goalRecordType){
             case ResultCode.WEIGHT_CODE:
-               heightMax = 150;
-                heightMin = 20;
                 chartsName = "体重";
+                unit = "kg";
                 break;
             case ResultCode.CHEST_CODE:
-                heightMax = 100;
-                heightMin = 30;
                 chartsName = "胸围";
+                unit = "cm";
                 break;
             case ResultCode.LOIN_CODE:
-                heightMax = 100;
-                heightMin = 30;
                 chartsName = "腰围";
+                unit = "cm";
                 break;
             case ResultCode.LEFT_ARM_CODE:
-                heightMax = 60;
-                heightMin = 15;
                 chartsName = "左臂围";
                 break;
             case ResultCode.RIGHT_ARM_CODE:
                 chartsName = "右臂围";
-                heightMax = 60;
-                heightMin = 15;
+                unit = "cm";
                 break;
             case ResultCode.SHOULDER_CODE:
                 chartsName = "肩宽";
-                heightMax = 100;
-                heightMin = 15;
+                unit = "cm";
                 break;
 
         }
 
 
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
+
         List<PointValue> values = new ArrayList<PointValue>();
+        List<Float> sortLists = new ArrayList<>();
         for (int i = 0; i < goalRecordInfos.size(); ++i) {
             values.add(new PointValue(i, goalRecordInfos.get(i).getGoalRecordData()).setLabel(String.valueOf(goalRecordInfos.get(i).getGoalRecordData())));
             axisValues.add(new AxisValue(i).setLabel(TimeUtil.timestampToData(goalRecordInfos.get(i).getGoalRecordTime())));
+            sortLists.add(goalRecordInfos.get(i).getGoalRecordData());
 
 //            values.add(new PointValue(4, 0.5f).setLabel("Good Enough".toCharArray()));
         }
@@ -154,33 +150,41 @@ public class PlanChangeFragment extends BaseFragment{
         lines.add(line);
 
         lineData = new LineChartData(lines);
-        lineData.setAxisXBottom(new Axis(axisValues).setHasLines(true));
-        lineData.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(3));
-
-        // For build-up animation you have to disable viewport recalculation.
-        lcvPlanChange.setViewportCalculationEnabled(false);
-        // And set initial max viewport and current viewport- remember to set viewports after data.
-
-        Viewport v = new Viewport(0, heightMax, 6, heightMin);
-        lcvPlanChange.setMaximumViewport(v);
-        lcvPlanChange.setCurrentViewport(v);
-        lcvPlanChange.setZoomType(ZoomType.HORIZONTAL);
-
+        lineData.setAxisYLeft(new Axis().setHasLines(true).setMaxLabelChars(3).setName(unit).setTextColor(ChartUtils.COLOR_RED));
 
         Axis distanceAxis = new Axis();
         distanceAxis.setName(chartsName);
         distanceAxis.setTextColor(ChartUtils.COLOR_ORANGE);
         distanceAxis.setMaxLabelChars(4);
-        distanceAxis.setValues(axisValues);
 
 
 //        distanceAxis.setFormatter(new SimpleAxisValueFormatter().setAppendedText("km".toCharArray()));
         distanceAxis.setHasLines(true);
         distanceAxis.setHasTiltedLabels(true);
+
+
+
+        // For build-up animation you have to disable viewport recalculation.
+        lcvPlanChange.setViewportCalculationEnabled(false);
+        // And set initial max viewport and current viewport- remember to set viewports after data.
+
+        float chartMax = 100 ;
+        float chartMin = 0 ;
+        if (sortLists.size()>0){
+            chartMax = Collections.max(sortLists)+10;
+            chartMin = Collections.min(sortLists)-10;
+            distanceAxis.setValues(axisValues);
+        }
+
+        Viewport v = new Viewport(0, chartMax, 6, chartMin);
+        lcvPlanChange.setMaximumViewport(v);
+        lcvPlanChange.setCurrentViewport(v);
+        lcvPlanChange.setZoomType(ZoomType.HORIZONTAL);
+
         lineData.setAxisXBottom(distanceAxis);
 
         lcvPlanChange.setLineChartData(lineData);
-        
+
 
     }
 

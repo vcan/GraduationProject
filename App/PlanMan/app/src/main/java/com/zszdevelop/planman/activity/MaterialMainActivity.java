@@ -162,7 +162,10 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                 }.getType();
                 List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
 
-                fragment.setViewPagerData(consumeRecords);
+                if (fragment!= null){
+                    fragment.setViewPagerData(consumeRecords);
+                }
+
 
             }
         });
