@@ -104,10 +104,12 @@ public class SearchActivity extends AppCompatActivity {
             initOptionFood();
             etSearch.setHint("搜索饮食");
             tvSearchTitle.setText("添加饮食记录吧");
+            navigation.setCheckedItem(R.id.navigation_search_food);
         } else {
             etSearch.setHint("搜索运动");
             tvSearchTitle.setText("添加运动记录吧");
             initOptionSport();
+            navigation.setCheckedItem(R.id.navigation_search_sport);
         }
 
 

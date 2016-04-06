@@ -2,7 +2,6 @@ package com.zszdevelop.planman.utils;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,11 +26,11 @@ import com.zszdevelop.planman.config.ResultCode;
 /**
  * Created by zhangshengzhong on 16/3/26.
  */
-public class DrawerToolUtils {
+public  class DrawerToolUtils {
 
-    private Fragment mContent;
 
     public static void interactorNavigation(final AppCompatActivity act, Toolbar toolbar, final NavigationView navigation, final DrawerLayout drawerLayout) {
+
 
         if (navigation.getHeaderCount() > 0) {
             View headerView = navigation.getHeaderView(0);
@@ -61,13 +60,10 @@ public class DrawerToolUtils {
 
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            //用于辨别此前是否已有选中条目
-            MenuItem preMenuItem;
+
 
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                preMenuItem = menuItem;
 
                 Intent intent;
                 switch (menuItem.getItemId()) {
@@ -84,57 +80,58 @@ public class DrawerToolUtils {
 
                         intent = new Intent(act, InsertPlanActivity.class);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
 
                         break;
 
                     case R.id.navigation_plan:
                         intent = new Intent(act, MyPlanActivity.class);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
                     case R.id.navigation_record_figure:
                         intent = new Intent(act, RecordFigureActivity.class);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
                     case R.id.navigation_search_food:
                         intent = new Intent(act, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.FOOD_CODE);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
 
                     case R.id.navigation_search_sport:
                         intent = new Intent(act, SearchActivity.class);
                         intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
                     case R.id.navigation_change:
                         intent = new Intent(act, ChangeActivity.class);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
                     case R.id.navigation_know_me:
                         intent = new Intent(act, KnowMeActivity.class);
                         act.startActivity(intent);
-                        isFinish(menuItem);
+                        isFinish();
                         break;
 
                 }
                 drawerLayout.closeDrawers();
 
-//                menuItem.setChecked(true);
-//                preMenuItem = menuItem;
 
                 return true;
             }
 
-            private void isFinish(MenuItem menuItem) {
-                if (preMenuItem != menuItem){
+            // 是否关闭由传入的 Activity 是否不是 MaterialMainActivity的实例决定
+            private void isFinish() {
+
+                if (!(act instanceof MaterialMainActivity)){
                     act.finish();
                 }
+
             }
         });
     }

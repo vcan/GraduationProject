@@ -224,6 +224,7 @@ public class RegisterActionActivity extends BaseActivity {
             public void onSuccess(String json) {
                 Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
                 intent.putExtra("bodyData",bodyData);
+                Helper.getInstance().setBodyData(bodyData);
                 startActivity(intent);
             }
         });

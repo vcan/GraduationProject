@@ -17,10 +17,12 @@ import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.adapter.MaterialPagerAdapter;
 import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.fragment.MaterialBodyDataFragment;
 import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
@@ -33,7 +35,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack {
+public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack ,MaterialBodyDataFragment.RefreshCallBack{
 
     @Bind(R.id.materialViewPager)
     MaterialViewPager materialViewPager;
@@ -81,6 +83,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
         toolbar = materialViewPager.getToolbar();
         DrawerToolUtils.initToolbar(this, toolbar, "");
+        navigation.setCheckedItem(R.id.navigation_mian);
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
     }
 
@@ -123,7 +126,32 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
 
     private void fillData() {
+        if (Helper.getInstance().getBodyData()!= null){
+            MaterialBodyDataFragment fragment = MaterialBodyDataFragment.newInstanceFragment(Helper.getInstance().getBodyData());
+            fragmentList.add(fragment) ;
+            fillPlan();
+        }else {
+            String url = String.format(API.BODY_DATA_URI, Helper.getUserId());
+            HttpRequest.get(url, new HttpRequestListener() {
+                @Override
+                public void onSuccess(String json) {
 
+                    Gson gson = new Gson();
+                    BodyData bodyData = gson.fromJson(json, BodyData.class);
+                    Helper.getInstance().setBodyData(bodyData);
+                    // 填充数据
+                    MaterialBodyDataFragment fragment = MaterialBodyDataFragment.newInstanceFragment(bodyData);
+                    fragmentList.add(fragment) ;
+                    fillPlan();
+                }
+            });
+        }
+
+
+
+    }
+
+    private void fillPlan() {
         // 填充目标记录数据,根据目标数量显示Viewpager/fragment 的数量
         String url = String.format(API.GET_GOAL_PLAN_URI, Helper.getUserId(), ResultCode.NO_COMPLETE_GOAL_RECODE_CODE);
         HttpRequest.get(url, new HttpRequestListener() {
@@ -150,9 +178,8 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     }
 
 
-
     @Override
-    public void fillDataListener(int currentPage, final int actionType, final MaterialRecycleViewFragment fragment) {
+    public void fillDataListener(int currentPage, final MaterialRecycleViewFragment fragment) {
         String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
         HttpRequest.get(url, new HttpRequestListener() {
             @Override
@@ -162,7 +189,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                 }.getType();
                 List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
 
-                if (fragment!= null){
+                if (fragment != null) {
                     fragment.setViewPagerData(consumeRecords);
                 }
 
@@ -193,4 +220,23 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         }
     }
 
+    @Override
+    public void fillDataListener(int currentPage, final MaterialBodyDataFragment bodyDataFragment) {
+        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
+        HttpRequest.get(url, new HttpRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
+                }.getType();
+                List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
+
+                if (bodyDataFragment != null) {
+                    bodyDataFragment.setViewPagerData(consumeRecords);
+                }
+
+
+            }
+        });
+    }
 }

@@ -28,7 +28,10 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-            return "计划 "+ (position+1);
+        if (position == 0){
+            return "健康指数";
+        }
+            return "计划 "+ position;
     }
 
 

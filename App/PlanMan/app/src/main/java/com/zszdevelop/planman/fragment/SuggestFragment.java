@@ -60,11 +60,13 @@ public class SuggestFragment extends BaseFragment {
     private float standardWeight;
     private float bmi;
     private int intakeCC;
+    private boolean isShowDescribe;
 
 
-    public static SuggestFragment newInstanceFragment(BodyData bodyData) {
+    public static SuggestFragment newInstanceFragment(BodyData bodyData,boolean isShowDescribe) {
         SuggestFragment fragment = new SuggestFragment();
         fragment.bodyData = bodyData;
+        fragment.isShowDescribe = isShowDescribe;
         return fragment;
     }
 
@@ -75,9 +77,21 @@ public class SuggestFragment extends BaseFragment {
 
     @Override
     protected void onBindFragment(View view) {
+        isShowDescribe();
         fillData();
     }
 
+    private void isShowDescribe() {
+        if (isShowDescribe){
+            tvSuggestBmiDescribe.setVisibility(View.VISIBLE);
+            tvSuggestHeartRateDescribe.setVisibility(View.VISIBLE);
+            tvSuggestReeDescribe.setVisibility(View.VISIBLE);
+        }else {
+            tvSuggestBmiDescribe.setVisibility(View.GONE);
+            tvSuggestHeartRateDescribe.setVisibility(View.GONE);
+            tvSuggestReeDescribe.setVisibility(View.GONE);
+        }
+    }
 
 
     private void fillData() {
@@ -88,7 +102,7 @@ public class SuggestFragment extends BaseFragment {
         float maxHeart = bodyData.getMaxHeart();
 //        中低强度的运动应该达到人最大心率(最大心率=220-实际年龄)的60%~75%
 
-        tvSuggestBmiValue.setText(String.valueOf(bmi));
+        tvSuggestBmiValue.setText(String.format("%.2f",bmi));
         tvSuggestReeValue.setText(String.format("%s大卡", intakeCC));
         tvSuggestWeightValue.setText(String.format("%.2fKG", standardWeight));
         tvSuggestWeightScopeValue.setText(String.format("%.2f~%.2fKG", standardWeight * 0.9, standardWeight * 1.1));

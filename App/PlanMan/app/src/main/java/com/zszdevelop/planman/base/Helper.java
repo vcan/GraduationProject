@@ -3,6 +3,7 @@ package com.zszdevelop.planman.base;
 import android.text.TextUtils;
 
 import com.zszdevelop.planman.bean.BaseUser;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.Config;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.utils.SharedPreferencesUtil;
@@ -15,7 +16,15 @@ public class Helper {
 
     private static Helper helper = null;
     private BaseUser baseUser;
+    private BodyData bodyData;
 
+    public BodyData getBodyData() {
+        return bodyData;
+    }
+
+    public void setBodyData(BodyData bodyData) {
+        this.bodyData = bodyData;
+    }
 
     public BaseUser getBaseUser() {
         return baseUser;

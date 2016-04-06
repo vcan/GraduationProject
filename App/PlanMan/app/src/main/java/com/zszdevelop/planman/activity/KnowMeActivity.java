@@ -48,6 +48,7 @@ public class KnowMeActivity extends BaseActivity {
     private void initView() {
 
         DrawerToolUtils.initToolbar(this, toolbar, "一分钟了解自己");
+        navigation.setCheckedItem(R.id.navigation_know_me);
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
 
 
@@ -66,7 +67,7 @@ public class KnowMeActivity extends BaseActivity {
                 Gson gson = new Gson();
                 BodyData bodyData = gson.fromJson(json, BodyData.class);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fl_know_me_content, SuggestFragment.newInstanceFragment(bodyData));
+                fragmentTransaction.replace(R.id.fl_know_me_content, SuggestFragment.newInstanceFragment(bodyData,true));
                 fragmentTransaction.commit();
             }
         });

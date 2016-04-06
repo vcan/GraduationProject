@@ -62,6 +62,7 @@ public class MyPlanActivity extends BaseActivity {
 
     private void initView() {
         DrawerToolUtils.initToolbar(this, toolbar, "我的计划");
+        navigation.setCheckedItem(R.id.navigation_plan);
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
         initRecyclerView();
     }

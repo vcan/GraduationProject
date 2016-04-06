@@ -16,10 +16,10 @@ import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.activity.InsertPlanActivity;
 import com.zszdevelop.planman.activity.RecordFigureActivity;
 import com.zszdevelop.planman.activity.SearchActivity;
-import com.zszdevelop.planman.adapter.TestMaterialRVAdapter;
+import com.zszdevelop.planman.adapter.MaterialBodyDataAdapter;
 import com.zszdevelop.planman.base.BaseFragment;
+import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
-import com.zszdevelop.planman.bean.GoalInfo;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * Created by zhangshengzhong on 16/3/11.
  */
-public class MaterialRecycleViewFragment extends BaseFragment {
+public class MaterialBodyDataFragment extends BaseFragment {
 
 
     @Bind(R.id.plmrv_material)
@@ -52,19 +52,17 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     private int mScrollOffset = 4;
     private int currentPage;
-    private int actionType;
     List<ConsumeRecordInfo> lists = new ArrayList<>();
     private RefreshCallBack refreshCallBack;
     private RecyclerViewMaterialAdapter adapter;
-    private GoalInfo goalInfo;
-    private TestMaterialRVAdapter rvAdapter;
-    private MaterialRecycleViewFragment fragment;
+    private BodyData bodyData;
+    private MaterialBodyDataAdapter mBDAdapter;
+    private MaterialBodyDataFragment fragment;
 
-    public static MaterialRecycleViewFragment newInstanceFragment(int type, GoalInfo goalInfo) {
+    public static MaterialBodyDataFragment newInstanceFragment(BodyData bodyData) {
 
-        MaterialRecycleViewFragment fragment = new MaterialRecycleViewFragment();
-        fragment.actionType = type;
-        fragment.goalInfo = goalInfo;
+        MaterialBodyDataFragment fragment = new MaterialBodyDataFragment();
+        fragment.bodyData = bodyData;
         fragment.fragment = fragment;
         return fragment;
     }
@@ -90,7 +88,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_material_recycleview;
+        return R.layout.fragment_material_body_data;
     }
 
     @Override
@@ -105,6 +103,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     }
 
     private void initListener() {
+
         fabNewFigure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,11 +172,11 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     private void fillData() {
 
         // 设置头部文件\
-        rvAdapter.setHeaderData(goalInfo);
+        mBDAdapter.setHeaderData(bodyData);
         adapter.notifyDataSetChanged();
 
         currentPage = 1;
-        refreshCallBack.fillDataListener(currentPage,  fragment);
+        refreshCallBack.fillDataListener(currentPage,fragment);
     }
 
 
@@ -187,9 +186,9 @@ public class MaterialRecycleViewFragment extends BaseFragment {
         plmrvMaterial.setLinearLayout();
         plmrvMaterial.getRecyclerView().setHasFixedSize(true);
         // 应用adapter
-        rvAdapter = new TestMaterialRVAdapter(getActivity(), R.layout.item_plan, R.layout.item_consume_record, lists);
+        mBDAdapter = new MaterialBodyDataAdapter(getActivity(), R.layout.head_material_body_data, R.layout.item_consume_record, lists);
         // 并将应用的adapter 设置给 RecyclerViewMaterialAdapter
-        this.adapter = new RecyclerViewMaterialAdapter(rvAdapter);
+        this.adapter = new RecyclerViewMaterialAdapter(mBDAdapter);
         plmrvMaterial.setAdapter(this.adapter);
         plmrvMaterial.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -200,7 +199,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
             @Override
             public void onLoadMore() {
-                refreshCallBack.fillDataListener(++currentPage,  fragment);
+                refreshCallBack.fillDataListener(++currentPage, fragment);
             }
         });
 
@@ -248,7 +247,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
 
     public interface RefreshCallBack {
-        void fillDataListener(int currentPage, MaterialRecycleViewFragment fragment);
+        void fillDataListener(int currentPage, MaterialBodyDataFragment fragment);
     }
 
 }

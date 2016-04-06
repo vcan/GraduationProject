@@ -16,22 +16,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.base.BaseActivity;
-import com.zszdevelop.planman.base.Helper;
-import com.zszdevelop.planman.bean.ConsumeRecordInfo;
-import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.fragment.HomeFragment;
 import com.zszdevelop.planman.fragment.InsertPlanFragment;
 import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
-import com.zszdevelop.planman.http.HttpRequest;
-import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -91,23 +81,23 @@ public class MainActivity extends BaseActivity implements MaterialRecycleViewFra
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void fillDataListener(int currentPage, int actionType, final MaterialRecycleViewFragment fragment) {
-        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
-        HttpRequest.get(url, new HttpRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
-                }.getType();
-                List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
-
-                fragment.setViewPagerData(consumeRecords);
-
-            }
-        });
-    }
+//
+//    @Override
+//    public void fillDataListener(int currentPage, final MaterialRecycleViewFragment fragment) {
+//        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
+//        HttpRequest.get(url, new HttpRequestListener() {
+//            @Override
+//            public void onSuccess(String json) {
+//                Gson gson = new Gson();
+//                Type listType = new TypeToken<List<ConsumeRecordInfo>>() {
+//                }.getType();
+//                List<ConsumeRecordInfo> consumeRecords = gson.fromJson(json, listType);
+//
+//                fragment.setViewPagerData(consumeRecords);
+//
+//            }
+//        });
+//    }
 
 
     @Override
@@ -202,5 +192,10 @@ public class MainActivity extends BaseActivity implements MaterialRecycleViewFra
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
+    }
+
+    @Override
+    public void fillDataListener(int currentPage, MaterialRecycleViewFragment fragment) {
+
     }
 }

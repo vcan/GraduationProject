@@ -74,7 +74,7 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     private void fillData() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_register_suggest, SuggestFragment.newInstanceFragment(bodyData));
+        fragmentTransaction.replace(R.id.fl_register_suggest, SuggestFragment.newInstanceFragment(bodyData,true));
         fragmentTransaction.commit();
     }
 

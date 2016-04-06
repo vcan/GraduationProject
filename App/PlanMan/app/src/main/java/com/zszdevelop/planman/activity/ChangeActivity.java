@@ -73,6 +73,7 @@ public class ChangeActivity extends BaseActivity {
     private void initView() {
 
         DrawerToolUtils.initToolbar(this, toolbar, "变化趋势");
+        navigation.setCheckedItem(R.id.navigation_change);
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
 
 
