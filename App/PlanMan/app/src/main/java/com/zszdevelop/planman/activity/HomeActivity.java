@@ -98,8 +98,8 @@ public class HomeActivity extends BaseActivity {
         ImageView rlIcon3 = new ImageView(this);
         ImageView rlIcon4 = new ImageView(this);
 
-        rlIcon1.setImageDrawable(getResources().getDrawable(R.drawable.smssdk_search_icon));
-        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.smssdk_sharesdk_icon));
+        rlIcon1.setImageDrawable(getResources().getDrawable(R.mipmap.ic_search_white));
+        rlIcon2.setImageDrawable(getResources().getDrawable(R.mipmap.ic_search_white));
         rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.button_action));
         rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.button_action_dark_touch));
 

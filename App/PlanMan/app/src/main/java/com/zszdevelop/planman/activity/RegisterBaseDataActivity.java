@@ -45,7 +45,7 @@ public class RegisterBaseDataActivity extends BaseActivity {
 
 
     private void initView() {
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(RegisterBaseDataActivity.this);
         DrawerToolUtils.initToolbar(this, toolbar, "个人数据");
 
         fragment = (BodyDataFragment) getSupportFragmentManager().findFragmentById(R.id.fm_register_base_data);

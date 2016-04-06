@@ -93,7 +93,7 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
         holder.tv_plan_goal_value.setText(String.format("%s%s",item.getStopGoal(),unitStr));
 
         if (item.getGoalStatus() == ResultCode.MODIFY_SUCCESS){
-            holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.smssdk_search_icon));
+            holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_search_white));
             holder.iv_plan_stutus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,7 +172,7 @@ public class PlanAdapter extends BaseAdapter<GoalInfo,PlanViewHolder> {
                 if (modifyStatus == ResultCode.MODIFY_SUCCESS){
                     item.setGoalStatus(modifyStatus);
                     notifyDataSetChanged();
-                    holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.smssdk_search_icon));
+                    holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.ic_search_white));
                 }
             }
         });

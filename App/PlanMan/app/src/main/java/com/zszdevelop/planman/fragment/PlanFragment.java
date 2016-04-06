@@ -133,7 +133,7 @@ public class PlanFragment extends BaseFragment {
         tvPlanGoalValue.setText(String.format("%s%s",item.getStopGoal(),unitStr));
 
         if (item.getGoalStatus() == ResultCode.MODIFY_SUCCESS){
-            ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.smssdk_search_icon));
+            ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_search_white));
             ivPlanStutus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -228,7 +228,7 @@ public class PlanFragment extends BaseFragment {
                 if (modifyStatus == ResultCode.MODIFY_SUCCESS) {
 
                     item.setGoalStatus(modifyStatus);
-                    ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(BaseApplication.getApplication(), R.drawable.smssdk_search_icon));
+                    ivPlanStutus.setImageDrawable(ContextCompat.getDrawable(BaseApplication.getApplication(), R.mipmap.ic_search_white));
 
                 }
             }

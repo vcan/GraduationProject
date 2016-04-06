@@ -136,7 +136,7 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 holder.tv_plan_goal_value.setText(String.format("%s%s",goalInfo.getStopGoal(),unitStr));
 
                 if (goalInfo.getGoalStatus() == ResultCode.MODIFY_SUCCESS){
-                    holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.smssdk_search_icon));
+                    holder.iv_plan_stutus.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.ic_search_white));
                     holder.iv_plan_stutus.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -207,7 +207,7 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 if (modifyStatus == ResultCode.MODIFY_SUCCESS) {
 
                     item.setGoalStatus(modifyStatus);
-                    iv.setImageDrawable(ContextCompat.getDrawable(BaseApplication.getApplication(), R.drawable.smssdk_search_icon));
+                    iv.setImageDrawable(ContextCompat.getDrawable(BaseApplication.getApplication(), R.mipmap.ic_search_white));
 
                 }
             }

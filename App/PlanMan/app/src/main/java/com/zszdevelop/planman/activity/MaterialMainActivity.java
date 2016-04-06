@@ -1,5 +1,6 @@
 package com.zszdevelop.planman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -27,6 +30,7 @@ import com.zszdevelop.planman.fragment.MaterialRecycleViewFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
+import com.zszdevelop.planman.utils.ShareUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,6 +38,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack ,MaterialBodyDataFragment.RefreshCallBack{
 
@@ -239,4 +245,28 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_about_us:
+                Intent intent = new Intent(MaterialMainActivity.this,AboutUsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_shared:
+                ShareUtils.shareToSocial();
+
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
