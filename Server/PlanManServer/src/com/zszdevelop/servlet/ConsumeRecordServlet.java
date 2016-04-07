@@ -38,9 +38,11 @@ public class ConsumeRecordServlet extends HttpServlet {
 		ServerSettingUtils.settingEncode(request, response);
 		// 取得参数
 		String userId = request.getParameter("userId");
+		String page = request.getParameter("page");
 		userId = userId == null ? "0" : userId;
+		page = page == null ? "1" : page;
 		ConsumeRecordDao consumeRecordDao = new ConsumeRecordImpl();
-		ArrayList<ConsumeRecordInfo> consumeRecordInfo = consumeRecordDao.getConsumeRecordInfo(Integer.parseInt(userId));
+		ArrayList<ConsumeRecordInfo> consumeRecordInfo = consumeRecordDao.getConsumeRecordInfo(Integer.parseInt(userId),Integer.parseInt(page));
 
 		// 将数据以json的形式传递回来
 		Gson gson = new Gson();

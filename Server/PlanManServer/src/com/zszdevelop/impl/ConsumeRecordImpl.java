@@ -10,6 +10,7 @@ import com.zszdevelop.base.BaseConnection;
 import com.zszdevelop.bean.ConsumeRecordInfo;
 import com.zszdevelop.bean.GoalInfo;
 import com.zszdevelop.dao.ConsumeRecordDao;
+import com.zszdevelop.utils.PaginationUtils;
 
 public class ConsumeRecordImpl implements ConsumeRecordDao{
 	private Connection conn = null;
@@ -50,9 +51,9 @@ public class ConsumeRecordImpl implements ConsumeRecordDao{
 	}
 
 	@Override
-	public ArrayList<ConsumeRecordInfo> getConsumeRecordInfo(int userId) {
+	public ArrayList<ConsumeRecordInfo> getConsumeRecordInfo(int userId,int currentPage) {
 		ArrayList<ConsumeRecordInfo> lists = new ArrayList<>();
-		String sql = "SELECT * FROM ConsumeRecordInfo WHERE userId=?";
+		String sql = "SELECT * FROM ConsumeRecordInfo WHERE userId=? limit "+PaginationUtils.pageLimits(currentPage)+"";
 		conn = BaseConnection.getConnection();
 		try {
 			ps = (PreparedStatement) conn.prepareStatement(sql);

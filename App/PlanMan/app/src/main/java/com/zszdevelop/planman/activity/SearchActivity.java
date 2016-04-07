@@ -201,7 +201,12 @@ public class SearchActivity extends AppCompatActivity {
                 Food foods = new Food();
                 foods.setId(cursor.getString(0));
                 foods.setName(cursor.getString(1));
-                foods.setCalory(cursor.getDouble(2));
+                if (searchType == ResultCode.FOOD_CODE){
+                    foods.setCalory(cursor.getDouble(2));
+                }else {
+                    foods.setCalory(cursor.getDouble(2)*61);
+                }
+
                 foodses.add(foods);
 
             }
@@ -327,12 +332,21 @@ public class SearchActivity extends AppCompatActivity {
                     slidingDeckModel.setGram(gram);
                     slidingDeckModel.setTotalCC(aloneCC * (gram / 100));
                     slidingDeckModel.setSlidingTime(options1Items.get(options1));
+
                 } else {
-                    slidingDeckModel.setSlidingTime(options1ItemsSports.get(options1));
+                    slidingDeckModel.setSlidingTime("今日运动");
+                    int time = Integer.parseInt(options1ItemsSports.get(options1).replace("分钟",""));
+                    double v = aloneCC * (time / 60);
+//                    slidingDeckModel.setTotalCC(aloneCC * ( time/ 60));
+                    slidingDeckModel.setGram(time);
+                    slidingDeckModel.setTotalCC(v);
+
+
                 }
-
-
                 slidingDeckModel.setSlidingName(bean.getName());
+
+
+
 
 
                 slidingAdapter.insert(slidingDeckModel, 0);//插入在第一条

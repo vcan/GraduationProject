@@ -38,8 +38,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MaterialMainActivity extends BaseActivity implements MaterialRecycleViewFragment.RefreshCallBack ,MaterialBodyDataFragment.RefreshCallBack{
 
@@ -186,7 +184,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
     @Override
     public void fillDataListener(int currentPage, final MaterialRecycleViewFragment fragment) {
-        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
+        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId(),currentPage);
         HttpRequest.get(url, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
@@ -228,7 +226,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
     @Override
     public void fillDataListener(int currentPage, final MaterialBodyDataFragment bodyDataFragment) {
-        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId());
+        String url = String.format(API.CONSUME_RECORD_URI, Helper.getUserId(),currentPage);
         HttpRequest.get(url, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
