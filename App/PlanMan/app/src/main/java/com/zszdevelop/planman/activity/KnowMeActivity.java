@@ -48,12 +48,17 @@ public class KnowMeActivity extends BaseActivity {
     private void initView() {
 
         DrawerToolUtils.initToolbar(this, toolbar, "一分钟了解自己");
-        navigation.setCheckedItem(R.id.navigation_know_me);
+
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
 
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        navigation.setCheckedItem(R.id.navigation_know_me);
+    }
 
     private void initListener() {
     }

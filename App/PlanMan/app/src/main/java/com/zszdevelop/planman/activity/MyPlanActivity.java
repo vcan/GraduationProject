@@ -67,6 +67,12 @@ public class MyPlanActivity extends BaseActivity {
         initRecyclerView();
     }
 
+    @Override
+    protected void onStart() {
+        navigation.setCheckedItem(R.id.navigation_plan);
+        super.onStart();
+    }
+
     private void initListener() {
 
         fabMyPlan.setOnClickListener(new View.OnClickListener() {

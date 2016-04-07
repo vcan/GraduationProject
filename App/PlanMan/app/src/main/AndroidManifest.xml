@@ -38,6 +38,7 @@
 
         <activity
             android:name=".activity.SearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -72,10 +73,10 @@
             android:name=".activity.Test11Activity"
             android:label="@string/title_activity_test11"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ModifyUserActivity" />
-        <activity android:name=".activity.ChangeActivity" />
-        <activity android:name=".activity.KnowMeActivity" />
-        <activity android:name=".activity.AboutUsActivity"></activity>
+        <activity android:name=".activity.ModifyUserActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ChangeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.KnowMeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AboutUsActivity"  android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="com.mob.tools.MobUIShell"

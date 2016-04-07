@@ -59,7 +59,7 @@ public class InsertPlanActivity extends BaseActivity {
 
     private void initView() {
         DrawerToolUtils.initToolbar(this, toolbar, "新增计划");
-        navigation.setCheckedItem(R.id.navigation_new_plan);
+
         DrawerToolUtils.interactorNavigation(this, toolbar,navigation, drawerLayout);
 
         fragment = new InsertPlanFragment();
@@ -68,6 +68,11 @@ public class InsertPlanActivity extends BaseActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        navigation.setCheckedItem(R.id.navigation_new_plan);
+    }
 
     private void initlistener() {
 

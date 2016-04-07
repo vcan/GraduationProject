@@ -16,10 +16,12 @@ import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.fragment.BodyDataFragment;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
+import com.zszdevelop.planman.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 
@@ -153,6 +155,8 @@ public class ModifyUserActivity extends BaseActivity {
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
+                SharedPreferencesUtil.setInt(UserConfig.SEX,bodyData.getSex());
+                DrawerToolUtils.displayAvatar();
                finish();
             }
         });

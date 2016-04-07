@@ -198,4 +198,14 @@ public class MainActivity extends BaseActivity implements MaterialRecycleViewFra
     public void fillDataListener(int currentPage, MaterialRecycleViewFragment fragment) {
 
     }
+
+    @Override
+    public void setHideMenu() {
+    }
+
+    @Override
+    public void setShowMenu() {
+
+
+    }
 }

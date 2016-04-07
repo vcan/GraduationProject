@@ -12,4 +12,5 @@ public class UserConfig {
 
     public static final int MAN = 0;
     public static final int WOMAN = 1;
+    public static final String SEX = "sex";
 }

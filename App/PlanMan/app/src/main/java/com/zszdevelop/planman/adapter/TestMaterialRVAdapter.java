@@ -95,6 +95,9 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         switch (getItemViewType(position)) {
             case TYPE_HEADER:
                 final PlanViewHolder holder = (PlanViewHolder)itemHolder ;
+                if (goalInfo == null){
+                    return;
+                }
                 holder.tv_plan_goal_time.setText(TimeUtil.timestampToYMD(goalInfo.getStopTime()));
 
                 holder.tv_plan_current_value.setText(goalInfo.getStopGoal()+"cm");

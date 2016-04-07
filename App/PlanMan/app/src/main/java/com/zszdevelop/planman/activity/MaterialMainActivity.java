@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.google.gson.Gson;
@@ -48,6 +53,20 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+
+
+    @Bind(R.id.fab_new_plan)
+    FloatingActionButton fabNewPlan;
+    @Bind(R.id.fab_new_figure)
+    FloatingActionButton fabNewFigure;
+    @Bind(R.id.fab_new_foods)
+    FloatingActionButton fabNewFoods;
+    @Bind(R.id.fab_new_sports)
+    FloatingActionButton fabNewSports;
+    @Bind(R.id.fab_main_menu)
+    FloatingActionMenu fabMainMenu;
+
+    private int mScrollOffset = 4;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     List<Fragment> fragmentList = new ArrayList<>();
@@ -68,7 +87,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
     private void initView() {
 
         initToolbar();
-
+        initFloatActionButton();
 
 //        View logo = findViewById(R.id.logo_white);
 //        if (logo != null)
@@ -86,9 +105,19 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         setTitle("");
 
         toolbar = materialViewPager.getToolbar();
+        PagerSlidingTabStrip pagerTitleStrip = materialViewPager.getPagerTitleStrip();
+        pagerTitleStrip.setTextColor(ContextCompat.getColor(this, R.color.white));
+        pagerTitleStrip.setTextSize(28);
+
         DrawerToolUtils.initToolbar(this, toolbar, "");
-        navigation.setCheckedItem(R.id.navigation_mian);
+
         DrawerToolUtils.interactorNavigation(this, toolbar, navigation, drawerLayout);
+    }
+
+    @Override
+    protected void onStart() {
+        navigation.setCheckedItem(R.id.navigation_mian);
+        super.onStart();
     }
 
     private void initListener() {
@@ -126,6 +155,59 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             }
         });
 
+
+        fabNewFigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(MaterialMainActivity.this, RecordFigureActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewFoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(MaterialMainActivity.this, SearchActivity.class);
+                intent.putExtra("SearchType", ResultCode.FOOD_CODE);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewSports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(MaterialMainActivity.this, SearchActivity.class);
+                intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
+                startActivity(intent);
+
+            }
+        });
+
+        fabNewPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.close(true);
+                Intent intent = new Intent(MaterialMainActivity.this, InsertPlanActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
+
+    private void initFloatActionButton() {
+        fabMainMenu.setClosedOnTouchOutside(true);
+        fabMainMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabMainMenu.toggle(true);
+            }
+        });
     }
 
 
@@ -145,6 +227,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                     Helper.getInstance().setBodyData(bodyData);
                     // 填充数据
                     MaterialBodyDataFragment fragment = MaterialBodyDataFragment.newInstanceFragment(bodyData);
+
                     fragmentList.add(fragment) ;
                     fillPlan();
                 }
@@ -169,6 +252,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                 for (int i = 0; i < goalList.size(); i++) {
                     // 填充数据
                     MaterialRecycleViewFragment fragment = MaterialRecycleViewFragment.newInstanceFragment(i, goalList.get(i));
+
                     fragmentList.add(fragment);
                 }
                 MaterialPagerAdapter pagerAdapter = new MaterialPagerAdapter(getSupportFragmentManager(), fragmentList);
@@ -200,6 +284,17 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
             }
         });
+    }
+
+    @Override
+    public void setHideMenu() {
+        fabMainMenu.hideMenu(true);
+    }
+
+    @Override
+    public void setShowMenu() {
+        fabMainMenu.showMenu(true);
+
     }
 
 

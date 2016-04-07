@@ -104,15 +104,27 @@ public class SearchActivity extends AppCompatActivity {
             initOptionFood();
             etSearch.setHint("搜索饮食");
             tvSearchTitle.setText("添加饮食记录吧");
-            navigation.setCheckedItem(R.id.navigation_search_food);
+
         } else {
             etSearch.setHint("搜索运动");
             tvSearchTitle.setText("添加运动记录吧");
             initOptionSport();
-            navigation.setCheckedItem(R.id.navigation_search_sport);
+
         }
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (searchType == ResultCode.FOOD_CODE) {
+
+            navigation.setCheckedItem(R.id.navigation_search_food);
+        } else {
+
+            navigation.setCheckedItem(R.id.navigation_search_sport);
+        }
     }
 
     private void initListener() {
@@ -164,7 +176,7 @@ public class SearchActivity extends AppCompatActivity {
         map.put("consumeCC", String.valueOf(totalCC));
         map.put("consumeRecordType", String.valueOf(ResultCode.FOOD_CODE));
         map.put("consumeRecordContent", listJson);
-        map.put("consumeRecordTime", String.valueOf(System.currentTimeMillis() / 1000));
+        map.put("consumeRecordTime", String.valueOf(System.currentTimeMillis()));
 
         HttpRequest.post(API.SUBMIT_CONSUME_RECORD_URI, map, new HttpRequestListener() {
             @Override

@@ -14,10 +14,12 @@ import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.API;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.event.ExitRegisterEvent;
 import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.LogUtils;
+import com.zszdevelop.planman.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -222,6 +224,7 @@ public class RegisterActionActivity extends BaseActivity {
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
+                SharedPreferencesUtil.setInt(UserConfig.SEX, bodyData.getSex());
                 Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
                 intent.putExtra("bodyData",bodyData);
                 Helper.getInstance().setBodyData(bodyData);

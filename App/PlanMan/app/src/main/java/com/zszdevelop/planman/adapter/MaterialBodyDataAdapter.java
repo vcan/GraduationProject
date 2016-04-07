@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.SlidingDeckModel;
+import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.utils.TimeUtil;
 import com.zszdevelop.planman.view_holder.BodyDataViewHolder;
 import com.zszdevelop.planman.view_holder.ConsumeRecordViewHolder;
@@ -112,6 +113,7 @@ public class MaterialBodyDataAdapter extends RecyclerView.Adapter<RecyclerView.V
                 // 通过getItem 取得数据
                 ConsumeRecordInfo item = getItem(position);
                 holderItem.tv_cr_time.setText(TimeUtil.timestampToData(item.getConsumeRecordTime()));
+                LogUtils.e(TimeUtil.timestampToData(item.getConsumeRecordTime()) + ">>>>" + item.getConsumeRecordTime());
                 holderItem.tv_consume_cc.setText(String.format("摄入:%s大卡", item.getConsumeCC()));
 
                 Gson gson = new Gson();

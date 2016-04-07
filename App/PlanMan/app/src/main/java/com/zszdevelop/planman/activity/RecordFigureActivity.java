@@ -50,8 +50,8 @@ public class RecordFigureActivity extends AppCompatActivity {
 
     private void initView() {
 
-        DrawerToolUtils.initToolbar(this,toolbar,"记录身材");
-        navigation.setCheckedItem(R.id.navigation_record_figure);
+        DrawerToolUtils.initToolbar(this, toolbar, "记录身材");
+
         DrawerToolUtils.interactorNavigation(this,toolbar,navigation,drawerLayout);
 
         fragmentList.add(FigureFragment.newInstanceFragment(ResultCode.WEIGHT_CODE));
@@ -66,6 +66,12 @@ public class RecordFigureActivity extends AppCompatActivity {
         tabsFigure.setTabMode(TabLayout.MODE_FIXED);
         tabsFigure.setupWithViewPager(vpRecordFigure);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        navigation.setCheckedItem(R.id.navigation_record_figure);
     }
 
     private void initListener() {

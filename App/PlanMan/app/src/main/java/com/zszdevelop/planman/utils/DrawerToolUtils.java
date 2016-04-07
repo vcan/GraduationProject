@@ -22,6 +22,7 @@ import com.zszdevelop.planman.activity.MyPlanActivity;
 import com.zszdevelop.planman.activity.RecordFigureActivity;
 import com.zszdevelop.planman.activity.SearchActivity;
 import com.zszdevelop.planman.config.ResultCode;
+import com.zszdevelop.planman.config.UserConfig;
 
 /**
  * Created by zhangshengzhong on 16/3/26.
@@ -29,12 +30,16 @@ import com.zszdevelop.planman.config.ResultCode;
 public  class DrawerToolUtils {
 
 
+    private static ImageView ivAvatar;
+
     public static void interactorNavigation(final AppCompatActivity act, Toolbar toolbar, final NavigationView navigation, final DrawerLayout drawerLayout) {
 
 
         if (navigation.getHeaderCount() > 0) {
             View headerView = navigation.getHeaderView(0);
-            ImageView ivAvatar = (ImageView) headerView.findViewById(R.id.iv_avatar);
+            ivAvatar = (ImageView) headerView.findViewById(R.id.iv_avatar);
+
+            displayAvatar();
             TextView tv_name = (TextView) headerView.findViewById(R.id.tv_name);
             TextView tv_describe = (TextView) headerView.findViewById(R.id.tv_describe);
             ivAvatar.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +141,15 @@ public  class DrawerToolUtils {
         });
     }
 
+    public static void displayAvatar() {
+        int sex = SharedPreferencesUtil.getInt(UserConfig.SEX, UserConfig.MAN);
+        if (sex == UserConfig.MAN){
+            ivAvatar.setImageResource(R.mipmap.male_icon);
+        }else {
+            ivAvatar.setImageResource(R.mipmap.female_icon);
+        }
+    }
+
 
     public static void initToolbar(final AppCompatActivity act, Toolbar toolbar, String title) {
         toolbar.setTitle(title);
@@ -151,6 +165,7 @@ public  class DrawerToolUtils {
             }
         });
     }
+
 
 
 }

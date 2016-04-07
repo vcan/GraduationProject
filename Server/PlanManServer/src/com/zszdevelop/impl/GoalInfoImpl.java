@@ -62,9 +62,9 @@ public class GoalInfoImpl implements GoalInfoDao{
 		ArrayList<GoalInfo> lists = new ArrayList<>();
 		String sql;
 		if (goalStatus == ResultCode.ALL_GOAL_RECORED_CODE) {
-			sql = "SELECT * FROM GoalInfo WHERE userId=? ";
+			sql = "SELECT * FROM GoalInfo WHERE userId=? order by goalId desc";
 		}else {
-			sql = "SELECT * FROM GoalInfo WHERE userId=? and goalStatus = 0";
+			sql = "SELECT * FROM GoalInfo WHERE userId=? and goalStatus = 0 ";
 		}
 		 
 		conn = BaseConnection.getConnection();

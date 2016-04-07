@@ -53,7 +53,7 @@ public class ConsumeRecordImpl implements ConsumeRecordDao{
 	@Override
 	public ArrayList<ConsumeRecordInfo> getConsumeRecordInfo(int userId,int currentPage) {
 		ArrayList<ConsumeRecordInfo> lists = new ArrayList<>();
-		String sql = "SELECT * FROM ConsumeRecordInfo WHERE userId=? limit "+PaginationUtils.pageLimits(currentPage)+"";
+		String sql = "SELECT * FROM ConsumeRecordInfo WHERE userId=? order by consumeRecordId desc limit "+PaginationUtils.pageLimits(currentPage)+"";
 		conn = BaseConnection.getConnection();
 		try {
 			ps = (PreparedStatement) conn.prepareStatement(sql);

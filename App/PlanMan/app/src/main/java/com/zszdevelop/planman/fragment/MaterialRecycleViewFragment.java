@@ -1,26 +1,19 @@
 package com.zszdevelop.planman.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.zszdevelop.planman.R;
-import com.zszdevelop.planman.activity.InsertPlanActivity;
-import com.zszdevelop.planman.activity.RecordFigureActivity;
-import com.zszdevelop.planman.activity.SearchActivity;
 import com.zszdevelop.planman.adapter.TestMaterialRVAdapter;
 import com.zszdevelop.planman.base.BaseFragment;
 import com.zszdevelop.planman.bean.ConsumeRecordInfo;
 import com.zszdevelop.planman.bean.GoalInfo;
-import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.view.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -35,20 +28,9 @@ import butterknife.ButterKnife;
 public class MaterialRecycleViewFragment extends BaseFragment {
 
 
+
     @Bind(R.id.plmrv_material)
-    PullLoadMoreRecyclerView plmrvMaterial;
-    @Bind(R.id.fab_new_plan)
-    FloatingActionButton fabNewPlan;
-    @Bind(R.id.fab_new_figure)
-    FloatingActionButton fabNewFigure;
-    @Bind(R.id.fab_new_foods)
-    FloatingActionButton fabNewFoods;
-    @Bind(R.id.fab_new_sports)
-    FloatingActionButton fabNewSports;
-    @Bind(R.id.fab_main_menu)
-    FloatingActionMenu fabMainMenu;
-
-
+  public   PullLoadMoreRecyclerView plmrvMaterial;
 
     private int mScrollOffset = 4;
     private int currentPage;
@@ -105,47 +87,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     }
 
     private void initListener() {
-        fabNewFigure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabMainMenu.close(true);
-                Intent intent = new Intent(getActivity(), RecordFigureActivity.class);
-                startActivity(intent);
 
-            }
-        });
-
-        fabNewFoods.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabMainMenu.close(true);
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra("SearchType", ResultCode.FOOD_CODE);
-                startActivity(intent);
-
-            }
-        });
-
-        fabNewSports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabMainMenu.close(true);
-               Intent intent = new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
-                startActivity(intent);
-
-            }
-        });
-
-        fabNewPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabMainMenu.close(true);
-                Intent intent = new Intent(getActivity(), InsertPlanActivity.class);
-                startActivity(intent);
-
-            }
-        });
     }
 
     @Override
@@ -157,18 +99,10 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     private void initView() {
         initRecycleView();
-        initFloatActionButton();
+
     }
 
-    private void initFloatActionButton() {
-        fabMainMenu.setClosedOnTouchOutside(true);
-        fabMainMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabMainMenu.toggle(true);
-            }
-        });
-    }
+
 
     private void fillData() {
 
@@ -212,9 +146,11 @@ public class MaterialRecycleViewFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (Math.abs(dy) > mScrollOffset) {
                     if (dy > 0) {
-                        fabMainMenu.hideMenu(true);
+                        refreshCallBack.setHideMenu();
+//                        fabMainMenu.hideMenu(true);
                     } else {
-                        fabMainMenu.showMenu(true);
+                        refreshCallBack.setShowMenu();
+//                        fabMainMenu.showMenu(true);
                     }
                 }
             }
@@ -249,6 +185,8 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     public interface RefreshCallBack {
         void fillDataListener(int currentPage, MaterialRecycleViewFragment fragment);
+        void setHideMenu();
+        void setShowMenu();
     }
 
 }
