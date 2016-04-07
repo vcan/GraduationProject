@@ -8,8 +8,9 @@
 *   记录身材变化,查看变化趋势树立信心.
 *   了解自己身体状态,通过控制摄入支出平衡以达到以达到科学减肥.  
     
-   下面是几张应用的图片：![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o57y3kb9j20k00zkwgy.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o58wgou0j20k00zkmyp.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o57eob9sj20k00zk0u8.jpg)
-  ![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o58g78ynj20k00zkjsk.jpg)![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o59j9zxuj20k00zktbq.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o59vadmuj20k00zkaba.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5a62sjjj20k00zk764.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5ag1mb4j20k00zkmxw.jpg)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5apr651j20k00zkdhi.jpg)
+   下面是几张应用的图片：  
+   ![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o57y3kb9j20k00zkwgy.jpg  =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o58wgou0j20k00zkmyp.jpg =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o57eob9sj20k00zk0u8.jpg =180x320)
+  ![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o58g78ynj20k00zkjsk.jpg =180x320)![](http://ww3.sinaimg.cn/large/81eeb0fcjw1f2o59j9zxuj20k00zktbq.jpg =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o59vadmuj20k00zkaba.jpg =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5a62sjjj20k00zk764.jpg =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5ag1mb4j20k00zkmxw.jpg =180x320)![](http://ww2.sinaimg.cn/large/81eeb0fcjw1f2o5apr651j20k00zkdhi.jpg =180x320)
   
     
 ##   项目还在不断完善中，请多多指点
