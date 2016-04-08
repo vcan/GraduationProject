@@ -226,4 +226,9 @@ public class TestMaterialRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
 
     }
+
+    public void clear() {
+        lists.clear();
+        notifyDataSetChanged();
+    }
 }

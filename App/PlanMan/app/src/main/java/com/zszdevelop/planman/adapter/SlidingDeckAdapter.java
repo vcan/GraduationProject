@@ -34,10 +34,13 @@ import android.widget.TextView;
 import com.redbooth.SlidingDeck;
 import com.zszdevelop.planman.R;
 import com.zszdevelop.planman.bean.SlidingDeckModel;
+import com.zszdevelop.planman.config.ResultCode;
 
 public class SlidingDeckAdapter extends ArrayAdapter<SlidingDeckModel> {
-    public SlidingDeckAdapter(Context context) {
+    private int actionType;
+    public SlidingDeckAdapter(Context context,int actionType) {
         super(context, R.layout.sliding_item);
+        this.actionType = actionType;
     }
 
     @Override
@@ -49,12 +52,32 @@ public class SlidingDeckAdapter extends ArrayAdapter<SlidingDeckModel> {
         }
         SlidingDeckModel item = getItem(position);
         view.setTag(item);
-        ((TextView)view.findViewById(R.id.tv_sliding_total_cc)).setText(String.format("%.2f 大卡", item.getTotalCC()));
-        ((TextView)view.findViewById(R.id.tv_sliding_gram)).setText(String.format("摄入: %.2f 克" , item.getGram()));
-        ((TextView)view.findViewById(R.id.tv_sliding_alone_cc)).setText(String.format("每100g热量: %.2f 大卡",item.getAloneCC()));
-        ((TextView)view.findViewById(R.id.tv_sliding_name)).setText(item.getSlidingName());
-        ((TextView)view.findViewById(R.id.tv_sliding_time)).setText(item.getSlidingTime()+" : ");
-        ((TextView)view.findViewById(R.id.tv_sliding_total_ccstr)).setText("摄入的总热量: " );
+        TextView alone_cc = (TextView) view.findViewById(R.id.tv_sliding_alone_cc);
+        TextView total_cc = (TextView) view.findViewById(R.id.tv_sliding_total_cc);
+        TextView sliding_gram = (TextView) view.findViewById(R.id.tv_sliding_gram);
+        TextView sliding_name = (TextView) view.findViewById(R.id.tv_sliding_name);
+        TextView sliding_time = (TextView) view.findViewById(R.id.tv_sliding_time);
+        TextView total_ccstr = (TextView) view.findViewById(R.id.tv_sliding_total_ccstr);
+
+        if (actionType == ResultCode.FOOD_CODE){
+
+            total_cc.setText(String.format("%.2f 大卡", item.getTotalCC()));
+            sliding_gram.setText(String.format("摄入: %.2f 克", item.getGram()));
+            alone_cc.setText(String.format("每100g热量: %.2f 大卡", item.getAloneCC()));
+            sliding_name.setText(item.getSlidingName());
+            sliding_time.setText(item.getSlidingTime() + " : ");
+            total_ccstr.setText("摄入的总热量: ");
+
+        }else {
+
+            total_cc.setText(String.format("%.2f 大卡", item.getTotalCC()));
+            sliding_gram.setText(String.format("运动: %s 分钟",item.getGram()));
+            alone_cc.setText(String.format("每60分钟: %.2f 大卡", item.getAloneCC()));
+            sliding_name.setText(item.getSlidingName());
+            sliding_time.setText(item.getSlidingTime() + " : ");
+            total_ccstr.setText("消耗的总热量: ");
+
+        }
         final View completeView = view.findViewById(R.id.completeCommand);
         completeView.setTag(view);
         completeView.setOnClickListener(new View.OnClickListener() {

@@ -32,6 +32,7 @@ public class MaterialBodyDataFragment extends BaseFragment {
    public PullLoadMoreRecyclerView plmrvMaterial;
 
 
+    private boolean isPrepared;
 
 
     private int mScrollOffset = 4;
@@ -77,14 +78,18 @@ public class MaterialBodyDataFragment extends BaseFragment {
 
     @Override
     protected void onBindFragment(View view) {
-
-
         initView();
         initListener();
-        fillData();
+        isPrepared = true;
+        lazyLoad();
+
 
 
     }
+
+
+
+
 
     private void initListener() {
 
@@ -134,6 +139,10 @@ public class MaterialBodyDataFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
 
+        if (!isPrepared ||!isVisible){
+            return;
+        }
+        fillData();
 
     }
 

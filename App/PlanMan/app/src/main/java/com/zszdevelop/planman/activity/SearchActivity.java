@@ -235,7 +235,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void initializeSlidingDeck() {
-        slidingAdapter = new SlidingDeckAdapter(this);
+        slidingAdapter = new SlidingDeckAdapter(this,searchType);
 
         slidingDeck = (SlidingDeck) findViewById(R.id.slidingDeck);
         slidingDeck.setAdapter(slidingAdapter);
@@ -347,7 +347,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 } else {
                     slidingDeckModel.setSlidingTime("今日运动");
-                    int time = Integer.parseInt(options1ItemsSports.get(options1).replace("分钟",""));
+                    double time = Double.parseDouble(options1ItemsSports.get(options1).replace("分钟",""));
                     double v = aloneCC * (time / 60);
 //                    slidingDeckModel.setTotalCC(aloneCC * ( time/ 60));
                     slidingDeckModel.setGram(time);

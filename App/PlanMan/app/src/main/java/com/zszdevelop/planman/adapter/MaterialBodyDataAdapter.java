@@ -124,7 +124,7 @@ public class MaterialBodyDataAdapter extends RecyclerView.Adapter<RecyclerView.V
                 holderItem.ll_consume_content.removeAllViews();
                 for (int i = 0; i < modelList.size(); i++) {
                     TextView textView = new TextView(context);
-                    textView.setText(String.format("%s : %s 大卡", modelList.get(i).getSlidingName(), modelList.get(i).getTotalCC()));
+                    textView.setText(String.format("%s : %.2f 大卡", modelList.get(i).getSlidingName(), modelList.get(i).getTotalCC()));
                     holderItem.ll_consume_content.addView(textView);
                 }
                 break;

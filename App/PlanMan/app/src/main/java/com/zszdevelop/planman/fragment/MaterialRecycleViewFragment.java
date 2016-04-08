@@ -31,6 +31,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
 
     @Bind(R.id.plmrv_material)
   public   PullLoadMoreRecyclerView plmrvMaterial;
+    boolean isPrepared;
 
     private int mScrollOffset = 4;
     private int currentPage;
@@ -78,10 +79,11 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     @Override
     protected void onBindFragment(View view) {
 
-
         initView();
         initListener();
-        fillData();
+          isPrepared  = true;
+        lazyLoad();
+
 
 
     }
@@ -94,6 +96,11 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     protected void lazyLoad() {
 
 
+        if (!isPrepared ||!isVisible){
+            return;
+        }
+
+        fillData();
     }
 
 
@@ -107,6 +114,7 @@ public class MaterialRecycleViewFragment extends BaseFragment {
     private void fillData() {
 
         // 设置头部文件\
+        rvAdapter.clear();
         rvAdapter.setHeaderData(goalInfo);
         adapter.notifyDataSetChanged();
 

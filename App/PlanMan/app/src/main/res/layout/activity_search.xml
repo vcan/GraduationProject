@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gray"
     tools:context="com.zszdevelop.planman.activity.SearchActivity">
 
     <android.support.v4.widget.DrawerLayout
@@ -38,6 +39,8 @@
                         android:layout_margin="@dimen/default_distance"
                         android:layout_weight="1"
                         android:hint="搜索食物"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
                         android:singleLine="true" />
 
                     <ImageView
