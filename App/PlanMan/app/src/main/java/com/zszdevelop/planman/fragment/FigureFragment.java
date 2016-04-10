@@ -82,11 +82,9 @@ public class FigureFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        LogUtils.e(">>>>>>>>>>>到ll");
         if(!isPrepared ||!isVisible) {
             return;
         }
-        LogUtils.e(">>>>>>>>>>>lazyLoad(View view)");
         initView();
         initListener();
         fillData();

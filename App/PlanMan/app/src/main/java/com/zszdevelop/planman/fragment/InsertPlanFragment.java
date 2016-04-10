@@ -245,19 +245,75 @@ public class InsertPlanFragment extends BaseFragment {
     private void initOptionPlanType() {
         //选项选择器
         pvOptionsType = new OptionsPickerView(getActivity());
-        options1ItemTypes.add(new FigureType(ResultCode.SHOULDER_CODE, "肩宽"));
-        options1ItemTypes.add(new FigureType(ResultCode.LOIN_CODE, "腰围"));
         options1ItemTypes.add(new FigureType(ResultCode.WEIGHT_CODE, "体重"));
         options1ItemTypes.add(new FigureType(ResultCode.CHEST_CODE, "胸围"));
+        options1ItemTypes.add(new FigureType(ResultCode.LOIN_CODE, "腰围"));
         options1ItemTypes.add(new FigureType(ResultCode.LEFT_ARM_CODE, "左臂围"));
         options1ItemTypes.add(new FigureType(ResultCode.RIGHT_ARM_CODE, "右臂围"));
-
+        options1ItemTypes.add(new FigureType(ResultCode.SHOULDER_CODE, "肩宽"));
 
         //三级联动效果
         pvOptionsType.setPicker(options1ItemTypes);
         pvOptionsType.setTitle("目标类型");
         pvOptionsType.setCyclic(false);
-        pvOptionsType.setSelectOptions(2);
+        pvOptionsType.setSelectOptions(0);
+
+    }
+
+    public void setDefaultSelect(int actionType, float goalRecordData){
+        pvOptionsType.setSelectOptions(actionType - 1);
+        int defaultValue = 60;
+        String defaultName = "体重";
+        String unit = "kg";
+        switch (actionType){
+
+            case ResultCode.WEIGHT_CODE:
+                defaultValue = 60;
+                defaultName = "体重";
+                unit = "cm";
+                break;
+
+            case ResultCode.CHEST_CODE:
+                defaultName = "胸围";
+                defaultValue = 75;
+                unit = "cm";
+                break;
+            case ResultCode.LOIN_CODE:
+                defaultName = "腰围";
+                defaultValue = 75;
+                unit = "cm";
+                break;
+            case ResultCode.LEFT_ARM_CODE:
+                defaultName = "左臂围";
+                defaultValue = 30;
+                unit = "cm";
+                break;
+            case ResultCode.RIGHT_ARM_CODE:
+                defaultName = "右臂围";
+                defaultValue = 30;
+                unit = "cm";
+                break;
+            case ResultCode.SHOULDER_CODE:
+                defaultName = "肩宽";
+                defaultValue = 40;
+                unit = "cm";
+                break;
+
+        }
+        if (goalRecordData> 2){
+            pvOptions.setSelectOptions((int)goalRecordData - 2, 0);
+            tvChooseType.setText(defaultName);
+            tvChooseCurrentValue.setText(String.format("%s%s", goalRecordData,unit));
+            tvChooseGoalValue.setText(String.format("%s%s", goalRecordData - 2,unit));
+        }else {
+
+
+            pvOptions.setSelectOptions(defaultValue, 0);
+
+            tvChooseType.setText(defaultName);
+            tvChooseCurrentValue.setText(String.format("%s%s",defaultValue,unit));
+            tvChooseGoalValue.setText(String.format("%s%s", defaultValue - 2,unit));
+        }
 
     }
 

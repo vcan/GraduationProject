@@ -22,6 +22,15 @@ public class ResultCode {
     // 腰围
     public static final int SHOULDER_CODE = 6;
 
+    // 线条型男
+    public static final int LINE_FIGURE_CODE = 1;
+
+    // 肌肉型男
+    public static final int MUSCLE_FIGURE_CODE = 2;
+
+    // 手动添加记录
+    public static final int MANUAL_ADD_CODE = 1;
+
     // 首页
     public static final int FIRST_PAGE_CODE = 1;
 

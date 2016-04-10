@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.activity.AutoPlanActivity;
 import com.zszdevelop.planman.activity.ChangeActivity;
-import com.zszdevelop.planman.activity.InsertPlanActivity;
 import com.zszdevelop.planman.activity.KnowMeActivity;
 import com.zszdevelop.planman.activity.MaterialMainActivity;
 import com.zszdevelop.planman.activity.ModifyUserActivity;
@@ -83,7 +83,7 @@ public  class DrawerToolUtils {
                         break;
                     case R.id.navigation_new_plan:
 
-                        intent = new Intent(act, InsertPlanActivity.class);
+                        intent = new Intent(act, AutoPlanActivity.class);
                         act.startActivity(intent);
                         isFinish();
 
