@@ -23,6 +23,12 @@ public class SharedPreferencesUtil {
 		this.sp = context.getSharedPreferences(SHARED_NAME, 0);
 	}
 	
+	public static SharedPreferencesUtil getInstance(Context context){
+		if (spu == null) {
+			spu = new SharedPreferencesUtil(context);
+		}
+		return spu;
+	}
 
 	public static SharedPreferencesUtil getInstance() {
 		if (spu == null) {
@@ -30,31 +36,31 @@ public class SharedPreferencesUtil {
 		}
 		return spu;
 	}
-	
+
+
 	/**
 	 * @param key 键值名
 	 * @param b	设置boolean值
 	 */
-	public  static void setBoolean(String key,boolean b){
-		SharedPreferencesUtil.getInstance().sp.edit().putBoolean(key, b).commit();
+	public  void setBoolean(String key,boolean b){
+		sp.edit().putBoolean(key, b).commit();
 	}
 	
 
 	/**
 	 * @param key 键名
-	 * @param b	默认返回值
 	 * @return boolean值
 	 */
-	public static boolean getBoolean(String key,boolean defult){
-		return SharedPreferencesUtil.getInstance().sp.getBoolean(key,defult);
+	public boolean getBoolean(String key,boolean defult){
+		return sp.getBoolean(key,defult);
 	}
 	
 	/**
 	 * @param key 键名
 	 * @param s	设置字符串
 	 */
-	public static void setString(String key,String s){
-		SharedPreferencesUtil.getInstance().sp.edit().putString(key, s).commit();
+	public void setString(String key,String s){
+		sp.edit().putString(key, s).commit();
 	}
 	
 	/**
@@ -62,26 +68,26 @@ public class SharedPreferencesUtil {
 	 * @param defult	默认返回值
 	 * @return 字符串
 	 */
-	public static String getString(String key,String defult){
-		return SharedPreferencesUtil.getInstance().sp.getString(key, defult);
+	public String getString(String key,String defult){
+		return sp.getString(key, defult);
 	}
-	public static String getString(String key ){
-		return SharedPreferencesUtil.getInstance().sp.getString(key, "");
+	public String getString(String key ){
+		return sp.getString(key, "");
 	}
 	/**
 	 * @param key 键名
 	 * @param i	设置整型值
 	 */
-	public static void setInt(String key,int i){
-		SharedPreferencesUtil.getInstance().sp.edit().putInt(key, i).commit();
+	public void setInt(String key,int i){
+		sp.edit().putInt(key, i).commit();
 	}
 	
 	/**
 	 * @param key 键名
 	 * @param i	设置整型值
 	 */
-	public static void setFloat(String key,Float i){
-		SharedPreferencesUtil.getInstance().sp.edit().putFloat(key, i).commit();
+	public void setFloat(String key,Float i){
+		sp.edit().putFloat(key, i).commit();
 	}
 	
 	/**
@@ -89,21 +95,24 @@ public class SharedPreferencesUtil {
 	 * @param defult	默认返回int值
 	 * @return	int
 	 */
-	public static int getInt(String key,int defult){
-		return SharedPreferencesUtil.getInstance().sp.getInt(key, defult);
+	public int getInt(String key,int defult){
+		return sp.getInt(key, defult);
 		
 	}
-	public static int getInt(String key){
-		return SharedPreferencesUtil.getInstance().sp.getInt(key, 0);
+	public int getInt(String key){
+		return sp.getInt(key, 0);
 		
 	}
 	
-	public static float getFloat(String key){
-		return SharedPreferencesUtil.getInstance().sp.getFloat(key, 0);
+	public float getFloat(String key){
+		return sp.getFloat(key, 0);
 		
 	}
 	
 	public void clear() {
 		sp.edit().clear().commit();
+	}
+	public void remove(String key) {
+		sp.edit().remove(key).apply();
 	}
 }

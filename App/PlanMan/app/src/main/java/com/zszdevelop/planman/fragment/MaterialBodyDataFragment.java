@@ -93,47 +93,6 @@ public class MaterialBodyDataFragment extends BaseFragment {
 
     private void initListener() {
 
-//        fabNewFigure.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fabMainMenu.close(true);
-//                Intent intent = new Intent(getActivity(), RecordFigureActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        fabNewFoods.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fabMainMenu.close(true);
-//                Intent intent = new Intent(getActivity(), SearchActivity.class);
-//                intent.putExtra("SearchType", ResultCode.FOOD_CODE);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        fabNewSports.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fabMainMenu.close(true);
-//               Intent intent = new Intent(getActivity(), SearchActivity.class);
-//                intent.putExtra("SearchType", ResultCode.SPORTS_CODE);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        fabNewPlan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fabMainMenu.close(true);
-//                Intent intent = new Intent(getActivity(), InsertPlanActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
     }
 
     @Override
@@ -149,23 +108,13 @@ public class MaterialBodyDataFragment extends BaseFragment {
 
     private void initView() {
         initRecycleView();
-        initFloatActionButton();
-    }
-
-    private void initFloatActionButton() {
-//        fabMainMenu.setClosedOnTouchOutside(true);
-//        fabMainMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fabMainMenu.toggle(true);
-//            }
-//        });
     }
 
     private void fillData() {
 
         // 设置头部文件\
         mBDAdapter.setHeaderData(bodyData);
+        lists.clear();
         adapter.notifyDataSetChanged();
 
         currentPage = 1;
@@ -187,6 +136,8 @@ public class MaterialBodyDataFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 currentPage = 1;
+                lists.clear();
+                adapter.notifyDataSetChanged();
                 refreshCallBack.fillDataListener(currentPage, fragment);
             }
 

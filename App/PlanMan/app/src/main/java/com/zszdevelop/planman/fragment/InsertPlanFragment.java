@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -42,6 +43,18 @@ public class InsertPlanFragment extends BaseFragment {
     TextView tvChooseCurrentTime;
     @Bind(R.id.tv_choose_describe)
     TextView tvChooseDescribe;
+    @Bind(R.id.ll_choose_type)
+    LinearLayout llChooseType;
+    @Bind(R.id.ll_choose_goal_value)
+    LinearLayout llChooseGoalValue;
+    @Bind(R.id.ll_choose_current_value)
+    LinearLayout llChooseCurrentValue;
+    @Bind(R.id.ll_choose_goal_time)
+    LinearLayout llChooseGoalTime;
+    @Bind(R.id.ll_choose_current_time)
+    LinearLayout llChooseCurrentTime;
+    @Bind(R.id.ll_choose_describe)
+    LinearLayout llChooseDescribe;
 
     private TimePickerView pvTime;
     private OptionsPickerView pvOptions;
@@ -105,7 +118,7 @@ public class InsertPlanFragment extends BaseFragment {
             }
         });
         //点击弹出选项选择器
-        tvChooseGoalValue.setOnClickListener(new View.OnClickListener() {
+        llChooseGoalValue.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -115,7 +128,7 @@ public class InsertPlanFragment extends BaseFragment {
         });
 
         //点击弹出选项选择器
-        tvChooseCurrentValue.setOnClickListener(new View.OnClickListener() {
+        llChooseCurrentValue.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -152,7 +165,7 @@ public class InsertPlanFragment extends BaseFragment {
         });
 
         //弹出时间选择器
-        tvChooseGoalTime.setOnClickListener(new View.OnClickListener() {
+        llChooseGoalTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -162,7 +175,7 @@ public class InsertPlanFragment extends BaseFragment {
         });
 
         //弹出时间选择器
-        tvChooseCurrentTime.setOnClickListener(new View.OnClickListener() {
+        llChooseCurrentTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -182,21 +195,20 @@ public class InsertPlanFragment extends BaseFragment {
             }
         });
 
-        tvChooseType.setOnClickListener(new View.OnClickListener() {
+        llChooseType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pvOptionsType.show();
             }
         });
 
-        tvChooseDescribe.setOnClickListener(new View.OnClickListener() {
+        llChooseDescribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ModifyTextActivity.class);
                 startActivityForResult(intent, ResultCode.MODIFY_DESCRIBE);
             }
         });
-
 
 
     }
@@ -260,12 +272,12 @@ public class InsertPlanFragment extends BaseFragment {
 
     }
 
-    public void setDefaultSelect(int actionType, float goalRecordData){
+    public void setDefaultSelect(int actionType, float goalRecordData) {
         pvOptionsType.setSelectOptions(actionType - 1);
         int defaultValue = 60;
         String defaultName = "体重";
         String unit = "kg";
-        switch (actionType){
+        switch (actionType) {
 
             case ResultCode.WEIGHT_CODE:
                 defaultValue = 60;
@@ -300,19 +312,19 @@ public class InsertPlanFragment extends BaseFragment {
                 break;
 
         }
-        if (goalRecordData> 2){
-            pvOptions.setSelectOptions((int)goalRecordData - 2, 0);
+        if (goalRecordData > 2) {
+            pvOptions.setSelectOptions((int) goalRecordData - 2, 0);
             tvChooseType.setText(defaultName);
-            tvChooseCurrentValue.setText(String.format("%s%s", goalRecordData,unit));
-            tvChooseGoalValue.setText(String.format("%s%s", goalRecordData - 2,unit));
-        }else {
+            tvChooseCurrentValue.setText(String.format("%s%s", goalRecordData, unit));
+            tvChooseGoalValue.setText(String.format("%s%s", goalRecordData - 2, unit));
+        } else {
 
 
             pvOptions.setSelectOptions(defaultValue, 0);
 
             tvChooseType.setText(defaultName);
-            tvChooseCurrentValue.setText(String.format("%s%s",defaultValue,unit));
-            tvChooseGoalValue.setText(String.format("%s%s", defaultValue - 2,unit));
+            tvChooseCurrentValue.setText(String.format("%s%s", defaultValue, unit));
+            tvChooseGoalValue.setText(String.format("%s%s", defaultValue - 2, unit));
         }
 
     }

@@ -50,9 +50,9 @@ public class Helper {
      * @return true/false
      */
     public static final boolean getLoginStatus() {
-        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
-        String auth_token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
-       Boolean isLogin =  SharedPreferencesUtil.getBoolean(Config.IS_LOGIN, false);
+        int user_id = SharedPreferencesUtil.getInstance().getInt(UserConfig.USER_ID);
+        String auth_token = SharedPreferencesUtil.getInstance().getString(UserConfig.AUTH_TOKEN);
+       Boolean isLogin =  SharedPreferencesUtil.getInstance().getBoolean(Config.IS_LOGIN, false);
 
 //        String user_id = SharedPreferencesUtil.getString(UserConfig.USER_ID);
         if (user_id == 0 || TextUtils.isEmpty(auth_token) || !isLogin) {
@@ -63,14 +63,14 @@ public class Helper {
     }
 
     public static final int getUserId() {
-//        int user_id = SharedPreferencesUtil.getInt(UserConfig.USER_ID);
-        int user_id = 10001;
+        int user_id = SharedPreferencesUtil.getInstance().getInt(UserConfig.USER_ID);
+//        int user_id = 10001;
 
     return  user_id;}
 
     public static final String getToken() {
-//        String token = SharedPreferencesUtil.getString(UserConfig.AUTH_TOKEN);
-        String token = "aaa";
+        String token = SharedPreferencesUtil.getInstance().getString(UserConfig.AUTH_TOKEN);
+//        String token = "aaa";
 
     return  token;}
 

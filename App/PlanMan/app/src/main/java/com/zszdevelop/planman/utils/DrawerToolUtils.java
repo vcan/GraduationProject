@@ -142,7 +142,7 @@ public  class DrawerToolUtils {
     }
 
     public static void displayAvatar() {
-        int sex = SharedPreferencesUtil.getInt(UserConfig.SEX, UserConfig.MAN);
+        int sex = SharedPreferencesUtil.getInstance().getInt(UserConfig.SEX, UserConfig.MAN);
         if (sex == UserConfig.MAN){
             ivAvatar.setImageResource(R.mipmap.male_icon);
         }else {

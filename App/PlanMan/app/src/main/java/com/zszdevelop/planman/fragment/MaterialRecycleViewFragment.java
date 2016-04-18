@@ -137,6 +137,9 @@ public class MaterialRecycleViewFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 currentPage = 1;
+                lists.clear();
+                adapter.notifyDataSetChanged();
+
                 refreshCallBack.fillDataListener(currentPage, fragment);
             }
 

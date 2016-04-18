@@ -16,6 +16,7 @@ import com.zszdevelop.planman.fragment.SuggestFragment;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,7 +54,6 @@ public class RegisterSuggestActivity extends BaseActivity {
     }
 
     private void initView() {
-
         EventBus.getDefault().register(this);
         DrawerToolUtils.initToolbar(this, toolbar, "一分钟了解自己");
 
@@ -85,6 +85,7 @@ public class RegisterSuggestActivity extends BaseActivity {
 
     }
 
+    @Subscribe
     public void onEventMainThread(ExitRegisterEvent event) {
         if (event.isExit()){
             finish();

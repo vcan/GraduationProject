@@ -13,6 +13,7 @@ import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BodyData;
 import com.zszdevelop.planman.config.API;
+import com.zszdevelop.planman.config.Config;
 import com.zszdevelop.planman.config.ResultCode;
 import com.zszdevelop.planman.config.UserConfig;
 import com.zszdevelop.planman.event.ExitRegisterEvent;
@@ -22,6 +23,7 @@ import com.zszdevelop.planman.utils.LogUtils;
 import com.zszdevelop.planman.utils.SharedPreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
@@ -174,7 +176,7 @@ public class RegisterActionActivity extends BaseActivity {
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("个人数据");
+        toolbar.setTitle("活动系数");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -224,10 +226,11 @@ public class RegisterActionActivity extends BaseActivity {
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
-                SharedPreferencesUtil.setInt(UserConfig.SEX, bodyData.getSex());
+                SharedPreferencesUtil.getInstance().setInt(UserConfig.SEX, bodyData.getSex());
                 Intent intent = new Intent(RegisterActionActivity.this, RegisterSuggestActivity.class);
                 intent.putExtra("bodyData",bodyData);
                 Helper.getInstance().setBodyData(bodyData);
+                SharedPreferencesUtil.getInstance().setBoolean(Config.IS_EDIT_REGISTER, true);
                 startActivity(intent);
             }
         });
@@ -240,7 +243,7 @@ public class RegisterActionActivity extends BaseActivity {
         super.onDestroy();
 
     }
-
+    @Subscribe
     public void onEventMainThread(ExitRegisterEvent event) {
         if (event.isExit()){
             finish();

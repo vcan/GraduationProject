@@ -155,7 +155,7 @@ public class ModifyUserActivity extends BaseActivity {
         HttpRequest.post(API.MODIFY_BASE_DATA_URI, map, new HttpRequestListener() {
             @Override
             public void onSuccess(String json) {
-                SharedPreferencesUtil.setInt(UserConfig.SEX,bodyData.getSex());
+                SharedPreferencesUtil.getInstance().setInt(UserConfig.SEX,bodyData.getSex());
                 DrawerToolUtils.displayAvatar();
                finish();
             }

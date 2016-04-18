@@ -2,10 +2,10 @@ package com.zszdevelop.planman.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.zszdevelop.planman.R;
+import com.zszdevelop.planman.base.BaseActivity;
 import com.zszdevelop.planman.base.Helper;
 import com.zszdevelop.planman.bean.BaseUser;
 import com.zszdevelop.planman.config.API;
@@ -19,7 +19,7 @@ import com.zszdevelop.planman.utils.UUIDInstallation;
 
 import java.util.HashMap;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,11 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.e(">>>>>>>>splash...");
+    }
 
     private void initListener() {
     }
@@ -50,11 +55,18 @@ public class SplashActivity extends AppCompatActivity {
      * 判断是不是第一次登陆
      */
     private void firstLogin() {
-        boolean isFirstLogin = SharedPreferencesUtil.getBoolean(Config.FIRST_APP, true);
+        boolean isFirstLogin = SharedPreferencesUtil.getInstance().getBoolean(Config.FIRST_APP, true);
+        boolean isEditRegister = SharedPreferencesUtil.getInstance().getBoolean(Config.IS_EDIT_REGISTER, false);
         if (isFirstLogin) {
             registerUUID();
         } else {
-            Jump2Home();
+            if (isEditRegister){
+                Jump2Home();
+            }else {
+                Intent intent = new Intent(SplashActivity.this,RegisterBaseDataActivity.class);
+                startActivity(intent);
+            }
+
         }
     }
 
@@ -71,13 +83,14 @@ public class SplashActivity extends AppCompatActivity {
                 BaseUser baseUser =gson.fromJson(json, BaseUser.class);
 
                 Helper.getInstance().setBaseUser(baseUser);
-                SharedPreferencesUtil.setInt(UserConfig.USER_ID, baseUser.getUserId());
-                SharedPreferencesUtil.setString(UserConfig.AUTH_TOKEN, baseUser.getAuthToken());
-                SharedPreferencesUtil.setBoolean(Config.FIRST_APP, false);
+                SharedPreferencesUtil.getInstance().setInt(UserConfig.USER_ID, baseUser.getUserId());
+                SharedPreferencesUtil.getInstance().setString(UserConfig.AUTH_TOKEN, baseUser.getAuthToken());
+                SharedPreferencesUtil.getInstance().setBoolean(Config.FIRST_APP, false);
 
                 if (baseUser.isFirstLogin()){
                     Intent intent = new Intent(SplashActivity.this,RegisterBaseDataActivity.class);
                     startActivity(intent);
+                    finish();
                 }else {
                     Jump2Home();
                 }

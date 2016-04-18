@@ -107,7 +107,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         toolbar = materialViewPager.getToolbar();
         PagerSlidingTabStrip pagerTitleStrip = materialViewPager.getPagerTitleStrip();
         pagerTitleStrip.setTextColor(ContextCompat.getColor(this, R.color.white));
-        pagerTitleStrip.setTextSize(28);
+        pagerTitleStrip.setTextSize(40);
 
         DrawerToolUtils.initToolbar(this, toolbar, "");
 

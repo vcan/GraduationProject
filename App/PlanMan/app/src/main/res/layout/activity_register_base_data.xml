@@ -28,13 +28,14 @@
 
     </fragment>
 
-    <Button
-        android:id="@+id/btn_register_base_next"
+
+    <TextView
+        android:id="@+id/tv_register_base_next"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:gravity="center"
         android:text="下一步"
-
-        />
-
+        android:textColor="@color/white" />
 </RelativeLayout>

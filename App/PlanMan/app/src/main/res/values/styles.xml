@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!-- 箭头颜色 -->
         <item name="colorControlNormal">@color/white</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

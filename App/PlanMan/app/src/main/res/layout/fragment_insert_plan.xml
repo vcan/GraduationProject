@@ -7,6 +7,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_choose_type"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -34,6 +35,7 @@
     <include layout="@layout/view_line" />
 
     <LinearLayout
+        android:id="@+id/ll_choose_goal_value"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -61,12 +63,14 @@
     <include layout="@layout/view_line" />
 
     <LinearLayout
+        android:id="@+id/ll_choose_current_value"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:padding="@dimen/default_distance">
 
         <TextView
+
             style="@style/text_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +92,7 @@
     <include layout="@layout/view_line" />
 
     <LinearLayout
+        android:id="@+id/ll_choose_goal_time"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -115,6 +120,7 @@
     <include layout="@layout/view_line" />
 
     <LinearLayout
+        android:id="@+id/ll_choose_current_time"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -142,6 +148,7 @@
     <include layout="@layout/view_line" />
 
     <LinearLayout
+        android:id="@+id/ll_choose_describe"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
