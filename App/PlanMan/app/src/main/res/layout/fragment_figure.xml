@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_figure_title"
+        android:layout_width="wrap_content"
+        style="@style/text_title"
+        android:text="您最近一次记录体重"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_figure_old_time"
+        android:layout_width="wrap_content"
+        style="@style/text_content"
+        android:text="您最近一次记录体重"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tv_figure_title"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" />
+
+    <com.zszdevelop.planman.utils.RiseNumberTextView
+        android:id="@+id/rntv_figure_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="73.12"
+        android:layout_below="@+id/tv_figure_old_time"
+        android:textSize="35sp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_figure_time"
+        android:layout_width="wrap_content"
+        style="@style/text_content"
+        android:text="时间"
+        android:layout_below="@+id/rntv_figure_number"
+        android:layout_marginTop="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" />
+
+    <Button
+
+        android:id="@+id/btn_figure_complete"
+        android:layout_below="@+id/tv_figure_time"
+        android:text="保存"
+
+        android:background="@color/colorAccent"
+        android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/distance_48dp"
+        android:layout_height="wrap_content" />
+
+
+
+</RelativeLayout>

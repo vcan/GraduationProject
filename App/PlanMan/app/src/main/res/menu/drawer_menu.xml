@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_mian"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/my_mian" />
+
+        <item
+            android:id="@+id/navigation_plan"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/my_plan" />
+        <item
+            android:id="@+id/navigation_new_plan"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/my_new_plan" />
+
+
+        <item
+            android:id="@+id/navigation_record_figure"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/plan_record_figure" />
+
+        <item
+            android:id="@+id/navigation_change"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/plan_change" />
+
+
+        <item
+            android:id="@+id/navigation_search_food"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/plan_search_food" />
+
+        <item
+            android:id="@+id/navigation_search_sport"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/plan_search_sport" />
+
+        <item
+            android:id="@+id/navigation_know_me"
+            android:icon="@mipmap/ic_label_black_24dp"
+            android:title="@string/know_me" />
+    </group>
+
+</menu>

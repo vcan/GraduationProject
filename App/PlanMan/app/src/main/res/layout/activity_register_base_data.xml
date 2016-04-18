@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.RegisterBaseDataActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_register_describe"
+        style="@style/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:text="准确的数据 = 量身定制的减肥健身方案!" />
+
+    <fragment
+        android:layout_below="@+id/tv_register_describe"
+        android:id="@+id/fm_register_base_data"
+        android:name="com.zszdevelop.planman.fragment.BodyDataFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_base_data_layout">
+
+    </fragment>
+
+
+    <TextView
+        android:id="@+id/tv_register_base_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/white" />
+</RelativeLayout>
