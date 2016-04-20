@@ -36,6 +36,7 @@ import com.zszdevelop.planman.http.HttpRequest;
 import com.zszdevelop.planman.http.HttpRequestListener;
 import com.zszdevelop.planman.utils.DrawerToolUtils;
 import com.zszdevelop.planman.utils.ShareUtils;
+import com.zszdevelop.planman.utils.UpdateVersionUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,6 +82,10 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
         initListener();
         fillData();
         initView();
+
+        // 看是否需要更新版本
+        UpdateVersionUtils updateVersionUtils = new UpdateVersionUtils();
+        updateVersionUtils.requestUpdata(this);
     }
 
 
@@ -88,16 +93,6 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
 
         initToolbar();
         initFloatActionButton();
-
-//        View logo = findViewById(R.id.logo_white);
-//        if (logo != null)
-//            logo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    materialViewPager.notifyHeaderChanged();
-//                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
-//                }
-//            });
 
     }
 
@@ -128,9 +123,10 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case 0:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.green,
-                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+                        return HeaderDesign.fromColorAndDrawable(
+                                ContextCompat.getColor(MaterialMainActivity.this, R.color.green),
+                                ContextCompat.getDrawable(MaterialMainActivity.this, R.mipmap.ic_wallpaper));
+//                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
 //                    case 0:
 //                        return HeaderDesign.fromColorAndDrawable(
 //                                ContextCompat.getColor(MaterialMainActivity.this, R.color.colorPrimaryDark),
@@ -138,7 +134,7 @@ public class MaterialMainActivity extends BaseActivity implements MaterialRecycl
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
                     case 2:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
